@@ -109,3 +109,10 @@ The template uses Nuxt UI components extensively:
 - Devtools are enabled by default
 
 Reply in french
+
+## Active Technologies
+- TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+ (001-saas-starter-foundation)
+- Self-hosted Supabase (PostgreSQL) for users, roles, subscriptions, and auth (001-saas-starter-foundation)
+
+## Recent Changes
+- 001-saas-starter-foundation: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
