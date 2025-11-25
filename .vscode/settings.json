@@ -1,0 +1,33 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#c6f8de",
+        "activityBar.background": "#c6f8de",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#bd8df1",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#c6f8de",
+        "statusBar.background": "#98f3c3",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#6aeea8",
+        "statusBarItem.remoteBackground": "#98f3c3",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#98f3c3",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#98f3c399",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#98f3c3",
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "editor.quickSuggestions": {
+        "strings": "on"
+    },
+    "tailwindCSS.classAttributes": ["class", "ui"],
+    "tailwindCSS.experimental.classRegex": [
+        ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    ]
+    
+}
