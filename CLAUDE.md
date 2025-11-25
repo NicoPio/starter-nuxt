@@ -31,6 +31,7 @@ npx eslint .
 ## Architecture
 
 ### Stack
+
 - **Framework**: Nuxt 4 with Vue 3.5
 - **UI Library**: Nuxt UI (100+ accessible components with automatic dark mode)
 - **Styling**: Tailwind CSS 4 (via @tailwindcss/vite plugin)
@@ -39,6 +40,7 @@ npx eslint .
 - **Database**: better-sqlite3 included for data persistence
 
 ### Key Modules
+
 - `@nuxt/content` - Content management with schema validation
 - `@nuxt/ui` - Comprehensive UI component library
 - `@nuxt/image` - Image optimization
@@ -78,6 +80,7 @@ public/               # Static assets served at root
 ### Content Collections
 
 The project uses Nuxt Content collections with Zod schema validation. Currently defined:
+
 - `authors` collection: data type, sources from `**.yml` files with schema for name, avatar, and url
 
 ### Styling Approach
@@ -91,6 +94,7 @@ The project uses Nuxt Content collections with Zod schema validation. Currently 
 ### Component Usage
 
 The template uses Nuxt UI components extensively:
+
 - `UPageHero` - Hero sections with title, description, and action links
 - `UPageSection` - Content sections with optional features list
 - `UPageCTA` - Call-to-action sections
@@ -103,3 +107,5 @@ The template uses Nuxt UI components extensively:
 - The `postinstall` script runs `nuxt prepare` to generate TypeScript definitions
 - Compatibility date set to "2025-07-15"
 - Devtools are enabled by default
+
+Reply in french
