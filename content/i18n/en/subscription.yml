@@ -1,0 +1,10 @@
+title: My Subscription
+plan: Plan
+status: Status
+currentPeriodEnd: Current Period End
+cancel: Cancel Subscription
+cancelConfirm: Are you sure you want to cancel your subscription?
+
+messages:
+  cancelSuccess: Subscription cancelled successfully
+  cancelError: Failed to cancel subscription

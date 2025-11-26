@@ -1,0 +1,81 @@
+title: Fonctionnalités
+description: Découvrez toutes les fonctionnalités de notre plateforme SaaS
+
+sections:
+  userManagement:
+    title: Gestion des utilisateurs
+    description: Notre plateforme fournit des capacités complètes de gestion des utilisateurs
+    items:
+      - title: Authentification sécurisée
+        description: Authentification email/mot de passe propulsée par Supabase
+      - title: Contrôle d'accès basé sur les rôles
+        description: Trois rôles utilisateur (Admin, Contributeur, Utilisateur)
+      - title: Gestion de profil
+        description: Les utilisateurs peuvent mettre à jour leurs informations personnelles et avatars
+      - title: Gestion de session
+        description: Actualisation automatique des tokens et déconnexion sécurisée
+
+  subscriptionPlans:
+    title: Plans d'abonnement
+    description: Options d'abonnement flexibles pour répondre à vos besoins
+    items:
+      - title: Niveau gratuit
+        description: Commencez avec les fonctionnalités de base
+      - title: Plan Pro
+        description: Accédez aux fonctionnalités avancées et au support prioritaire
+      - title: Enterprise
+        description: Solutions personnalisées pour les grandes équipes
+
+  adminDashboard:
+    title: Tableau de bord Admin
+    description: Outils puissants pour les administrateurs
+    items:
+      - title: Gestion des utilisateurs
+        description: Afficher, modifier et gérer tous les comptes utilisateur
+      - title: Attribution de rôles
+        description: Changez facilement les rôles et permissions des utilisateurs
+      - title: Analytique
+        description: Surveillez l'utilisation de la plateforme et l'activité des utilisateurs
+      - title: Configuration
+        description: Gérez les paramètres de paiement Stripe
+
+  multiLanguage:
+    title: Support multilingue
+    description: Atteignez un public mondial avec l'internationalisation intégrée
+    items:
+      - title: Anglais et français
+        description: Disponibles dès le départ
+      - title: Traduction facile
+        description: Ajoutez plus de langues avec de simples fichiers YAML
+      - title: Détection automatique
+        description: Préférence de langue depuis les paramètres du navigateur
+      - title: SEO Friendly
+        description: Balises hreflang appropriées pour les moteurs de recherche
+
+  security:
+    title: Sécurité
+    description: La sécurité de vos données est notre priorité
+    items:
+      - title: Sécurité au niveau des lignes
+        description: Contrôle d'accès au niveau de la base de données avec Supabase RLS
+      - title: Secrets chiffrés
+        description: Informations de paiement stockées en toute sécurité
+      - title: HTTPS uniquement
+        description: Connexions sécurisées en production
+      - title: Mises à jour régulières
+        description: Maintenez les dépendances à jour
+
+  developerExperience:
+    title: Expérience développeur
+    description: Construit avec des outils modernes pour un développement rapide
+    items:
+      - title: Nuxt 4
+        description: Le dernier framework full-stack
+      - title: TypeScript
+        description: Code typé en toute sécurité partout
+      - title: Tailwind CSS 4
+        description: Stylisation utility-first
+      - title: Nuxt UI
+        description: Plus de 100 composants accessibles
+      - title: Auto-imports
+        description: Composants et composables prêts à l'emploi

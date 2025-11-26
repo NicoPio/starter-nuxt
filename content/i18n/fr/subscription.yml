@@ -1,0 +1,10 @@
+title: Mon Abonnement
+plan: Forfait
+status: Statut
+currentPeriodEnd: Fin de la période actuelle
+cancel: Annuler l'abonnement
+cancelConfirm: Êtes-vous sûr de vouloir annuler votre abonnement ?
+
+messages:
+  cancelSuccess: Abonnement annulé avec succès
+  cancelError: Échec de l'annulation de l'abonnement

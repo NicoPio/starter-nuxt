@@ -1,0 +1,4 @@
+unauthorized: Vous devez être connecté pour accéder à cette page
+forbidden: Vous n'avez pas la permission d'accéder à cette page
+notFound: Page non trouvée
+serverError: Une erreur s'est produite. Veuillez réessayer plus tard.

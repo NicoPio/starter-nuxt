@@ -19,11 +19,11 @@ Tasks are organized by **User Story** for independent implementation and testing
 
 **Goal**: Initialize project with required dependencies and configuration
 
-- [ ] T001 Install new dependencies: @nuxtjs/supabase, @nuxtjs/i18n, stripe, zod
-- [ ] T002 Create .env.example with all required environment variables from quickstart.md
-- [ ] T003 Update nuxt.config.ts to add @nuxtjs/supabase and @nuxtjs/i18n modules
-- [ ] T004 [P] Create locales/en.json with initial English translations
-- [ ] T005 [P] Create locales/fr.json with initial French translations
+- [X] T001 Install new dependencies: @nuxtjs/supabase, @nuxtjs/i18n, stripe, zod
+- [X] T002 Create .env.example with all required environment variables from quickstart.md
+- [X] T003 Update nuxt.config.ts to add @nuxtjs/supabase and @nuxtjs/i18n modules
+- [X] T004 [P] Create locales/en.json with initial English translations
+- [X] T005 [P] Create locales/fr.json with initial French translations
 - [ ] T006 Setup Supabase local instance via Docker Compose (follow quickstart.md)
 - [ ] T007 Run database migration from data-model.md to create profiles, subscriptions, payment_config tables
 
@@ -33,16 +33,16 @@ Tasks are organized by **User Story** for independent implementation and testing
 
 **Goal**: Shared infrastructure needed by all user stories
 
-- [ ] T008 [P] Create app/plugins/supabase.ts for Supabase client initialization
-- [ ] T009 [P] Create server/utils/supabase.ts for server-side Supabase client
-- [ ] T010 [P] Create server/utils/stripe.ts for Stripe SDK initialization
-- [ ] T011 [P] Create app/composables/useToast.ts for toast notifications (Nuxt UI)
-- [ ] T012 [P] Create app/middleware/auth.ts for authentication check
-- [ ] T013 [P] Create app/middleware/guest.ts for redirecting authenticated users
-- [ ] T014 [P] Create server/utils/schemas.ts with Zod validation schemas from data-model.md
-- [ ] T015 [P] Create app/layouts/default.vue for public pages layout
-- [ ] T016 [P] Create app/layouts/dashboard.vue for authenticated pages layout
-- [ ] T017 [P] Create app/layouts/admin.vue for admin pages layout
+- [X] T008 [P] Create app/plugins/supabase.ts for Supabase client initialization
+- [X] T009 [P] Create server/utils/supabase.ts for server-side Supabase client
+- [X] T010 [P] Create server/utils/stripe.ts for Stripe SDK initialization
+- [X] T011 [P] Create app/composables/useToast.ts for toast notifications (Nuxt UI)
+- [X] T012 [P] Create app/middleware/auth.ts for authentication check
+- [X] T013 [P] Create app/middleware/guest.ts for redirecting authenticated users
+- [X] T014 [P] Create server/utils/schemas.ts with Zod validation schemas from data-model.md
+- [X] T015 [P] Create app/layouts/default.vue for public pages layout
+- [X] T016 [P] Create app/layouts/dashboard.vue for authenticated pages layout
+- [X] T017 [P] Create app/layouts/admin.vue for admin pages layout
 
 ---
 
@@ -54,10 +54,10 @@ Tasks are organized by **User Story** for independent implementation and testing
 
 **Implementation**:
 
-- [ ] T018 [P] [US1] Update app/pages/index.vue to serve as public landing page
-- [ ] T019 [P] [US1] Create content/pages/features.md for free content page
-- [ ] T020 [P] [US1] Create app/pages/features.vue to display free content from Nuxt Content
-- [ ] T021 [US1] Add route protection: authenticated users can access /dashboard (test redirect)
+- [X] T018 [P] [US1] Update app/pages/index.vue to serve as public landing page
+- [X] T019 [P] [US1] Create content/pages/features.md for free content page
+- [X] T020 [P] [US1] Create app/pages/features.vue to display free content from Nuxt Content
+- [X] T021 [US1] Add route protection: authenticated users can access /dashboard (test redirect)
 
 **MVP Complete After This Phase** ✅
 
@@ -72,29 +72,29 @@ Tasks are organized by **User Story** for independent implementation and testing
 **Implementation**:
 
 ### Authentication UI
-- [ ] T022 [P] [US2] Create app/components/auth/SignupForm.vue with email/password fields and Zod validation
-- [ ] T023 [P] [US2] Create app/components/auth/LoginForm.vue with email/password and "remember me"
-- [ ] T024 [P] [US2] Create app/pages/signup.vue using SignupForm component
-- [ ] T025 [P] [US2] Create app/pages/login.vue using LoginForm component
+- [X] T022 [P] [US2] Create app/components/auth/SignupForm.vue with email/password fields and Zod validation
+- [X] T023 [P] [US2] Create app/components/auth/LoginForm.vue with email/password and "remember me"
+- [X] T024 [P] [US2] Create app/pages/signup.vue using SignupForm component
+- [X] T025 [P] [US2] Create app/pages/login.vue using LoginForm component
 
 ### Authentication API
-- [ ] T026 [US2] Create server/api/auth/signup.post.ts endpoint (see contracts/API-SUMMARY.md)
-- [ ] T027 [US2] Create server/api/auth/login.post.ts endpoint
-- [ ] T028 [US2] Create server/api/auth/logout.post.ts endpoint
+- [X] T026 [US2] Create server/api/auth/signup.post.ts endpoint (see contracts/API-SUMMARY.md)
+- [X] T027 [US2] Create server/api/auth/login.post.ts endpoint
+- [X] T028 [US2] Create server/api/auth/logout.post.ts endpoint
 
 ### Profile Management
-- [ ] T029 [P] [US2] Create app/composables/useAuth.ts for auth state management
-- [ ] T030 [P] [US2] Create app/composables/useUser.ts for user profile state
-- [ ] T031 [P] [US2] Create app/components/profile/ProfileForm.vue for editing user data
-- [ ] T032 [P] [US2] Create app/pages/profile.vue for profile management page
-- [ ] T033 [P] [US2] Create app/pages/dashboard.vue as user dashboard
-- [ ] T034 [US2] Create server/api/users/me.get.ts to fetch current user profile
-- [ ] T035 [US2] Create server/api/users/me.patch.ts to update profile
+- [X] T029 [P] [US2] Create app/composables/useAuth.ts for auth state management
+- [X] T030 [P] [US2] Create app/composables/useUser.ts for user profile state
+- [X] T031 [P] [US2] Create app/components/profile/ProfileForm.vue for editing user data
+- [X] T032 [P] [US2] Create app/pages/profile.vue for profile management page
+- [X] T033 [P] [US2] Create app/pages/dashboard.vue as user dashboard
+- [X] T034 [US2] Create server/api/users/me.get.ts to fetch current user profile
+- [X] T035 [US2] Create server/api/users/me.patch.ts to update profile
 
 ### Integration
-- [ ] T036 [US2] Add auth redirect: preserve original URL when redirecting to login
-- [ ] T037 [US2] Implement toast notifications for signup/login/profile update success/errors
-- [ ] T038 [US2] Add trigger in Supabase to auto-create profile + free subscription on signup (data-model.md)
+- [X] T036 [US2] Add auth redirect: preserve original URL when redirecting to login
+- [X] T037 [US2] Implement toast notifications for signup/login/profile update success/errors
+- [X] T038 [US2] Add trigger in Supabase to auto-create profile + free subscription on signup (data-model.md)
 
 ---
 

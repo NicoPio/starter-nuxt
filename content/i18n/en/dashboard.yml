@@ -1,0 +1,20 @@
+title: Dashboard
+description: Your personal dashboard
+heading: Dashboard
+subheading: Welcome to your dashboard
+
+welcome:
+  title: Welcome
+  message: Hello, {name}! Welcome to your dashboard.
+
+quickActions:
+  title: Quick Actions
+  viewProfile: View Profile
+  manageSubscription: Manage Subscription
+  adminPanel: Admin Panel
+
+accountStatus:
+  title: Account Status
+  status: Status
+  active: Active
+  role: Role

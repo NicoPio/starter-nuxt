@@ -1,0 +1,28 @@
+title: Tableau de bord Admin
+
+users:
+  title: Gestion des utilisateurs
+  search: Rechercher des utilisateurs...
+  role: Rôle
+  email: Email
+  createdAt: Créé le
+  actions: Actions
+  changeRole: Changer le rôle
+  delete: Supprimer l'utilisateur
+  deleteConfirm: Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+  messages:
+    roleUpdateSuccess: Rôle de l'utilisateur mis à jour avec succès
+    roleUpdateError: Échec de la mise à jour du rôle
+    deleteSuccess: Utilisateur supprimé avec succès
+    deleteError: Échec de la suppression de l'utilisateur
+
+config:
+  title: Configuration Stripe
+  publicKey: Clé publique Stripe
+  secretKey: Clé secrète Stripe
+  webhookSecret: Secret du webhook
+  testMode: Mode test
+  save: Enregistrer la configuration
+  messages:
+    saveSuccess: Configuration enregistrée avec succès
+    saveError: Échec de l'enregistrement de la configuration

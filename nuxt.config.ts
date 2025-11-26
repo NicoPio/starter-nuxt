@@ -12,7 +12,17 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
     "@nuxt/ui",
+    "@nuxtjs/supabase",
   ],
   css: ["./app/assets/css/main.css"],
   vite: { plugins: [tailwindcss()] },
+
+  // Supabase configuration
+  supabase: {
+    redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
+      exclude: ['/', '/signup', '/features']
+    }
+  }
 });

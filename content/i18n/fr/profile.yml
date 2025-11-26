@@ -1,0 +1,29 @@
+title: Mon Profil
+description: Gérez vos informations de profil
+heading: Paramètres du profil
+subheading: Mettez à jour vos informations personnelles
+loading: Chargement du profil...
+fullName: Nom complet
+fullNamePlaceholder: Entrez votre nom complet
+email: Email
+role: Rôle
+avatarUrl: URL de l'avatar
+avatarUrlPlaceholder: https://exemple.com/avatar.jpg
+avatarUrlHint: Entrez un lien direct vers votre photo de profil
+avatarPreview: Aperçu de l'avatar
+save: Enregistrer les modifications
+
+validation:
+  fullNameTooShort: Le nom complet est trop court
+  fullNameTooLong: Le nom complet est trop long
+  invalidUrl: Format d'URL invalide
+
+fetch:
+  error: Échec du chargement du profil
+  errorGeneric: Impossible de récupérer vos données de profil
+
+update:
+  success: Profil mis à jour
+  successMessage: Votre profil a été mis à jour avec succès
+  error: Échec de la mise à jour
+  errorGeneric: Échec de la mise à jour du profil. Veuillez réessayer.

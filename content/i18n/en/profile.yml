@@ -1,0 +1,29 @@
+title: My Profile
+description: Manage your profile information
+heading: Profile Settings
+subheading: Update your personal information
+loading: Loading profile...
+fullName: Full Name
+fullNamePlaceholder: Enter your full name
+email: Email
+role: Role
+avatarUrl: Avatar URL
+avatarUrlPlaceholder: https://example.com/avatar.jpg
+avatarUrlHint: Enter a direct link to your profile picture
+avatarPreview: Avatar Preview
+save: Save Changes
+
+validation:
+  fullNameTooShort: Full name is too short
+  fullNameTooLong: Full name is too long
+  invalidUrl: Invalid URL format
+
+fetch:
+  error: Failed to load profile
+  errorGeneric: Could not fetch your profile data
+
+update:
+  success: Profile updated
+  successMessage: Your profile has been updated successfully
+  error: Update failed
+  errorGeneric: Failed to update profile. Please try again.
