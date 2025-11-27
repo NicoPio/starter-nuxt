@@ -1,59 +1,67 @@
+import { authClient } from "~/lib/auth-client";
+
 export const useAuth = () => {
-  const supabaseClient = useSupabaseClient()
-  const user = useSupabaseUser()
   const toast = useToast()
   const { t } = useContentI18n()
+  const session = authClient.useSession()
 
-  const isAuthenticated = computed(() => !!user.value)
+  const user = computed(() => session.value.data?.user || null)
+  const isAuthenticated = computed(() => !!session.value.data)
 
   const signup = async (email: string, password: string, full_name?: string) => {
     try {
-      const response = await $fetch('/api/auth/signup', {
-        method: 'POST',
-        body: { email, password, full_name }
+      const response = await authClient.signUp.email({
+        email,
+        password,
+        name: full_name || email.split('@')[0] || 'User',
       })
-      return { data: response, error: null }
-    } catch (error: any) {
+
+      if (response.error) {
+        return { data: null, error: response.error }
+      }
+
+      return { data: response.data, error: null }
+    } catch (error: unknown) {
       return { data: null, error }
     }
   }
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await $fetch('/api/auth/login', {
-        method: 'POST',
-        body: { email, password }
+      const response = await authClient.signIn.email({
+        email,
+        password,
       })
-      return { data: response, error: null }
-    } catch (error: any) {
+
+      if (response.error) {
+        return { data: null, error: response.error }
+      }
+
+      return { data: response.data, error: null }
+    } catch (error: unknown) {
       return { data: null, error }
     }
   }
 
   const logout = async () => {
     try {
-      await $fetch('/api/auth/logout', {
-        method: 'POST'
-      })
-
-      // Clear local session
-      await supabaseClient.auth.signOut()
+      await authClient.signOut()
 
       toast.add({
         title: t('auth.logout.success'),
         description: t('auth.logout.successMessage'),
-        color: 'green'
+        color: 'success'
       })
 
-      // Redirect to home
       await navigateTo('/')
 
       return { error: null }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : t('auth.logout.errorGeneric')
       toast.add({
         title: t('auth.logout.error'),
-        description: error.message || t('auth.logout.errorGeneric'),
-        color: 'red'
+        description: message,
+        color: 'error'
       })
       return { error }
     }
@@ -61,6 +69,7 @@ export const useAuth = () => {
 
   return {
     user,
+    session,
     isAuthenticated,
     signup,
     login,

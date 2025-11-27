@@ -62,6 +62,6 @@
 </template>
 
 <script setup lang="ts">
-const user = useSupabaseUser()
+const { user } = useAuth()
 const { t: $t } = useContentI18n()
 </script>

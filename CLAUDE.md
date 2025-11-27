@@ -116,3 +116,4 @@ Reply in french
 
 ## Recent Changes
 - 001-saas-starter-foundation: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
+- always add a new entry to @CHANGELOG.md when a new feature is added

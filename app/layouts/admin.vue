@@ -31,7 +31,7 @@
               :popper="{ placement: 'bottom-end' }"
             >
               <UButton
-                color="gray"
+                color="neutral"
                 variant="ghost"
                 :label="user?.email"
                 trailing-icon="i-heroicons-chevron-down-20-solid"
@@ -51,15 +51,13 @@
 </template>
 
 <script setup lang="ts">
-const user = useSupabaseUser()
-const client = useSupabaseClient()
+const { user, logout } = useAuth()
 const router = useRouter()
 const { t } = useContentI18n()
 const $t = t
 
 const handleLogout = async () => {
-  await client.auth.signOut()
-  await router.push('/login')
+  await logout()
 }
 
 const userMenuItems = computed(() => [

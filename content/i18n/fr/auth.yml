@@ -2,6 +2,7 @@ validation:
   emailInvalid: Adresse email invalide
   passwordRequired: Le mot de passe est requis
   passwordTooShort: Le mot de passe doit contenir au moins 8 caractères
+  nameRequired: Le nom complet est requis
 
 login:
   title: Connexion
@@ -32,7 +33,7 @@ signup:
   password: Mot de passe
   passwordPlaceholder: Choisissez un mot de passe sécurisé
   passwordHint: Doit contenir au moins 8 caractères
-  fullName: Nom complet (Optionnel)
+  fullName: Nom complet
   fullNamePlaceholder: Jean Dupont
   submit: S'inscrire
   hasAccount: Vous avez déjà un compte ?

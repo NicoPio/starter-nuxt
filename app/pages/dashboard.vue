@@ -77,7 +77,7 @@ onMounted(async () => {
           <UButton to="/subscription" block variant="soft">
             {{ t('dashboard.quickActions.manageSubscription') }}
           </UButton>
-          <UButton v-if="profile?.role === 'Admin'" to="/admin" block variant="soft" color="purple">
+          <UButton v-if="profile?.role === 'Admin'" to="/admin" block variant="soft" color="primary">
             {{ t('dashboard.quickActions.adminPanel') }}
           </UButton>
         </div>

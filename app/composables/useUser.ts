@@ -22,11 +22,17 @@ export const useUser = () => {
       const data = await $fetch<UserProfile>('/api/users/me')
       profile.value = data
       return { data, error: null }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error
+        ? error.message
+        : typeof error === 'object' && error !== null && 'message' in error
+          ? String((error as { message: unknown }).message)
+          : t('profile.fetch.errorGeneric')
+
       toast.add({
         title: t('profile.fetch.error'),
-        description: error.message || t('profile.fetch.errorGeneric'),
-        color: 'red'
+        description: message,
+        color: 'error'
       })
       return { data: null, error }
     } finally {
@@ -47,15 +53,21 @@ export const useUser = () => {
       toast.add({
         title: t('profile.update.success'),
         description: t('profile.update.successMessage'),
-        color: 'green'
+        color: 'success'
       })
 
       return { data, error: null }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error
+        ? error.message
+        : typeof error === 'object' && error !== null && 'message' in error
+          ? String((error as { message: unknown }).message)
+          : t('profile.update.errorGeneric')
+
       toast.add({
         title: t('profile.update.error'),
-        description: error.message || t('profile.update.errorGeneric'),
-        color: 'red'
+        description: message,
+        color: 'error'
       })
       return { data: null, error }
     } finally {

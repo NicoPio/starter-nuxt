@@ -2,6 +2,7 @@ validation:
   emailInvalid: Invalid email address
   passwordRequired: Password is required
   passwordTooShort: Password must be at least 8 characters
+  nameRequired: Full name is required
 
 login:
   title: Login
@@ -32,7 +33,7 @@ signup:
   password: Password
   passwordPlaceholder: Choose a secure password
   passwordHint: Must be at least 8 characters
-  fullName: Full Name (Optional)
+  fullName: Full Name
   fullNamePlaceholder: John Doe
   submit: Sign Up
   hasAccount: Already have an account?
