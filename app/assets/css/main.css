@@ -1,18 +1,206 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@theme static {
-  --font-sans: 'Public Sans', sans-serif;
+@theme {
+  /* Police moderne et lisible */
+  --font-sans: 'Inter var', 'Inter', 'Public Sans', system-ui, -apple-system, sans-serif;
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+  /* Typographies plus grosses et modernes */
+  --font-size-xs: 0.875rem;     /* 14px */
+  --font-size-sm: 1rem;         /* 16px */
+  --font-size-base: 1.125rem;   /* 18px - Plus gros par défaut */
+  --font-size-lg: 1.375rem;     /* 22px */
+  --font-size-xl: 1.75rem;      /* 28px */
+  --font-size-2xl: 2.25rem;     /* 36px */
+  --font-size-3xl: 3rem;        /* 48px */
+  --font-size-4xl: 3.75rem;     /* 60px */
+
+  /* Hauteurs de ligne plus aérées */
+  --line-height-tight: 1.35;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.75;
+
+  /* Palette Bleue Vibrante (Primaire) */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;    /* Bleu vif principal */
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+
+  /* Palette Violette Vibrante (Secondaire) */
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;   /* Violet vif */
+  --color-violet-600: #7c3aed;
+  --color-violet-700: #6d28d9;
+  --color-violet-800: #5b21b6;
+  --color-violet-900: #4c1d95;
+  --color-violet-950: #2e1065;
+
+  /* Palette Émeraude Vibrante (Success) */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;  /* Vert vif */
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  /* Palette Ambre Vibrante (Warning) */
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;    /* Jaune/Orange vif */
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
+
+  /* Palette Rose Vibrante (Error) */
+  --color-rose-50: #fff1f2;
+  --color-rose-100: #ffe4e6;
+  --color-rose-200: #fecdd3;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;     /* Rose/Rouge vif */
+  --color-rose-600: #e11d48;
+  --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
+  --color-rose-900: #881337;
+  --color-rose-950: #4c0519;
+
+  /* Radius plus arrondis pour un look moderne */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+}
+
+/* Variables CSS personnalisées pour NuxtUI */
+:root {
+  /* Couleurs primaires */
+  --ui-color-primary-50: var(--color-blue-50);
+  --ui-color-primary-100: var(--color-blue-100);
+  --ui-color-primary-200: var(--color-blue-200);
+  --ui-color-primary-300: var(--color-blue-300);
+  --ui-color-primary-400: var(--color-blue-400);
+  --ui-color-primary-500: var(--color-blue-500);
+  --ui-color-primary-600: var(--color-blue-600);
+  --ui-color-primary-700: var(--color-blue-700);
+  --ui-color-primary-800: var(--color-blue-800);
+  --ui-color-primary-900: var(--color-blue-900);
+  --ui-color-primary-950: var(--color-blue-950);
+
+  --ui-primary: var(--ui-color-primary-500);
+
+  /* Backgrounds plus clairs et lumineux */
+  --ui-bg: #ffffff;
+  --ui-bg-elevated: #fafafa;
+  --ui-text: #0f172a;
+  --ui-text-muted: #475569;
+
+  /* Bordures subtiles */
+  --ui-border: #e2e8f0;
+
+  /* Radius global */
+  --ui-radius: var(--radius-lg);
+}
+
+.dark {
+  /* En mode sombre, couleurs plus vives et contrastées */
+  --ui-primary: var(--ui-color-primary-400);
+
+  /* Backgrounds sombres mais pas trop */
+  --ui-bg: #0f172a;
+  --ui-bg-elevated: #1e293b;
+  --ui-text: #f1f5f9;
+  --ui-text-muted: #cbd5e1;
+
+  /* Bordures en mode sombre */
+  --ui-border: #334155;
+}
+
+/* Styles globaux pour un look moderne */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Titres plus gros et audacieux */
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+}
+
+/* Animations et transitions fluides */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effet de glassmorphism moderne */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Ombres plus prononcées et modernes */
+.shadow-modern {
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1),
+    0 10px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.shadow-modern-lg {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 20px 50px -12px rgb(0 0 0 / 0.25);
 }

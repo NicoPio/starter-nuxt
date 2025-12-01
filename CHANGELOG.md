@@ -2,6 +2,34 @@
 
 ## [En cours] - 2025-12-01
 
+### Ajouté
+- **Thème personnalisé moderne et vibrant ✨ NOUVEAU**
+  - Palette de couleurs vives et énergiques :
+    - Primaire : Bleu vif (`#3b82f6`)
+    - Secondaire : Violet vibrant (`#8b5cf6`)
+    - Success : Émeraude (`#10b981`)
+    - Warning : Ambre (`#f59e0b`)
+    - Error : Rose (`#f43f5e`)
+  - Typographies augmentées de 25% pour meilleure lisibilité :
+    - Taille de base : 18px (au lieu de 16px)
+    - Titres plus gros et audacieux (h1: 60px, h2: 48px, h3: 36px)
+    - Hauteurs de ligne plus aérées (1.6 par défaut)
+  - Design moderne :
+    - Backgrounds plus clairs et lumineux
+    - Bordures arrondies (radius: 1rem par défaut)
+    - Ombres prononcées pour plus de profondeur
+    - Effets de hover avec scale et transitions fluides
+    - Effet glassmorphism disponible (classe `.glass-effect`)
+  - Configuration :
+    - Fichier `app.config.ts` créé avec personnalisation NuxtUI
+    - Fichier `app/assets/css/main.css` enrichi avec variables CSS custom
+    - Support dark mode automatique avec couleurs ajustées
+  - Composants optimisés :
+    - Boutons avec effet hover scale
+    - Cartes avec ombres modernes
+    - Inputs avec meilleure lisibilité
+    - Modales avec backdrop blur
+
 ### Corrigé
 - **Erreur critique au démarrage - "Cannot access 'renderer$1' before initialization" ✅ RÉSOLU**
   - **Cause racine** : Import dynamique `await import('../../utils/auth')` dans `server/api/subscriptions/webhook.post.ts:39`
