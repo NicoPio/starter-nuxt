@@ -3,7 +3,7 @@
 ## [En cours] - 2025-12-01
 
 ### Ajouté
-- **Thème personnalisé moderne et vibrant ✨ NOUVEAU**
+- **Thème ultra clair moderne et vibrant ✨ NOUVEAU**
   - Palette de couleurs vives et énergiques :
     - Primaire : Bleu vif (`#3b82f6`)
     - Secondaire : Violet vibrant (`#8b5cf6`)
@@ -14,10 +14,13 @@
     - Taille de base : 18px (au lieu de 16px)
     - Titres plus gros et audacieux (h1: 60px, h2: 48px, h3: 36px)
     - Hauteurs de ligne plus aérées (1.6 par défaut)
-  - Design moderne :
-    - Backgrounds plus clairs et lumineux
+  - Design ultra clair et lumineux :
+    - Fond principal : `#f1f5f9` (gris ultra léger)
+    - Cartes blanches pures `#ffffff` avec bordures subtiles
+    - Headers de cartes avec fond gris très léger `#f8fafc`
+    - Texte gris foncé doux `#1e293b` (meilleur contraste que noir pur)
     - Bordures arrondies (radius: 1rem par défaut)
-    - Ombres prononcées pour plus de profondeur
+    - Ombres douces et modernes
     - Effets de hover avec scale et transitions fluides
     - Effet glassmorphism disponible (classe `.glass-effect`)
   - Configuration :
@@ -26,7 +29,7 @@
     - Support dark mode automatique avec couleurs ajustées
   - Composants optimisés :
     - Boutons avec effet hover scale
-    - Cartes avec ombres modernes
+    - Cartes blanches avec bordures subtiles et ombres douces
     - Inputs avec meilleure lisibilité
     - Modales avec backdrop blur
 

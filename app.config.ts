@@ -1,5 +1,12 @@
 export default defineAppConfig({
   ui: {
+    // Forcer le mode clair uniquement
+    colorMode: {
+      preference: 'light',
+      fallback: 'light',
+      storageKey: 'nuxt-color-mode'
+    },
+
     colors: {
       primary: 'blue',
       secondary: 'violet',
