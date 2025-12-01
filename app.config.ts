@@ -25,10 +25,10 @@ export default defineAppConfig({
 
     card: {
       slots: {
-        root: 'rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-0',
-        header: 'px-6 py-5 font-bold text-xl border-b border-gray-100 dark:border-gray-800',
-        body: 'px-6 py-5 text-base leading-relaxed',
-        footer: 'px-6 py-4 border-t border-gray-100 dark:border-gray-800'
+        root: 'rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 bg-white',
+        header: 'px-6 py-5 font-bold text-xl border-b border-gray-100 dark:border-gray-800 bg-gray-50/50',
+        body: 'px-6 py-5 text-base leading-relaxed bg-white',
+        footer: 'px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50'
       }
     },
 

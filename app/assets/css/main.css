@@ -111,17 +111,25 @@
 
   --ui-primary: var(--ui-color-primary-500);
 
-  /* Backgrounds plus clairs et lumineux */
-  --ui-bg: #ffffff;
-  --ui-bg-elevated: #fafafa;
-  --ui-text: #0f172a;
-  --ui-text-muted: #475569;
+  /* Backgrounds très clairs et lumineux - Thème ultra clair */
+  --ui-bg: #fefefe;              /* Presque blanc pur */
+  --ui-bg-elevated: #f8fafc;     /* Gris très très léger */
+  --ui-bg-muted: #f1f5f9;        /* Gris ultra léger pour les sections */
 
-  /* Bordures subtiles */
+  /* Texte avec bon contraste mais doux */
+  --ui-text: #1e293b;            /* Gris foncé (au lieu de noir pur) */
+  --ui-text-muted: #64748b;      /* Gris moyen pour texte secondaire */
+  --ui-text-subtle: #94a3b8;     /* Gris léger pour hints */
+
+  /* Bordures très subtiles */
   --ui-border: #e2e8f0;
+  --ui-border-light: #f1f5f9;
 
   /* Radius global */
   --ui-radius: var(--radius-lg);
+
+  /* Couleurs de fond pour les composants */
+  color-scheme: light;
 }
 
 .dark {
@@ -138,13 +146,20 @@
   --ui-border: #334155;
 }
 
-/* Styles globaux pour un look moderne */
+/* Styles globaux pour un look moderne et ultra clair */
 body {
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--ui-bg-muted);  /* Fond général très clair */
+  color: var(--ui-text);
+}
+
+/* Forcer les pages à être très claires */
+#__nuxt {
+  background-color: var(--ui-bg-muted);
 }
 
 /* Titres plus gros et audacieux */
