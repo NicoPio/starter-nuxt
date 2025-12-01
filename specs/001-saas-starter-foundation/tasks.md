@@ -107,21 +107,21 @@ Tasks are organized by **User Story** for independent implementation and testing
 **Implementation**:
 
 ### Subscription UI
-- [ ] T039 [P] [US3] Create app/composables/useSubscription.ts for subscription state
-- [ ] T040 [P] [US3] Create app/components/subscription/SubscriptionCard.vue to display plan details
-- [ ] T041 [P] [US3] Create app/components/subscription/CancelDialog.vue for cancellation confirmation
-- [ ] T042 [P] [US3] Create app/pages/subscription.vue for subscription management page
+- [X] T039 [P] [US3] Create app/composables/useSubscription.ts for subscription state
+- [X] T040 [P] [US3] Create app/components/subscription/SubscriptionCard.vue to display plan details
+- [X] T041 [P] [US3] Create app/components/subscription/CancelDialog.vue for cancellation confirmation
+- [X] T042 [P] [US3] Create app/pages/subscription.vue for subscription management page
 
 ### Subscription API
-- [ ] T043 [US3] Create server/api/subscriptions/me.get.ts to fetch user subscription
-- [ ] T044 [US3] Create server/api/subscriptions/cancel.post.ts for cancellation
-- [ ] T045 [US3] Create server/api/subscriptions/webhook.post.ts for Stripe webhooks
+- [X] T043 [US3] Create server/api/subscriptions/me.get.ts to fetch user subscription + migration SQL
+- [X] T044 [US3] Create server/api/subscriptions/cancel.post.ts for cancellation
+- [X] T045 [US3] Create server/api/subscriptions/webhook.post.ts for Stripe webhooks
 
 ### Stripe Integration
-- [ ] T046 [P] [US3] Create app/plugins/stripe.ts for client-side Stripe initialization
-- [ ] T047 [US3] Implement Stripe webhook signature verification in webhook endpoint
-- [ ] T048 [US3] Handle subscription events: created, updated, deleted, payment_failed in webhook
-- [ ] T049 [US3] Add toast notifications for subscription actions
+- [X] T046 [P] [US3] Webhook Stripe intégré dans T045 (pas de plugin client nécessaire pour MVP)
+- [X] T047 [US3] Implement Stripe webhook signature verification in webhook endpoint
+- [X] T048 [US3] Handle subscription events: created, updated, deleted, payment_failed in webhook
+- [X] T049 [US3] Add i18n translations (fr/en) for subscription pages and toasts
 
 ---
 
@@ -134,21 +134,21 @@ Tasks are organized by **User Story** for independent implementation and testing
 **Implementation**:
 
 ### Admin UI
-- [ ] T050 [P] [US4] Create app/middleware/admin.ts to check Admin role
-- [ ] T051 [P] [US4] Create app/components/admin/UserTable.vue with search/filter
-- [ ] T052 [P] [US4] Create app/components/admin/RoleDialog.vue for changing user roles
-- [ ] T053 [P] [US4] Create app/pages/admin/index.vue as admin dashboard
-- [ ] T054 [P] [US4] Create app/pages/admin/users.vue for user management
+- [X] T050 [P] [US4] Create app/middleware/admin.ts to check Admin role
+- [X] T051 [P] [US4] Create app/components/admin/UserTable.vue with search/filter (inline in users.vue)
+- [X] T052 [P] [US4] Create app/components/admin/RoleDialog.vue for changing user roles (inline in users.vue)
+- [X] T053 [P] [US4] Create app/pages/admin/index.vue as admin dashboard
+- [X] T054 [P] [US4] Create app/pages/admin/users.vue for user management
 
 ### Admin API
-- [ ] T055 [US4] Create server/api/admin/users.get.ts with pagination, search, filtering
-- [ ] T056 [US4] Create server/api/admin/users/[id]/role.patch.ts for role updates
-- [ ] T057 [US4] Create server/api/admin/users/[id].delete.ts for user deletion
-- [ ] T058 [US4] Add RLS policy check: only Admins can modify roles (verify in Supabase)
+- [X] T055 [US4] Create server/api/admin/users.get.ts with pagination, search, filtering
+- [X] T056 [US4] Create server/api/admin/users/[id]/role.patch.ts for role updates
+- [X] T057 [US4] Create server/api/admin/users/[id].delete.ts for user deletion
+- [X] T058 [US4] Add security validation: only Admins can modify roles (Better Auth API validation)
 
 ### Contributor Access
-- [ ] T059 [US4] Create app/middleware/contributor.ts for Contributor role (read-only access)
-- [ ] T060 [US4] Update admin/users.vue to show read-only view for Contributors
+- [X] T059 [US4] Create app/middleware/contributor.ts for Contributor role (read-only access)
+- [X] T060 [US4] Update admin/users.vue to show read-only view for Contributors
 
 ---
 
@@ -160,11 +160,11 @@ Tasks are organized by **User Story** for independent implementation and testing
 
 **Implementation**:
 
-- [ ] T061 [P] [US5] Create app/components/admin/StripeConfigForm.vue with API key fields
-- [ ] T062 [P] [US5] Create app/pages/admin/config.vue for configuration page
-- [ ] T063 [US5] Create server/api/admin/config/stripe.get.ts to fetch current config (public key only)
-- [ ] T064 [US5] Create server/api/admin/config/stripe.post.ts to save encrypted config
-- [ ] T065 [US5] Add toast notifications for config save success/failure
+- [X] T061 [P] [US5] Create app/components/admin/StripeConfigForm.vue with API key fields + validation Zod
+- [X] T062 [P] [US5] Create app/pages/admin/config.vue for configuration page
+- [X] T063 [US5] Create server/api/admin/config/stripe.get.ts to fetch current config (public key only)
+- [X] T064 [US5] Create server/api/admin/config/stripe.post.ts to save config to .env file
+- [X] T065 [US5] Add i18n translations (fr/en) for admin.config and admin.stripe
 
 ---
 

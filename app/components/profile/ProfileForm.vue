@@ -24,9 +24,24 @@ watch(profile, (newProfile) => {
   }
 })
 
+interface ValidationError {
+  path: string
+  message: string
+}
+
+interface ProfileFormState {
+  full_name: string
+  avatar_url: string
+}
+
+interface ProfileUpdates {
+  full_name?: string
+  avatar_url?: string
+}
+
 // Validate function for UForm
-const validate = (state: any) => {
-  const errors = []
+const validate = (state: ProfileFormState): ValidationError[] => {
+  const errors: ValidationError[] = []
   const result = profileSchema.safeParse(state)
 
   if (!result.success) {
@@ -42,7 +57,7 @@ const validate = (state: any) => {
 }
 
 const onSubmit = async () => {
-  const updates: any = {}
+  const updates: ProfileUpdates = {}
 
   if (state.full_name && state.full_name !== profile.value?.full_name) {
     updates.full_name = state.full_name
@@ -61,7 +76,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <UForm :state="state" :validate="validate" @submit="onSubmit" class="space-y-4">
+  <UForm :state="state" :validate="validate" class="space-y-4" @submit="onSubmit">
     <UFormField :label="t('profile.fullName')" name="full_name">
       <UInput
         v-model="state.full_name"
@@ -90,7 +105,7 @@ const onSubmit = async () => {
         :src="state.avatar_url"
         :alt="t('profile.avatarPreview')"
         class="h-16 w-16 rounded-full object-cover"
-      />
+      >
       <span class="text-sm text-gray-600 dark:text-gray-400">
         {{ t('profile.avatarPreview') }}
       </span>

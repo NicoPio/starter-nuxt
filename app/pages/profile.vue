@@ -34,7 +34,7 @@ onMounted(async () => {
     <UCard v-if="loading && !profile">
       <div class="flex items-center justify-center py-12">
         <div class="text-center">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"/>
           <p class="text-gray-600 dark:text-gray-400">{{ t('profile.loading') }}</p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 export default defineNuxtPlugin({
   name: 'i18n',
-  async setup(nuxtApp) {
+  async setup(_nuxtApp) {
     const { t, locale, setLocale, loadTranslations } = useContentI18n()
 
     // Détecter la locale depuis le cookie ou le navigateur côté client

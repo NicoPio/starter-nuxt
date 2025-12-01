@@ -45,15 +45,29 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await authClient.signOut()
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: async () => {
+            toast.add({
+              title: t('auth.logout.success'),
+              description: t('auth.logout.successMessage'),
+              color: 'success'
+            })
 
-      toast.add({
-        title: t('auth.logout.success'),
-        description: t('auth.logout.successMessage'),
-        color: 'success'
+            await new Promise(resolve => setTimeout(resolve, 100))
+
+            await navigateTo('/', { replace: true })
+          },
+          onError: (ctx) => {
+            const message = ctx.error?.message || t('auth.logout.errorGeneric')
+            toast.add({
+              title: t('auth.logout.error'),
+              description: message,
+              color: 'error'
+            })
+          }
+        }
       })
-
-      await navigateTo('/')
 
       return { error: null }
     } catch (error: unknown) {

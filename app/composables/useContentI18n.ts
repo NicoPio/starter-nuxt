@@ -1,16 +1,20 @@
+// Type pour les valeurs de traduction (peut être récursif)
+type TranslationValue = string | Record<string, unknown>
+
 export const useContentI18n = () => {
   const locale = useState<'en' | 'fr'>('locale', () => 'fr')
-  const translations = useState<Record<string, any>>('translations', () => ({}))
+  const translations = useState<Record<string, Record<string, unknown>>>('translations', () => ({}))
 
   const loadTranslations = async (newLocale: 'en' | 'fr') => {
     try {
       const modules = ['app', 'nav', 'auth', 'profile', 'dashboard', 'subscription', 'admin', 'errors', 'homepage', 'features']
-      const result: Record<string, any> = {}
+      const result: Record<string, Record<string, unknown>> = {}
 
       // Load all translations in parallel
       const promises = modules.map(async (module) => {
-        const collectionName = `i18n_${newLocale}_${module}` as any
+        const collectionName = `i18n_${newLocale}_${module}`
         try {
+          // @ts-expect-error - queryCollection n'a pas de type strict pour les collections dynamiques
           const data = await queryCollection(collectionName).first()
           return { module, data }
         } catch (err) {
@@ -24,7 +28,7 @@ export const useContentI18n = () => {
       for (const { module, data} of results) {
         if (data && data.meta) {
           // Extract the actual translation data from the meta object
-          result[module] = data.meta
+          result[module] = data.meta as Record<string, unknown>
         }
       }
       translations.value = result
@@ -38,20 +42,20 @@ export const useContentI18n = () => {
     }
   }
 
-  const interpolate = (text: string, params?: Record<string, any>): string => {
+  const interpolate = (text: string, params?: Record<string, string | number>): string => {
     if (!params) return text
     return text.replace(/\{(\w+)\}/g, (match, key) => {
       return params[key] !== undefined ? String(params[key]) : match
     })
   }
 
-  const t = (key: string, params?: Record<string, any>): string => {
+  const t = (key: string, params?: Record<string, string | number>): string => {
     const parts = key.split('.')
-    let value: any = translations.value
+    let value: unknown = translations.value
 
     for (const part of parts) {
       if (value && typeof value === 'object' && part in value) {
-        value = value[part]
+        value = (value as Record<string, unknown>)[part]
       } else {
         console.warn(`Translation key not found: ${key}`)
         return key

@@ -22,12 +22,12 @@ export const useStripe = () => {
   return stripeInstance
 }
 
-export const verifyStripeWebhook = (event: any, signature: string, secret: string) => {
+export const verifyStripeWebhook = (event: string | Buffer, signature: string, secret: string) => {
   const stripe = useStripe()
 
   try {
     return stripe.webhooks.constructEvent(event, signature, secret)
-  } catch (err) {
+  } catch {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid signature'

@@ -63,7 +63,12 @@ const onSubmit = async () => {
     })
 
     const redirectTo = (route.query.redirect as string) || '/dashboard'
-    await navigateTo(redirectTo)
+
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    if (import.meta.client) {
+      window.location.href = redirectTo
+    }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : t('auth.signup.errorGeneric')
     toast.add({

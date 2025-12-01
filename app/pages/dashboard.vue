@@ -2,7 +2,6 @@
 <script setup lang="ts">
 const { t } = useContentI18n()
 const { profile, fetchProfile, loading } = useUser()
-const { isAuthenticated } = useAuth()
 
 definePageMeta({
   layout: 'dashboard',
@@ -50,7 +49,7 @@ onMounted(async () => {
               :src="profile.avatar_url"
               :alt="profile.full_name || profile.email"
               class="h-12 w-12 rounded-full object-cover"
-            />
+            >
             <div>
               <p class="font-medium text-gray-900 dark:text-white">
                 {{ profile.full_name || profile.email }}
@@ -61,7 +60,7 @@ onMounted(async () => {
             </div>
           </div>
           <p v-else class="text-gray-600 dark:text-gray-400">
-            {{ t('dashboard.welcome.message', { name: profile?.full_name || profile?.email }) }}
+            {{ t('dashboard.welcome.message', { name: profile?.full_name || profile?.email || '' }) }}
           </p>
         </div>
       </UCard>

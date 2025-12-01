@@ -5,7 +5,13 @@ definePageMeta({
 })
 
 const { data: page } = await useAsyncData('features', () =>
-  queryContent('/pages/features').findOne()
+  $fetch('/api/_content/query', {
+    method: 'POST',
+    body: {
+      first: true,
+      where: [{ _path: '/pages/features' }]
+    }
+  })
 )
 </script>
 

@@ -17,12 +17,50 @@ users:
     deleteError: Échec de la suppression de l'utilisateur
 
 config:
+  title: Configuration
+  description: Gérer les paramètres de l'application
+  heading: Configuration
+  subheading: Configurez les intégrations et paramètres système
+  other:
+    title: Autres paramètres
+    comingSoon: Autres paramètres à venir...
+
+stripe:
   title: Configuration Stripe
-  publicKey: Clé publique Stripe
-  secretKey: Clé secrète Stripe
-  webhookSecret: Secret du webhook
-  testMode: Mode test
-  save: Enregistrer la configuration
-  messages:
-    saveSuccess: Configuration enregistrée avec succès
-    saveError: Échec de l'enregistrement de la configuration
+  description: Configurez votre intégration de paiement Stripe
+  testMode: Mode Test
+  liveMode: Mode Live
+  testModeEnabled: Mode test activé - Utilisez les clés pk_test_ et sk_test_
+  liveModeEnabled: Mode production activé - Utilisez les clés pk_live_ et sk_live_
+
+  info:
+    title: Informations importantes
+    message: Les clés Stripe seront stockées dans les variables d'environnement. Un redémarrage du serveur sera nécessaire après la sauvegarde.
+
+  warning: Les clés secrètes ne seront jamais affichées après la sauvegarde pour des raisons de sécurité.
+
+  fields:
+    publicKey: Clé Publique Stripe
+    secretKey: Clé Secrète Stripe
+    webhookSecret: Secret Webhook Stripe
+    testMode: Mode Test
+
+  testButton: Tester la connexion
+
+  test:
+    title: Test de connexion
+    message: Cette fonctionnalité sera disponible prochainement
+
+  save:
+    success: Configuration sauvegardée
+    successMessage: La configuration Stripe a été mise à jour. Redémarrez le serveur pour appliquer les changements.
+    error: Erreur de sauvegarde
+    errorGeneric: Une erreur s'est produite lors de la sauvegarde
+
+  validation:
+    publicKeyRequired: La clé publique est requise
+    publicKeyInvalid: La clé publique doit commencer par pk_
+    secretKeyRequired: La clé secrète est requise
+    secretKeyInvalid: La clé secrète doit commencer par sk_
+    webhookSecretRequired: Le secret webhook est requis
+    webhookSecretInvalid: Le secret webhook doit commencer par whsec_
