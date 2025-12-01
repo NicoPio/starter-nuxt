@@ -38,6 +38,7 @@
             >
               {{ $t('nav.dashboard') }}
             </UButton>
+            <ColorModeSwitcher />
             <LanguageSwitcher />
           </nav>
         </div>

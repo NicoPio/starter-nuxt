@@ -24,6 +24,7 @@
               {{ $t('admin.config.title') }}
             </NuxtLink>
 
+            <ColorModeSwitcher />
             <LanguageSwitcher />
 
             <UDropdownMenu

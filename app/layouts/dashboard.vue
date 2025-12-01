@@ -21,6 +21,7 @@
               {{ $t('nav.subscription') }}
             </NuxtLink>
 
+            <ColorModeSwitcher />
             <LanguageSwitcher />
 
             <UDropdownMenu
