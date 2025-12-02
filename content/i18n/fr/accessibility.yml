@@ -1,0 +1,10 @@
+# Labels d'accessibilité pour les lecteurs d'écran
+languageSwitcher: Changer la langue
+colorModeSwitcher: "Passer en mode {mode}"
+lightMode: clair
+darkMode: sombre
+skipToMain: Aller au contenu principal
+navigation: Navigation principale
+userMenu: Menu utilisateur
+closeDialog: Fermer le dialogue
+openDialog: Ouvrir le dialogue

@@ -1,0 +1,17 @@
+# Error page messages
+notFound:
+  title: Page Not Found
+  description: The page you're looking for doesn't exist or has been moved
+  suggestion: Try one of these popular pages instead
+
+serverError:
+  title: Server Error
+  description: Something went wrong on our end. We're working on fixing it
+
+generic:
+  title: An Error Occurred
+  description: An unexpected error occurred. Please try again later
+
+actions:
+  goHome: Back to Home
+  goBack: Go Back

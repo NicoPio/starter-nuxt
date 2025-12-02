@@ -172,13 +172,13 @@ Tasks are organized by **User Story** for independent implementation and testing
 
 **Goal**: Final touches and production readiness
 
-- [ ] T066 [P] Add loading states to all forms
-- [ ] T067 [P] Add error boundaries for unexpected errors
-- [ ] T068 [P] Implement proper error pages (404, 500)
-- [ ] T069 [P] Add meta tags and SEO optimization for public pages
-- [ ] T070 [P] Verify accessibility: keyboard navigation, screen reader labels
-- [ ] T071 Run full end-to-end test of all user flows
-- [ ] T072 Update CLAUDE.md with implementation notes and conventions
+- [X] T066 [P] Add loading states to all forms
+- [X] T067 [P] Add error boundaries for unexpected errors
+- [X] T068 [P] Implement proper error pages (404, 500)
+- [X] T069 [P] Add meta tags and SEO optimization for public pages
+- [X] T070 [P] Verify accessibility: keyboard navigation, screen reader labels
+- [X] T071 Run full end-to-end test of all user flows
+- [X] T072 Update CLAUDE.md with implementation notes and conventions
 
 ---
 

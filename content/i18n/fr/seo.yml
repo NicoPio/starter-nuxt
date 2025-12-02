@@ -1,0 +1,8 @@
+# Métadonnées SEO pour les pages publiques
+home:
+  title: SaaS Starter - Votre Application SaaS Moderne
+  description: Créez votre application SaaS avec authentification, abonnements, tableau de bord admin et internationalisation. Stack technologique moderne avec Nuxt 4, Better Auth et Stripe.
+
+features:
+  title: Fonctionnalités - SaaS Starter
+  description: Découvrez toutes les fonctionnalités de SaaS Starter incluant la gestion des utilisateurs, le contrôle d'accès par rôle, les abonnements Stripe, le tableau de bord admin et le support multi-langue.

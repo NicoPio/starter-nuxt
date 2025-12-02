@@ -3,12 +3,13 @@
     :icon="colorMode.value === 'dark' ? 'i-heroicons-moon-solid' : 'i-heroicons-sun-solid'"
     color="neutral"
     variant="ghost"
-    :aria-label="colorMode.value === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'"
+    :aria-label="t('accessibility.colorModeSwitcher', { mode: colorMode.value === 'dark' ? t('accessibility.lightMode') : t('accessibility.darkMode') })"
     @click="toggleColorMode"
   />
 </template>
 
 <script setup lang="ts">
+const { t } = useContentI18n()
 const colorMode = useColorMode()
 
 const toggleColorMode = () => {

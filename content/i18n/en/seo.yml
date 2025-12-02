@@ -1,0 +1,8 @@
+# SEO metadata for public pages
+home:
+  title: SaaS Starter - Your Modern SaaS Application
+  description: Build your SaaS application with authentication, subscriptions, admin dashboard, and internationalization. Modern tech stack with Nuxt 4, Better Auth, and Stripe.
+
+features:
+  title: Features - SaaS Starter
+  description: Discover all the features of SaaS Starter including user management, role-based access control, Stripe subscriptions, admin dashboard, and multi-language support.

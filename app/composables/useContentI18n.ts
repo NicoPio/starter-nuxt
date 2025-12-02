@@ -1,6 +1,3 @@
-// Type pour les valeurs de traduction (peut être récursif)
-type TranslationValue = string | Record<string, unknown>
-
 export const useContentI18n = () => {
   const locale = useState<'en' | 'fr'>('locale', () => 'fr')
   const translations = useState<Record<string, Record<string, unknown>>>('translations', () => ({}))

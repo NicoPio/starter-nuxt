@@ -6,9 +6,27 @@ definePageMeta({
   middleware: 'guest'
 })
 
+const siteUrl = 'https://your-saas-app.com' // TODO: Replace with actual site URL
+const title = t('auth.login.title')
+const description = t('auth.login.description')
+
 useSeoMeta({
-  title: t('auth.login.title'),
-  description: t('auth.login.description')
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogType: 'website',
+  ogUrl: `${siteUrl}/login`,
+  robots: 'noindex, nofollow', // Don't index auth pages
+  twitterCard: 'summary',
+  twitterTitle: title,
+  twitterDescription: description
+})
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  }
 })
 </script>
 

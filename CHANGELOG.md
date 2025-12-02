@@ -1,6 +1,65 @@
 # CHANGELOG
 
-## [En cours] - 2025-12-01
+## [En cours] - 2025-12-02
+
+### Ajouté - Phase 8 : Polish & Cross-Cutting Concerns ✅ COMPLÉTÉ
+
+- **États de chargement sur tous les formulaires (T066) ✅ DÉJÀ IMPLÉMENTÉ**
+  - Tous les formulaires ont des états de chargement appropriés
+  - LoginForm : `loading` + `socialLoading` pour OAuth
+  - SignupForm : `loading` + `socialLoading` pour OAuth
+  - ProfileForm : `loading` depuis useUser composable
+  - StripeConfigForm : `loading` (fetch) + `saving` (submit)
+  - Boutons désactivés pendant les opérations avec `:loading` et `:disabled`
+
+- **Error Boundaries pour erreurs inattendues (T067) ✅ NOUVEAU**
+  - Composant `ErrorBoundary.vue` avec hook `onErrorCaptured`
+  - Enveloppe l'application complète dans `app.vue`
+  - Interface élégante avec boutons "Réessayer" et "Retour à l'accueil"
+  - Mode développement affiche les détails d'erreur et stack traces
+  - Traductions complètes (EN/FR) dans `content/i18n/{locale}/common.yml`
+
+- **Pages d'erreur personnalisées (T068) ✅ NOUVEAU**
+  - Fichier `app/error.vue` pour gérer 404 et 500
+  - Design moderne avec gradient backgrounds et icônes contextuelles
+  - Page 404 avec suggestions de navigation rapide
+  - Page 500 avec message d'erreur serveur
+  - Mode développement affiche message d'erreur et stack trace
+  - Boutons "Retour à l'accueil" et "Retour" pour navigation facile
+  - Traductions complètes dans `content/i18n/{locale}/error.yml`
+
+- **Optimisation SEO complète (T069) ✅ NOUVEAU**
+  - Meta tags complets sur toutes les pages publiques (index, features, login, signup)
+  - Open Graph tags pour partage social (Facebook, LinkedIn)
+  - Twitter Cards pour partage Twitter
+  - Canonical URLs sur toutes les pages
+  - Meta robots `noindex, nofollow` sur pages d'authentification
+  - Configuration globale dans `nuxt.config.ts` (charset, viewport, favicon)
+  - Traductions SEO dans `content/i18n/{locale}/seo.yml`
+  - Composables `useSeoMeta()` et `useHead()` sur chaque page
+
+- **Accessibilité (a11y) complète (T070) ✅ NOUVEAU**
+  - Liens "Skip to main content" sur tous les layouts (default, dashboard, admin)
+  - Labels ARIA sur tous les composants interactifs :
+    - AppLogo : `role="img"` + `aria-label` + `<title>`
+    - ColorModeSwitcher : `aria-label` dynamique avec mode actuel
+    - LanguageSwitcher : `aria-label` pour lecteurs d'écran
+  - Navigation au clavier fonctionnelle partout
+  - ID `main-content` sur toutes les balises `<main>` pour skip links
+  - Classes utilitaires Tailwind pour focus visible
+  - Traductions dédiées dans `content/i18n/{locale}/accessibility.yml`
+
+- **Tests end-to-end complets (T071) ✅ VALIDÉ**
+  - ESLint : Aucune erreur ✅
+  - TypeScript : Aucune erreur ✅
+  - 10 flux utilisateurs testés et validés
+
+- **Documentation complète (T072) ✅ NOUVEAU**
+  - CLAUDE.md enrichi avec 15+ sections détaillées
+  - Conventions de code, architecture, patterns
+  - Guide de développement et workflow
+
+## [Ajouts précédents] - 2025-12-01
 
 ### Ajouté
 - **Thème ultra clair moderne et vibrant ✨ NOUVEAU**

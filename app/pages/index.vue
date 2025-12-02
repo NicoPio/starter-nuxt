@@ -1,7 +1,39 @@
 <!-- T018: Public landing page -->
 <script setup lang="ts">
+const { t } = useContentI18n()
+
 definePageMeta({
   layout: 'default'
+})
+
+const siteUrl = 'https://your-saas-app.com' // TODO: Replace with actual site URL
+const title = t('seo.home.title')
+const description = t('seo.home.description')
+
+useSeoMeta({
+  title,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogType: 'website',
+  ogUrl: siteUrl,
+  ogImage: `${siteUrl}/og-image.png`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: `${siteUrl}/og-image.png`
+})
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl
+    }
+  ]
 })
 </script>
 

@@ -5,6 +5,7 @@
       variant="ghost"
       :icon="currentLocale === 'en' ? 'i-heroicons-language' : 'i-heroicons-language'"
       trailing-icon="i-heroicons-chevron-down-20-solid"
+      :aria-label="t('accessibility.languageSwitcher')"
     >
       {{ currentLocale === 'en' ? 'EN' : 'FR' }}
     </UButton>
@@ -12,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-const { locale, setLocale } = useContentI18n()
+const { locale, setLocale, t } = useContentI18n()
 
 const currentLocale = computed(() => locale.value)
 

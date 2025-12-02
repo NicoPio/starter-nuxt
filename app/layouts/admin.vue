@@ -1,6 +1,13 @@
 <!-- T017: Admin layout for admin pages -->
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Skip to main content link for keyboard navigation -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded"
+    >
+      {{ $t('accessibility.skipToMain') }}
+    </a>
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800 shadow">
       <div class="container mx-auto px-4 py-4">
@@ -44,7 +51,7 @@
     </header>
 
     <!-- Main content -->
-    <main class="container mx-auto px-4 py-8">
+    <main id="main-content" class="container mx-auto px-4 py-8">
       <slot />
     </main>
 
