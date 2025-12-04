@@ -1,0 +1,57 @@
+title: Mon Abonnement
+description: Gérez votre abonnement et votre facturation
+heading: Mon Abonnement
+subheading: Consultez et gérez votre abonnement actuel
+
+currentPlan: Forfait actuel
+planDescription: Détails de votre abonnement
+status: Statut
+renewsOn: Renouvellement le
+expiresOn: Expire le
+cancelAt: Annulation programmée le
+planType: Type de forfait
+noSubscription: Aucun abonnement trouvé
+
+error: Erreur
+errorMessage: Une erreur s'est produite lors du chargement de l'abonnement
+
+statuses:
+  active: Actif
+  cancelled: Annulé
+  expired: Expiré
+  past_due: Paiement en retard
+
+cancel:
+  button: Annuler l'abonnement
+  title: Annuler l'abonnement
+  confirmation: Êtes-vous sûr de vouloir annuler votre abonnement ?
+  warning: Attention
+  warningPoint1: Votre abonnement restera actif jusqu'à la fin de la période en cours
+  warningPoint2: Vous perdrez l'accès aux fonctionnalités premium à la fin de la période
+  warningPoint3: Vous pouvez réactiver votre abonnement à tout moment
+  question: Voulez-vous vraiment continuer ?
+  confirmButton: Oui, annuler mon abonnement
+  success: Abonnement annulé
+  successMessage: Votre abonnement a été annulé avec succès
+  error: Erreur d'annulation
+  errorGeneric: Une erreur s'est produite lors de l'annulation
+
+upgrade:
+  button: Mettre à niveau
+
+plans:
+  title: Forfaits disponibles
+  current: Forfait actuel
+  selectButton: Sélectionner
+  free:
+    description: Fonctionnalités de base gratuites
+  pro:
+    description: Fonctionnalités avancées pour les professionnels
+  enterprise:
+    description: Solution complète pour les entreprises
+
+billing:
+  title: Facturation
+  description: Gérez vos informations de paiement et consultez votre historique de facturation
+  managePayment: Mode de paiement
+  button: Gérer la facturation

@@ -1,0 +1,36 @@
+// T010: Stripe SDK initialization utility
+import Stripe from 'stripe'
+
+let stripeInstance: Stripe | null = null
+
+export const useStripe = () => {
+  if (stripeInstance) {
+    return stripeInstance
+  }
+
+  const config = useRuntimeConfig()
+
+  if (!config.stripe?.secretKey) {
+    throw new Error('Stripe secret key is not configured')
+  }
+
+  stripeInstance = new Stripe(config.stripe.secretKey, {
+    apiVersion: '2025-11-17.clover',
+    typescript: true
+  })
+
+  return stripeInstance
+}
+
+export const verifyStripeWebhook = (event: string | Buffer, signature: string, secret: string) => {
+  const stripe = useStripe()
+
+  try {
+    return stripe.webhooks.constructEvent(event, signature, secret)
+  } catch {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid signature'
+    })
+  }
+}

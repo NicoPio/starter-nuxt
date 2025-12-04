@@ -1,0 +1,56 @@
+hero:
+  title: Template Démarrage Nuxt
+  description: Un template de démarrage prêt pour la production, propulsé par Nuxt UI. Créez des applications belles, accessibles et performantes en quelques minutes, pas en heures.
+  links:
+    - label: Commencer
+      to: https://ui.nuxt.com/docs/getting-started/installation/nuxt
+      target: _blank
+      trailingIcon: i-lucide-arrow-right
+      size: xl
+    - label: Utiliser ce template
+      to: https://github.com/nuxt-ui-templates/starter
+      target: _blank
+      icon: i-simple-icons-github
+      size: xl
+      color: neutral
+      variant: subtle
+
+features:
+  title: Tout ce dont vous avez besoin pour créer des applications Nuxt modernes
+  description: Commencez avec une base solide. Ce template inclut tous les essentiels pour créer des applications prêtes pour la production avec le puissant système de composants de Nuxt UI.
+  items:
+    - icon: i-lucide-rocket
+      title: Prêt pour la production dès le premier jour
+      description: Pré-configuré avec TypeScript, ESLint, Tailwind CSS et toutes les meilleures pratiques. Concentrez-vous sur la création de fonctionnalités, pas sur la configuration des outils.
+    - icon: i-lucide-palette
+      title: Beau par défaut
+      description: Tirant parti du système de design de Nuxt UI avec mode sombre automatique, espacement cohérent et composants soignés qui ont fière allure dès le départ.
+    - icon: i-lucide-zap
+      title: Ultra rapide
+      description: Optimisé pour les performances avec support SSR/SSG, découpage automatique du code et déploiement prêt pour l'edge. Vos utilisateurs vont adorer la vitesse.
+    - icon: i-lucide-blocks
+      title: Plus de 100 composants inclus
+      description: Accédez à la bibliothèque complète de composants de Nuxt UI. Des formulaires à la navigation, tout est accessible, responsive et personnalisable.
+    - icon: i-lucide-code-2
+      title: Expérience développeur en premier
+      description: Auto-imports, remplacement de modules à chaud et support TypeScript. Écrivez moins de code répétitif et livrez plus de fonctionnalités.
+    - icon: i-lucide-shield-check
+      title: Conçu pour l'échelle
+      description: Architecture prête pour l'entreprise avec gestion appropriée des erreurs, optimisation SEO et meilleures pratiques de sécurité intégrées.
+
+cta:
+  title: Prêt à créer votre prochaine application Nuxt ?
+  description: Rejoignez des milliers de développeurs qui construisent avec Nuxt et Nuxt UI. Obtenez ce template et commencez à livrer dès aujourd'hui.
+  variant: subtle
+  links:
+    - label: Commencer à construire
+      to: https://ui.nuxt.com/docs/getting-started/installation/nuxt
+      target: _blank
+      trailingIcon: i-lucide-arrow-right
+      color: neutral
+    - label: Voir sur GitHub
+      to: https://github.com/nuxt-ui-templates/starter
+      target: _blank
+      icon: i-simple-icons-github
+      color: neutral
+      variant: outline

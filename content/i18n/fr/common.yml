@@ -1,0 +1,21 @@
+cancel: Annuler
+confirm: Confirmer
+save: Enregistrer
+delete: Supprimer
+edit: Modifier
+close: Fermer
+back: Retour
+next: Suivant
+previous: Précédent
+loading: Chargement...
+error: Erreur
+success: Succès
+
+# Messages d'error boundary
+boundary:
+  title: Une erreur s'est produite
+  description: Une erreur inattendue s'est produite lors du rendu de ce composant
+  devMode: Mode Développement - Détails de l'erreur
+  errorInfo: Informations sur l'erreur
+  retry: Réessayer
+  goHome: Retour à l'accueil

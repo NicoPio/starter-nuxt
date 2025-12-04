@@ -19,16 +19,23 @@
     "@nuxt/ui": "^4.2.1",
     "@tailwindcss/vite": "^4.1.17",
     "@unhead/vue": "^2.0.19",
+    "better-auth": "^1.4.2",
     "better-sqlite3": "^12.4.6",
     "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
+    "pg": "^8.16.3",
+    "stripe": "^20.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
     "vue": "^3.5.25",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.75",
-    "@iconify-json/simple-icons": "^1.2.60"
+    "@iconify-json/simple-icons": "^1.2.60",
+    "@types/pg": "^8.15.6",
+    "bcryptjs": "^3.0.3"
   }
 }

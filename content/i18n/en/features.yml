@@ -1,0 +1,81 @@
+title: Features
+description: Discover all the features of our SaaS platform
+
+sections:
+  userManagement:
+    title: User Management
+    description: Our platform provides comprehensive user management capabilities
+    items:
+      - title: Secure Authentication
+        description: Email/password authentication powered by Supabase
+      - title: Role-Based Access Control
+        description: Three user roles (Admin, Contributor, User)
+      - title: Profile Management
+        description: Users can update their personal information and avatars
+      - title: Session Management
+        description: Automatic token refresh and secure logout
+
+  subscriptionPlans:
+    title: Subscription Plans
+    description: Flexible subscription options to meet your needs
+    items:
+      - title: Free Tier
+        description: Get started with basic features
+      - title: Pro Plan
+        description: Access advanced features and priority support
+      - title: Enterprise
+        description: Custom solutions for large teams
+
+  adminDashboard:
+    title: Admin Dashboard
+    description: Powerful tools for administrators
+    items:
+      - title: User Management
+        description: View, edit, and manage all user accounts
+      - title: Role Assignment
+        description: Easily change user roles and permissions
+      - title: Analytics
+        description: Monitor platform usage and user activity
+      - title: Configuration
+        description: Manage Stripe payment settings
+
+  multiLanguage:
+    title: Multi-language Support
+    description: Reach a global audience with built-in internationalization
+    items:
+      - title: English and French
+        description: Available out of the box
+      - title: Easy Translation
+        description: Add more languages with simple YAML files
+      - title: Automatic Detection
+        description: Language preference from browser settings
+      - title: SEO Friendly
+        description: Proper hreflang tags for search engines
+
+  security:
+    title: Security
+    description: Your data security is our priority
+    items:
+      - title: Row Level Security
+        description: Database-level access control with Supabase RLS
+      - title: Encrypted Secrets
+        description: Payment credentials stored securely
+      - title: HTTPS Only
+        description: Secure connections in production
+      - title: Regular Updates
+        description: Keep dependencies up to date
+
+  developerExperience:
+    title: Developer Experience
+    description: Built with modern tools for rapid development
+    items:
+      - title: Nuxt 4
+        description: Latest full-stack framework
+      - title: TypeScript
+        description: Type-safe code throughout
+      - title: Tailwind CSS 4
+        description: Utility-first styling
+      - title: Nuxt UI
+        description: 100+ accessible components
+      - title: Auto-imports
+        description: Components and composables ready to use

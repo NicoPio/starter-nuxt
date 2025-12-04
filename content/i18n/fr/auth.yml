@@ -1,0 +1,50 @@
+validation:
+  emailInvalid: Adresse email invalide
+  passwordRequired: Le mot de passe est requis
+  passwordTooShort: Le mot de passe doit contenir au moins 8 caractères
+  nameRequired: Le nom complet est requis
+
+login:
+  title: Connexion
+  description: Connectez-vous à votre compte
+  heading: Bon retour
+  subheading: Connectez-vous à votre compte pour continuer
+  email: Email
+  emailPlaceholder: votre.email@exemple.com
+  password: Mot de passe
+  passwordPlaceholder: Entrez votre mot de passe
+  rememberMe: Se souvenir de moi
+  forgotPassword: Mot de passe oublié ?
+  submit: Se connecter
+  noAccount: Pas encore de compte ?
+  signupLink: Inscrivez-vous ici
+  success: Bon retour !
+  successMessage: Vous vous êtes connecté avec succès
+  error: Échec de la connexion
+  errorGeneric: Email ou mot de passe invalide. Veuillez réessayer.
+
+signup:
+  title: Inscription
+  description: Créez votre compte
+  heading: Créer un compte
+  subheading: Commencez avec votre compte gratuit
+  email: Email
+  emailPlaceholder: votre.email@exemple.com
+  password: Mot de passe
+  passwordPlaceholder: Choisissez un mot de passe sécurisé
+  passwordHint: Doit contenir au moins 8 caractères
+  fullName: Nom complet
+  fullNamePlaceholder: Jean Dupont
+  submit: S'inscrire
+  hasAccount: Vous avez déjà un compte ?
+  loginLink: Connectez-vous ici
+  success: Compte créé !
+  successMessage: Bienvenue sur notre plateforme
+  error: Échec de l'inscription
+  errorGeneric: Impossible de créer le compte. Veuillez réessayer.
+
+logout:
+  success: Déconnecté
+  successMessage: Vous avez été déconnecté avec succès
+  error: Échec de la déconnexion
+  errorGeneric: Une erreur s'est produite lors de la déconnexion

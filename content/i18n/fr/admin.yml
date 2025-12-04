@@ -1,0 +1,102 @@
+title: Tableau de bord Admin
+
+users:
+  title: Gestion des utilisateurs
+  search: Rechercher des utilisateurs...
+  role: Rôle
+  email: Email
+  name: Nom
+  createdAt: Créé le
+  actionsColumn: Actions
+  changeRole: Changer le rôle
+  delete: Supprimer l'utilisateur
+  actions:
+    edit: Modifier l'utilisateur
+    delete: Supprimer l'utilisateur
+  deleteConfirm: Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+  loading: Chargement des utilisateurs...
+  noUsers: Aucun utilisateur trouvé
+  pagination:
+    previous: Précédent
+    next: Suivant
+    page: Page {page} sur {total}
+  filters:
+    allRoles: Tous les rôles
+    admin: Admin
+    contributor: Contributeur
+    user: Utilisateur
+    clear: Réinitialiser
+    active: Filtres actifs
+  roles:
+    adminDescription: Accès complet à toutes les fonctionnalités d'administration
+    contributorDescription: Peut consulter les données mais ne peut pas modifier les utilisateurs
+    userDescription: Accès standard à l'application
+  editRole:
+    title: Modifier le rôle de l'utilisateur
+    selectRole: Sélectionner un nouveau rôle
+    warning: Attention
+    warningMessage: Le changement de rôle prendra effet immédiatement
+    cancel: Annuler
+    save: Enregistrer
+  deleteDialog:
+    title: Supprimer l'utilisateur
+    message: Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.
+    warning: Action irréversible
+    warningMessage: Toutes les données de cet utilisateur seront définitivement supprimées
+    cancel: Annuler
+    confirm: Supprimer
+  messages:
+    roleUpdateSuccess: Rôle de l'utilisateur mis à jour avec succès
+    roleUpdateError: Échec de la mise à jour du rôle
+    deleteSuccess: Utilisateur supprimé avec succès
+    deleteError: Échec de la suppression de l'utilisateur
+    loadError: Échec du chargement des utilisateurs
+
+config:
+  title: Configuration
+  description: Gérer les paramètres de l'application
+  heading: Configuration
+  subheading: Configurez les intégrations et paramètres système
+  other:
+    title: Autres paramètres
+    comingSoon: Autres paramètres à venir...
+
+stripe:
+  title: Configuration Stripe
+  description: Configurez votre intégration de paiement Stripe
+  testMode: Mode Test
+  liveMode: Mode Live
+  testModeEnabled: Mode test activé - Utilisez les clés pk_test_ et sk_test_
+  liveModeEnabled: Mode production activé - Utilisez les clés pk_live_ et sk_live_
+
+  info:
+    title: Informations importantes
+    message: Les clés Stripe seront stockées dans les variables d'environnement. Un redémarrage du serveur sera nécessaire après la sauvegarde.
+
+  warning: Les clés secrètes ne seront jamais affichées après la sauvegarde pour des raisons de sécurité.
+
+  fields:
+    publicKey: Clé Publique Stripe
+    secretKey: Clé Secrète Stripe
+    webhookSecret: Secret Webhook Stripe
+    testMode: Mode Test
+
+  testButton: Tester la connexion
+
+  test:
+    title: Test de connexion
+    message: Cette fonctionnalité sera disponible prochainement
+
+  save:
+    success: Configuration sauvegardée
+    successMessage: La configuration Stripe a été mise à jour. Redémarrez le serveur pour appliquer les changements.
+    error: Erreur de sauvegarde
+    errorGeneric: Une erreur s'est produite lors de la sauvegarde
+
+  validation:
+    publicKeyRequired: La clé publique est requise
+    publicKeyInvalid: La clé publique doit commencer par pk_
+    secretKeyRequired: La clé secrète est requise
+    secretKeyInvalid: La clé secrète doit commencer par sk_
+    webhookSecretRequired: Le secret webhook est requis
+    webhookSecretInvalid: Le secret webhook doit commencer par whsec_

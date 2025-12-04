@@ -1,0 +1,17 @@
+# Messages de page d'erreur
+notFound:
+  title: Page introuvable
+  description: La page que vous recherchez n'existe pas ou a été déplacée
+  suggestion: Essayez plutôt l'une de ces pages populaires
+
+serverError:
+  title: Erreur du serveur
+  description: Une erreur s'est produite de notre côté. Nous travaillons à la résoudre
+
+generic:
+  title: Une erreur s'est produite
+  description: Une erreur inattendue s'est produite. Veuillez réessayer plus tard
+
+actions:
+  goHome: Retour à l'accueil
+  goBack: Retour

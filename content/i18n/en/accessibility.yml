@@ -1,0 +1,10 @@
+# Accessibility labels for screen readers
+languageSwitcher: Change language
+colorModeSwitcher: "Switch to {mode} mode"
+lightMode: light
+darkMode: dark
+skipToMain: Skip to main content
+navigation: Main navigation
+userMenu: User menu
+closeDialog: Close dialog
+openDialog: Open dialog

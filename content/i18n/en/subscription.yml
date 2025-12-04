@@ -1,0 +1,57 @@
+title: My Subscription
+description: Manage your subscription and billing
+heading: My Subscription
+subheading: View and manage your current subscription
+
+currentPlan: Current Plan
+planDescription: Your subscription details
+status: Status
+renewsOn: Renews on
+expiresOn: Expires on
+cancelAt: Scheduled cancellation on
+planType: Plan Type
+noSubscription: No subscription found
+
+error: Error
+errorMessage: An error occurred while loading your subscription
+
+statuses:
+  active: Active
+  cancelled: Cancelled
+  expired: Expired
+  past_due: Past Due
+
+cancel:
+  button: Cancel Subscription
+  title: Cancel Subscription
+  confirmation: Are you sure you want to cancel your subscription?
+  warning: Warning
+  warningPoint1: Your subscription will remain active until the end of the current period
+  warningPoint2: You will lose access to premium features at the end of the period
+  warningPoint3: You can reactivate your subscription at any time
+  question: Do you really want to continue?
+  confirmButton: Yes, cancel my subscription
+  success: Subscription Cancelled
+  successMessage: Your subscription has been cancelled successfully
+  error: Cancellation Error
+  errorGeneric: An error occurred during cancellation
+
+upgrade:
+  button: Upgrade
+
+plans:
+  title: Available Plans
+  current: Current Plan
+  selectButton: Select
+  free:
+    description: Free basic features
+  pro:
+    description: Advanced features for professionals
+  enterprise:
+    description: Complete solution for enterprises
+
+billing:
+  title: Billing
+  description: Manage your payment information and view billing history
+  managePayment: Payment method
+  button: Manage Billing

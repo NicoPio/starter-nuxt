@@ -1,0 +1,20 @@
+title: Tableau de bord
+description: Votre tableau de bord personnel
+heading: Tableau de bord
+subheading: Bienvenue sur votre tableau de bord
+
+welcome:
+  title: Bienvenue
+  message: Bonjour, {name} ! Bienvenue sur votre tableau de bord.
+
+quickActions:
+  title: Actions rapides
+  viewProfile: Voir le profil
+  manageSubscription: Gérer l'abonnement
+  adminPanel: Panneau d'administration
+
+accountStatus:
+  title: Statut du compte
+  status: Statut
+  active: Actif
+  role: Rôle

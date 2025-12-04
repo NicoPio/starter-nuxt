@@ -1,0 +1,50 @@
+validation:
+  emailInvalid: Invalid email address
+  passwordRequired: Password is required
+  passwordTooShort: Password must be at least 8 characters
+  nameRequired: Full name is required
+
+login:
+  title: Login
+  description: Sign in to your account
+  heading: Welcome Back
+  subheading: Sign in to your account to continue
+  email: Email
+  emailPlaceholder: your.email@example.com
+  password: Password
+  passwordPlaceholder: Enter your password
+  rememberMe: Remember me
+  forgotPassword: Forgot password?
+  submit: Sign In
+  noAccount: Don't have an account?
+  signupLink: Sign up here
+  success: Welcome back!
+  successMessage: You have successfully logged in
+  error: Login failed
+  errorGeneric: Invalid email or password. Please try again.
+
+signup:
+  title: Sign Up
+  description: Create your account
+  heading: Create Account
+  subheading: Get started with your free account
+  email: Email
+  emailPlaceholder: your.email@example.com
+  password: Password
+  passwordPlaceholder: Choose a secure password
+  passwordHint: Must be at least 8 characters
+  fullName: Full Name
+  fullNamePlaceholder: John Doe
+  submit: Sign Up
+  hasAccount: Already have an account?
+  loginLink: Login here
+  success: Account created!
+  successMessage: Welcome to our platform
+  error: Signup failed
+  errorGeneric: Could not create account. Please try again.
+
+logout:
+  success: Logged out
+  successMessage: You have been logged out successfully
+  error: Logout failed
+  errorGeneric: An error occurred during logout

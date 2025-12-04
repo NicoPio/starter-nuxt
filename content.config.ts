@@ -12,78 +12,117 @@ export default defineContentConfig({
         url: z.string(),
       }),
     }),
-    homepage: defineCollection({
+    i18n_en_app: defineCollection({
       type: "data",
-      source: "homepage.yml",
-      schema: z.object({
-        hero: z.object({
-          title: z.string(),
-          description: z.string(),
-          links: z.array(
-            z.object({
-              label: z.string(),
-              to: z.string(),
-              target: z.string().optional(),
-              icon: z.string().optional(),
-              trailingIcon: z.string().optional(),
-              size: z.enum(["xs", "sm", "md", "lg", "xl"]).optional(),
-              color: z
-                .enum([
-                  "primary",
-                  "secondary",
-                  "success",
-                  "info",
-                  "warning",
-                  "error",
-                  "neutral",
-                ])
-                .optional(),
-              variant: z
-                .enum(["link", "solid", "outline", "soft", "subtle", "ghost"])
-                .optional(),
-            })
-          ),
-        }),
-        features: z.object({
-          title: z.string(),
-          description: z.string(),
-          items: z.array(
-            z.object({
-              icon: z.string(),
-              title: z.string(),
-              description: z.string(),
-            })
-          ),
-        }),
-        cta: z.object({
-          title: z.string(),
-          description: z.string(),
-          variant: z.enum(["solid", "outline", "soft", "subtle", "naked"]),
-          links: z.array(
-            z.object({
-              label: z.string(),
-              to: z.string(),
-              target: z.string().optional(),
-              icon: z.string().optional(),
-              trailingIcon: z.string().optional(),
-              color: z
-                .enum([
-                  "primary",
-                  "secondary",
-                  "success",
-                  "info",
-                  "warning",
-                  "error",
-                  "neutral",
-                ])
-                .optional(),
-              variant: z
-                .enum(["link", "solid", "outline", "soft", "subtle", "ghost"])
-                .optional(),
-            })
-          ),
-        }),
-      }),
+      source: "i18n/en/app.yml",
+    }),
+    i18n_en_nav: defineCollection({
+      type: "data",
+      source: "i18n/en/nav.yml",
+    }),
+    i18n_en_auth: defineCollection({
+      type: "data",
+      source: "i18n/en/auth.yml",
+    }),
+    i18n_en_profile: defineCollection({
+      type: "data",
+      source: "i18n/en/profile.yml",
+    }),
+    i18n_en_dashboard: defineCollection({
+      type: "data",
+      source: "i18n/en/dashboard.yml",
+    }),
+    i18n_en_subscription: defineCollection({
+      type: "data",
+      source: "i18n/en/subscription.yml",
+    }),
+    i18n_en_admin: defineCollection({
+      type: "data",
+      source: "i18n/en/admin.yml",
+    }),
+    i18n_en_errors: defineCollection({
+      type: "data",
+      source: "i18n/en/errors.yml",
+    }),
+    i18n_fr_app: defineCollection({
+      type: "data",
+      source: "i18n/fr/app.yml",
+    }),
+    i18n_fr_nav: defineCollection({
+      type: "data",
+      source: "i18n/fr/nav.yml",
+    }),
+    i18n_fr_auth: defineCollection({
+      type: "data",
+      source: "i18n/fr/auth.yml",
+    }),
+    i18n_fr_profile: defineCollection({
+      type: "data",
+      source: "i18n/fr/profile.yml",
+    }),
+    i18n_fr_dashboard: defineCollection({
+      type: "data",
+      source: "i18n/fr/dashboard.yml",
+    }),
+    i18n_fr_subscription: defineCollection({
+      type: "data",
+      source: "i18n/fr/subscription.yml",
+    }),
+    i18n_fr_admin: defineCollection({
+      type: "data",
+      source: "i18n/fr/admin.yml",
+    }),
+    i18n_fr_errors: defineCollection({
+      type: "data",
+      source: "i18n/fr/errors.yml",
+    }),
+    i18n_en_homepage: defineCollection({
+      type: "data",
+      source: "i18n/en/homepage.yml",
+    }),
+    i18n_fr_homepage: defineCollection({
+      type: "data",
+      source: "i18n/fr/homepage.yml",
+    }),
+    i18n_en_features: defineCollection({
+      type: "data",
+      source: "i18n/en/features.yml",
+    }),
+    i18n_fr_features: defineCollection({
+      type: "data",
+      source: "i18n/fr/features.yml",
+    }),
+    i18n_en_seo: defineCollection({
+      type: "data",
+      source: "i18n/en/seo.yml",
+    }),
+    i18n_fr_seo: defineCollection({
+      type: "data",
+      source: "i18n/fr/seo.yml",
+    }),
+    i18n_en_accessibility: defineCollection({
+      type: "data",
+      source: "i18n/en/accessibility.yml",
+    }),
+    i18n_fr_accessibility: defineCollection({
+      type: "data",
+      source: "i18n/fr/accessibility.yml",
+    }),
+    i18n_en_error: defineCollection({
+      type: "data",
+      source: "i18n/en/error.yml",
+    }),
+    i18n_fr_error: defineCollection({
+      type: "data",
+      source: "i18n/fr/error.yml",
+    }),
+    i18n_en_common: defineCollection({
+      type: "data",
+      source: "i18n/en/common.yml",
+    }),
+    i18n_fr_common: defineCollection({
+      type: "data",
+      source: "i18n/fr/common.yml",
     }),
   },
 });

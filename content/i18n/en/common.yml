@@ -1,0 +1,21 @@
+cancel: Cancel
+confirm: Confirm
+save: Save
+delete: Delete
+edit: Edit
+close: Close
+back: Back
+next: Next
+previous: Previous
+loading: Loading...
+error: Error
+success: Success
+
+# Error boundary messages
+boundary:
+  title: Something went wrong
+  description: An unexpected error occurred while rendering this component
+  devMode: Development Mode - Error Details
+  errorInfo: Error Info
+  retry: Try Again
+  goHome: Go to Homepage
