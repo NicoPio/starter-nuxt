@@ -82,6 +82,7 @@ public/               # Static assets served at root
 The project uses Nuxt Content collections with Zod schema validation. Currently defined:
 
 - `authors` collection: data type, sources from `**.yml` files with schema for name, avatar, and url
+- if content needs to be added, use nuxt Content to manage the contents
 
 ### Styling Approach
 
@@ -117,6 +118,7 @@ Reply in french
 - Stripe for payments and subscription management
 - Zod for schema validation
 - Nuxt Content for i18n and content management
+- PostgreSQL (self-hosted Supabase) with Better Auth tables (`user`, `session`, `account`, `verification`) (002-admin-user-management)
 
 ## Implementation Notes
 
@@ -289,9 +291,9 @@ Reply in french
 7. Build for production: `npm run build`
 
 ## Recent Changes
+- 002-admin-user-management: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
 - 001-saas-starter-foundation: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
 - Always add a new entry to @CHANGELOG.md when a new feature is added
-- to memorize : Règle: import.meta est une fonctionnalité ESM qui ne peut être utilisée que dans :
   - Blocs <script> ou <script setup>
   - Fichiers .js / .ts / .mjs
   - JAMAIS directement dans les expressions de template Vue (v-if, {{ }}, etc.)

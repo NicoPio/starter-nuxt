@@ -5,16 +5,52 @@ users:
   search: Rechercher des utilisateurs...
   role: Rôle
   email: Email
+  name: Nom
   createdAt: Créé le
-  actions: Actions
+  actionsColumn: Actions
   changeRole: Changer le rôle
   delete: Supprimer l'utilisateur
+  actions:
+    edit: Modifier l'utilisateur
+    delete: Supprimer l'utilisateur
   deleteConfirm: Êtes-vous sûr de vouloir supprimer cet utilisateur ?
+  loading: Chargement des utilisateurs...
+  noUsers: Aucun utilisateur trouvé
+  pagination:
+    previous: Précédent
+    next: Suivant
+    page: Page {page} sur {total}
+  filters:
+    allRoles: Tous les rôles
+    admin: Admin
+    contributor: Contributeur
+    user: Utilisateur
+    clear: Réinitialiser
+    active: Filtres actifs
+  roles:
+    adminDescription: Accès complet à toutes les fonctionnalités d'administration
+    contributorDescription: Peut consulter les données mais ne peut pas modifier les utilisateurs
+    userDescription: Accès standard à l'application
+  editRole:
+    title: Modifier le rôle de l'utilisateur
+    selectRole: Sélectionner un nouveau rôle
+    warning: Attention
+    warningMessage: Le changement de rôle prendra effet immédiatement
+    cancel: Annuler
+    save: Enregistrer
+  deleteDialog:
+    title: Supprimer l'utilisateur
+    message: Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.
+    warning: Action irréversible
+    warningMessage: Toutes les données de cet utilisateur seront définitivement supprimées
+    cancel: Annuler
+    confirm: Supprimer
   messages:
     roleUpdateSuccess: Rôle de l'utilisateur mis à jour avec succès
     roleUpdateError: Échec de la mise à jour du rôle
     deleteSuccess: Utilisateur supprimé avec succès
     deleteError: Échec de la suppression de l'utilisateur
+    loadError: Échec du chargement des utilisateurs
 
 config:
   title: Configuration

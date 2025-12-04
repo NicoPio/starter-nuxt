@@ -1,0 +1,504 @@
+openapi: 3.1.0
+info:
+  title: Admin User Management API
+  version: 1.0.0
+  description: |
+    API endpoints for administrator user management in the Nuxt 4 SaaS starter.
+    Allows admins to list, filter, update roles, and delete user accounts.
+
+    **Authentication**: All endpoints require an authenticated session with Admin role.
+    **Authorization**: Enforced via Better Auth session + middleware.
+
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+  - url: https://example.com/api
+    description: Production server (TBD)
+
+security:
+  - sessionAuth: []
+
+paths:
+  /admin/users:
+    get:
+      summary: List users with pagination and filtering
+      description: |
+        Retrieves a paginated list of all users. Supports filtering by role and search query.
+        Maps to User Story 1 (View All Users) and User Story 2 (Filter Users).
+      operationId: listUsers
+      tags:
+        - Admin User Management
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number (1-indexed)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Number of users per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+        - name: role
+          in: query
+          description: Filter by user role
+          required: false
+          schema:
+            type: string
+            enum: [Admin, Contributor, User]
+          example: Admin
+        - name: search
+          in: query
+          description: Search users by email or name (case-insensitive)
+          required: false
+          schema:
+            type: string
+            maxLength: 100
+          example: john@example.com
+      responses:
+        '200':
+          description: Successful response with user list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+              examples:
+                withPagination:
+                  summary: Paginated user list
+                  value:
+                    users:
+                      - id: "550e8400-e29b-41d4-a716-446655440000"
+                        email: "admin@example.com"
+                        name: "Admin User"
+                        role: "Admin"
+                        createdAt: "2025-01-01T00:00:00Z"
+                      - id: "550e8400-e29b-41d4-a716-446655440001"
+                        email: "john@example.com"
+                        name: "John Doe"
+                        role: "User"
+                        createdAt: "2025-01-02T00:00:00Z"
+                    pagination:
+                      page: 1
+                      limit: 20
+                      total: 42
+                      totalPages: 3
+                    filters:
+                      role: null
+                      search: ""
+                withFilter:
+                  summary: Filtered by role
+                  value:
+                    users:
+                      - id: "550e8400-e29b-41d4-a716-446655440000"
+                        email: "admin@example.com"
+                        name: "Admin User"
+                        role: "Admin"
+                        createdAt: "2025-01-01T00:00:00Z"
+                    pagination:
+                      page: 1
+                      limit: 20
+                      total: 1
+                      totalPages: 1
+                    filters:
+                      role: "Admin"
+                      search: ""
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /admin/users/stats:
+    get:
+      summary: Get user count by role
+      description: |
+        Returns the count of users for each role (Admin, Contributor, User).
+        Used for filter badges showing "Admin (5)" etc.
+        Maps to User Story 2 (Filter Users) - requirement FR-006.
+      operationId: getUserStats
+      tags:
+        - Admin User Management
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Successful response with role counts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserStatsResponse'
+              example:
+                stats:
+                  - role: "Admin"
+                    count: 5
+                  - role: "Contributor"
+                    count: 12
+                  - role: "User"
+                    count: 9983
+                total: 10000
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /admin/users/{id}/role:
+    patch:
+      summary: Update user role
+      description: |
+        Updates the role of a specific user. Requires Admin privileges.
+        Maps to User Story 3 (Edit User Role).
+
+        **Business Rules**:
+        - Requester must be Admin
+        - Target user must exist
+        - New role must be valid (Admin, Contributor, User)
+      operationId: updateUserRole
+      tags:
+        - Admin User Management
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440001"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+            example:
+              role: "Contributor"
+      responses:
+        '200':
+          description: Role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                user:
+                  id: "550e8400-e29b-41d4-a716-446655440001"
+                  email: "john@example.com"
+                  name: "John Doe"
+                  role: "Contributor"
+                  createdAt: "2025-01-02T00:00:00Z"
+                  updatedAt: "2025-12-02T10:30:00Z"
+                message: "User role updated successfully"
+        '400':
+          description: Invalid role value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                statusCode: 400
+                message: "Invalid role. Must be one of: Admin, Contributor, User"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                statusCode: 404
+                message: "User not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /admin/users/{id}:
+    delete:
+      summary: Delete user account
+      description: |
+        Permanently deletes a user account. Requires Admin privileges.
+        Maps to User Story 4 (Delete User).
+
+        **Business Rules** (FR-014, FR-015):
+        - Cannot delete your own account (self-deletion prevention)
+        - Cannot delete the last admin account in the system
+        - Cascade deletes sessions, OAuth accounts, verification tokens
+      operationId: deleteUser
+      tags:
+        - Admin User Management
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: User ID (UUID) to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440001"
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User deleted successfully"
+                  deletedUserId:
+                    type: string
+                    format: uuid
+                    example: "550e8400-e29b-41d4-a716-446655440001"
+        '400':
+          description: Business rule violation (self-deletion or last admin)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                selfDeletion:
+                  summary: Attempted self-deletion
+                  value:
+                    statusCode: 400
+                    message: "Cannot delete your own account"
+                lastAdmin:
+                  summary: Attempted last admin deletion
+                  value:
+                    statusCode: 400
+                    message: "Cannot delete the last admin account"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                statusCode: 404
+                message: "User not found"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: better-auth.session_token
+      description: Better Auth session cookie (httpOnly, signed)
+
+  schemas:
+    UserRole:
+      type: string
+      enum: [Admin, Contributor, User]
+      description: User permission level
+
+    User:
+      type: object
+      required: [id, email, name, role, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique user identifier
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        email:
+          type: string
+          format: email
+          description: User's email address
+          example: "admin@example.com"
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: User's full name
+          example: "Admin User"
+        role:
+          $ref: '#/components/schemas/UserRole'
+        createdAt:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+          example: "2025-01-01T00:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: "2025-01-01T00:00:00Z"
+
+    PaginationMeta:
+      type: object
+      required: [page, limit, total, totalPages]
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: Current page number
+          example: 1
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: Users per page
+          example: 20
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of users
+          example: 42
+        totalPages:
+          type: integer
+          minimum: 0
+          description: Total number of pages
+          example: 3
+
+    UserFilters:
+      type: object
+      properties:
+        role:
+          allOf:
+            - $ref: '#/components/schemas/UserRole'
+            - nullable: true
+          description: Filter by role (null = all roles)
+          example: "Admin"
+        search:
+          type: string
+          maxLength: 100
+          description: Search query (email or name)
+          example: "john"
+
+    UserListResponse:
+      type: object
+      required: [users, pagination, filters]
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          description: List of users for current page
+        pagination:
+          $ref: '#/components/schemas/PaginationMeta'
+        filters:
+          $ref: '#/components/schemas/UserFilters'
+
+    RoleStat:
+      type: object
+      required: [role, count]
+      properties:
+        role:
+          $ref: '#/components/schemas/UserRole'
+        count:
+          type: integer
+          minimum: 0
+          description: Number of users with this role
+          example: 5
+
+    UserStatsResponse:
+      type: object
+      required: [stats, total]
+      properties:
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleStat'
+          minItems: 3
+          maxItems: 3
+          description: Count of users for each role
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of users across all roles
+          example: 10000
+
+    UpdateRoleRequest:
+      type: object
+      required: [role]
+      properties:
+        role:
+          $ref: '#/components/schemas/UserRole'
+
+    UserResponse:
+      type: object
+      required: [user, message]
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        message:
+          type: string
+          description: Success message
+          example: "User role updated successfully"
+
+    ErrorResponse:
+      type: object
+      required: [statusCode, message]
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code
+          example: 400
+        message:
+          type: string
+          description: Error message
+          example: "Invalid request"
+        data:
+          type: object
+          description: Additional error context (optional)
+          example: {}
+
+  responses:
+    Unauthorized:
+      description: Not authenticated (no valid session)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 401
+            message: "Unauthorized - Please log in"
+
+    Forbidden:
+      description: Authenticated but not authorized (non-admin user)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            message: "Admin access required"
+
+    InternalServerError:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 500
+            message: "Internal server error"
+
+tags:
+  - name: Admin User Management
+    description: Endpoints for managing user accounts (admin only)

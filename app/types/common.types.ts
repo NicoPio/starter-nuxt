@@ -57,7 +57,28 @@ export interface PaginatedResponse<T> {
   }
 }
 
+// Métadonnées de pagination
+export interface PaginationMeta {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+}
+
+// Options de filtres utilisateurs
+export interface UserFilters {
+  role?: UserRole
+  search?: string
+}
+
 // Réponse de liste d'utilisateurs
+export interface UserListResponse {
+  users: UserWithRole[]
+  pagination: PaginationMeta
+  filters: UserFilters
+}
+
+// DEPRECATED: Utiliser UserListResponse à la place
 export interface UsersResponse {
   users: UserWithRole[]
   pagination: {

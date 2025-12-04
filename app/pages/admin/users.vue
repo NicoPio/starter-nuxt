@@ -1,274 +1,220 @@
 <script setup lang="ts">
-import type { UserWithRole, UsersResponse } from '~/types/common.types'
+import type { UserWithRole, UserRole, UserFilters } from '~/types/common.types'
 
 definePageMeta({
   layout: 'admin',
-  middleware: ['auth', 'contributor']
+  middleware: ['auth', 'admin'] // T013: Vérifier que 'admin' middleware est bien là
 })
 
-const { isAdmin, isContributor } = useRole()
+const { t } = useContentI18n()
+const toast = useToast()
 
-const { data: users, pending, refresh } = await useFetch<UsersResponse>('/api/admin/users', {
-  query: {
-    page: 1,
-    limit: 20
-  }
-})
+// Utiliser le composable useUsers
+const {
+  users,
+  loading,
+  error,
+  pagination,
+  filters,
+  hasUsers,
+  hasPreviousPage,
+  hasNextPage,
+  fetchUsers,
+  nextPage,
+  previousPage,
+  setRoleFilter,
+  setSearchFilter,
+  clearFilters,
+  updateUserRole,
+  deleteUser
+} = useUsers()
 
-const selectedUser = ref<UserWithRole | null>(null)
-const showRoleDialog = ref(false)
-const showDeleteDialog = ref(false)
+// État du modal d'édition
+const editModalOpen = ref(false)
+const userToEdit = ref<UserWithRole | null>(null)
 
-const openRoleDialog = (user: UserWithRole) => {
-  selectedUser.value = user
-  showRoleDialog.value = true
-}
+// État du dialog de suppression
+const deleteDialogOpen = ref(false)
+const userToDelete = ref<UserWithRole | null>(null)
 
-const openDeleteDialog = (user: UserWithRole) => {
-  selectedUser.value = user
-  showDeleteDialog.value = true
-}
+// Charger les statistiques de rôles
+const roleStats = ref<{ role: UserRole; count: number }[]>([])
+const loadingStats = ref(false)
 
-const updateRole = async (newRole: string) => {
-  if (!selectedUser.value) return
-
+const fetchRoleStats = async () => {
+  loadingStats.value = true
   try {
-    await $fetch(`/api/admin/users/${selectedUser.value.id}/role`, {
-      method: 'PATCH',
-      body: { role: newRole }
-    })
+    const stats = await $fetch<{ role: UserRole; count: number }[]>('/api/admin/users/stats')
+    roleStats.value = stats
+  } catch (err) {
+    console.error('Failed to fetch role stats:', err)
+  } finally {
+    loadingStats.value = false
+  }
+}
 
-    await refresh()
-    showRoleDialog.value = false
+// Gestionnaire pour mettre à jour les filtres
+const handleUpdateFilters = async (newFilters: UserFilters) => {
+  if (newFilters.role !== filters.value.role) {
+    await setRoleFilter(newFilters.role)
+  }
+  if (newFilters.search !== filters.value.search) {
+    await setSearchFilter(newFilters.search)
+  }
+}
 
-    useToast().add({
-      title: 'Rôle mis à jour',
-      description: `Le rôle de ${selectedUser.value.email} a été changé en ${newRole}`,
+// Gestionnaire pour réinitialiser les filtres
+const handleClearFilters = async () => {
+  await clearFilters()
+}
+
+// Charger les utilisateurs et statistiques au montage
+onMounted(async () => {
+  await Promise.all([
+    fetchUsers(),
+    fetchRoleStats()
+  ])
+})
+
+// Gestionnaires d'événements pour les actions
+const handleEditUser = (user: UserWithRole) => {
+  userToEdit.value = user
+  editModalOpen.value = true
+}
+
+const handleSaveRole = async (userId: string, newRole: UserRole) => {
+  const result = await updateUserRole(userId, newRole)
+
+  if (result.success) {
+    toast.add({
+      title: t('admin.users.messages.roleUpdateSuccess'),
       color: 'success'
     })
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Impossible de mettre à jour le rôle'
-    useToast().add({
-      title: 'Erreur',
-      description: message,
+    // Rafraîchir les stats
+    await fetchRoleStats()
+  } else {
+    toast.add({
+      title: t('admin.users.messages.roleUpdateError'),
+      description: result.error || undefined,
       color: 'error'
     })
   }
 }
 
-const deleteUser = async () => {
-  if (!selectedUser.value) return
+const handleDeleteUser = (user: UserWithRole) => {
+  userToDelete.value = user
+  deleteDialogOpen.value = true
+}
 
-  try {
-    await $fetch(`/api/admin/users/${selectedUser.value.id}`, {
-      method: 'DELETE'
-    })
+const handleConfirmDelete = async (userId: string) => {
+  const result = await deleteUser(userId)
 
-    await refresh()
-    showDeleteDialog.value = false
-
-    useToast().add({
-      title: 'Utilisateur supprimé',
-      description: `L'utilisateur ${selectedUser.value.email} a été supprimé`,
+  if (result.success) {
+    toast.add({
+      title: t('admin.users.messages.deleteSuccess'),
       color: 'success'
     })
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Impossible de supprimer l\'utilisateur'
-    useToast().add({
-      title: 'Erreur',
-      description: message,
+    // Rafraîchir les stats après suppression
+    await fetchRoleStats()
+  } else {
+    toast.add({
+      title: t('admin.users.messages.deleteError'),
+      description: result.error || undefined,
       color: 'error'
     })
   }
 }
+
+// Watchers pour réinitialiser les valeurs quand les dialogs se ferment
+watch(editModalOpen, (isOpen) => {
+  if (!isOpen) {
+    userToEdit.value = null
+  }
+})
+
+watch(deleteDialogOpen, (isOpen) => {
+  if (!isOpen) {
+    userToDelete.value = null
+  }
+})
 
 useSeoMeta({
-  title: 'Gestion des utilisateurs - Admin',
-  description: 'Administration des utilisateurs et des rôles'
+  title: t('admin.users.title') + ' - Admin',
+  description: t('admin.users.title')
 })
 </script>
 
 <template>
   <div class="container mx-auto px-4 py-8">
+    <!-- En-tête -->
     <div class="mb-8">
-      <div class="flex items-center gap-3">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-          Gestion des utilisateurs
-        </h1>
-        <UBadge v-if="isContributor" color="warning" variant="subtle">
-          Mode lecture seule
-        </UBadge>
-      </div>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+        {{ t('admin.users.title') }}
+      </h1>
       <p class="mt-2 text-gray-600 dark:text-gray-400">
-        <span v-if="isAdmin">Gérez les rôles et les accès des utilisateurs</span>
-        <span v-else-if="isContributor">Consultez la liste des utilisateurs (accès en lecture seule)</span>
+        Gérez les rôles et les accès des utilisateurs
       </p>
     </div>
 
+    <!-- Erreur -->
+    <UAlert
+      v-if="error"
+      color="error"
+      variant="soft"
+      title="Erreur"
+      :description="error"
+      class="mb-6"
+    />
+
+    <!-- Card principale -->
     <UCard>
       <template #header>
         <div class="flex items-center justify-between">
-          <h2 class="text-xl font-semibold">Liste des utilisateurs</h2>
-          <UBadge v-if="users" color="neutral">
-            {{ users.pagination.total }} utilisateurs
+          <h2 class="text-xl font-semibold">{{ t('admin.users.title') }}</h2>
+          <UBadge v-if="!loading && hasUsers" color="neutral">
+            {{ pagination.total }} utilisateurs
           </UBadge>
         </div>
       </template>
 
-      <div v-if="pending" class="flex justify-center py-8">
-        <UIcon name="i-heroicons-arrow-path" class="w-6 h-6 animate-spin" />
+      <!-- Filtres -->
+      <div class="mb-6">
+        <AdminUserFilters
+          :filters="filters"
+          :role-stats="roleStats"
+          :loading="loading || loadingStats"
+          @update-filters="handleUpdateFilters"
+          @clear-filters="handleClearFilters"
+        />
       </div>
 
-      <div v-else-if="users?.users && users.users.length > 0" class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead class="bg-gray-50 dark:bg-gray-800">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                Utilisateur
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                Rôle
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                Inscription
-              </th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-            <tr v-for="user in users?.users || []" :key="user.id">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div>
-                    <div class="text-sm font-medium text-gray-900 dark:text-white">
-                      {{ user.name || 'Sans nom' }}
-                    </div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">
-                      {{ user.email }}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <UBadge
-                  :color="user.role === 'Admin' ? 'error' : user.role === 'Contributor' ? 'warning' : 'neutral'"
-                >
-                  {{ user.role }}
-                </UBadge>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {{ new Date(user.createdAt).toLocaleDateString('fr-FR') }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div v-if="isAdmin" class="flex justify-end gap-2">
-                  <UButton
-                    size="xs"
-                    color="neutral"
-                    variant="outline"
-                    @click="openRoleDialog(user)"
-                  >
-                    Changer le rôle
-                  </UButton>
-                  <UButton
-                    size="xs"
-                    color="error"
-                    variant="outline"
-                    @click="openDeleteDialog(user)"
-                  >
-                    Supprimer
-                  </UButton>
-                </div>
-                <div v-else-if="isContributor" class="text-xs text-gray-500 dark:text-gray-400">
-                  Lecture seule
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400">
-        Aucun utilisateur trouvé
-      </div>
+      <!-- Composant UserList -->
+      <AdminUserList
+        :users="users"
+        :loading="loading"
+        :page="pagination.page"
+        :total-pages="pagination.totalPages"
+        :has-previous-page="hasPreviousPage"
+        :has-next-page="hasNextPage"
+        @previous-page="previousPage"
+        @next-page="nextPage"
+        @edit-user="handleEditUser"
+        @delete-user="handleDeleteUser"
+      />
     </UCard>
 
-    <UModal v-model="showRoleDialog">
-      <UCard>
-        <template #header>
-          <h3 class="text-lg font-semibold">Changer le rôle</h3>
-        </template>
+    <!-- Modal d'édition de rôle -->
+    <AdminEditUserModal
+      v-model:open="editModalOpen"
+      :user="userToEdit"
+      @save="handleSaveRole"
+    />
 
-        <div v-if="selectedUser" class="space-y-4">
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            Utilisateur: <strong>{{ selectedUser.email }}</strong>
-          </p>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            Rôle actuel: <strong>{{ selectedUser.role }}</strong>
-          </p>
-
-          <div class="space-y-2">
-            <UButton
-              block
-              :color="selectedUser.role === 'Admin' ? 'primary' : 'neutral'"
-              @click="updateRole('Admin')"
-            >
-              Admin - Accès complet
-            </UButton>
-            <UButton
-              block
-              :color="selectedUser.role === 'Contributor' ? 'primary' : 'neutral'"
-              @click="updateRole('Contributor')"
-            >
-              Contributor - Lecture seule
-            </UButton>
-            <UButton
-              block
-              :color="selectedUser.role === 'User' ? 'primary' : 'neutral'"
-              @click="updateRole('User')"
-            >
-              User - Utilisateur standard
-            </UButton>
-          </div>
-        </div>
-
-        <template #footer>
-          <div class="flex justify-end">
-            <UButton color="neutral" variant="outline" @click="showRoleDialog = false">
-              Annuler
-            </UButton>
-          </div>
-        </template>
-      </UCard>
-    </UModal>
-
-    <UModal v-model="showDeleteDialog">
-      <UCard>
-        <template #header>
-          <h3 class="text-lg font-semibold text-error">Supprimer l'utilisateur</h3>
-        </template>
-
-        <div v-if="selectedUser" class="space-y-4">
-          <p class="text-sm">
-            Êtes-vous sûr de vouloir supprimer <strong>{{ selectedUser.email }}</strong> ?
-          </p>
-          <p class="text-sm text-error">
-            Cette action est irréversible.
-          </p>
-        </div>
-
-        <template #footer>
-          <div class="flex justify-end gap-2">
-            <UButton color="neutral" variant="outline" @click="showDeleteDialog = false">
-              Annuler
-            </UButton>
-            <UButton color="error" @click="deleteUser">
-              Supprimer
-            </UButton>
-          </div>
-        </template>
-      </UCard>
-    </UModal>
+    <!-- Dialog de suppression -->
+    <AdminDeleteUserDialog
+      v-model:open="deleteDialogOpen"
+      :user="userToDelete"
+      @confirm="handleConfirmDelete"
+    />
   </div>
 </template>

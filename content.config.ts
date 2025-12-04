@@ -92,5 +92,37 @@ export default defineContentConfig({
       type: "data",
       source: "i18n/fr/features.yml",
     }),
+    i18n_en_seo: defineCollection({
+      type: "data",
+      source: "i18n/en/seo.yml",
+    }),
+    i18n_fr_seo: defineCollection({
+      type: "data",
+      source: "i18n/fr/seo.yml",
+    }),
+    i18n_en_accessibility: defineCollection({
+      type: "data",
+      source: "i18n/en/accessibility.yml",
+    }),
+    i18n_fr_accessibility: defineCollection({
+      type: "data",
+      source: "i18n/fr/accessibility.yml",
+    }),
+    i18n_en_error: defineCollection({
+      type: "data",
+      source: "i18n/en/error.yml",
+    }),
+    i18n_fr_error: defineCollection({
+      type: "data",
+      source: "i18n/fr/error.yml",
+    }),
+    i18n_en_common: defineCollection({
+      type: "data",
+      source: "i18n/en/common.yml",
+    }),
+    i18n_fr_common: defineCollection({
+      type: "data",
+      source: "i18n/fr/common.yml",
+    }),
   },
 });
