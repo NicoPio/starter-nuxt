@@ -344,14 +344,14 @@ const EditUserModal = defineAsyncComponent(() =>
 ### Decision: Manual E2E + TypeScript/ESLint Validation
 
 **Rationale**:
-- CLAUDE.md specifies: "Check types: `npx nuxi typecheck`, Lint: `npx eslint .`"
+- CLAUDE.md specifies: "Check types: `bunx nuxi typecheck`, Lint: `bunx eslint .`"
 - Existing project has NO automated tests
 - Manual testing acceptable per project standards
 - Focus on type safety + linting
 
 **Validation Checklist**:
-1. ✅ TypeScript: No errors in `npx nuxi typecheck`
-2. ✅ ESLint: No errors in `npx eslint .`
+1. ✅ TypeScript: No errors in `bunx nuxi typecheck`
+2. ✅ ESLint: No errors in `bunx eslint .`
 3. ✅ Manual: Test all 5 user stories in browser
 4. ✅ Accessibility: Screen reader + keyboard navigation
 5. ✅ Edge cases: Test all 8 edge cases manually

@@ -271,11 +271,11 @@ curl "http://localhost:3000/api/admin/users/stats"
 
 ### Tasks
 
-- [X] T027 Run TypeScript type check and ESLint validation, fix all errors (npx nuxi typecheck && npx eslint .)
+- [X] T027 Run TypeScript type check and ESLint validation, fix all errors (bunx nuxi typecheck && bunx eslint .)
 
 **Completion Criteria**:
-- `npx nuxi typecheck` passes with 0 errors
-- `npx eslint .` passes with 0 errors
+- `bunx nuxi typecheck` passes with 0 errors
+- `bunx eslint .` passes with 0 errors
 - All translation keys exist in EN and FR
 - All components have proper TypeScript types
 - All API endpoints have Zod validation
@@ -286,8 +286,8 @@ curl "http://localhost:3000/api/admin/users/stats"
 - ✅ All 18 functional requirements met
 - ✅ All 8 success criteria validated
 - ✅ Accessibility: Keyboard navigation + screen reader
-- ✅ No TypeScript errors
-- ✅ No ESLint errors
+- ✅ No TypeScript errors (`bunx nuxi typecheck`)
+- ✅ No ESLint errors (`bunx eslint .`)
 - ✅ i18n works in French and English
 
 ---

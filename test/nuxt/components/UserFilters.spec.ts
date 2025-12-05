@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { ref, computed, watch } from 'vue'
-import UserFilters from '~/components/admin/UserFilters.vue'
-import type { UserFilters as UserFiltersType, UserRole } from '~/types/common.types'
+import UserFilters from '~/app/components/admin/UserFilters.vue'
+import type { UserFilters as UserFiltersType, UserRole } from '~/app/types/common.types'
 
 // Mock Vue globals
 global.ref = ref

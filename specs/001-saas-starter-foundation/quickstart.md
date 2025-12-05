@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+ and bun
 - Docker and Docker Compose (for self-hosted Supabase)
 - Stripe account (test mode)
 - Git
@@ -15,11 +15,11 @@
 ## 1. Install Dependencies
 
 ```bash
-npm install
+bun install
 
 # Add new dependencies for this feature
-npm install @nuxtjs/supabase @nuxtjs/i18n stripe zod
-npm install -D @types/stripe
+bun install @nuxtjs/supabase @nuxtjs/i18n stripe zod
+bun install -D @types/stripe
 ```
 
 ---
@@ -63,7 +63,7 @@ docker-compose up -d
 # 4. Verify tables created: profiles, subscriptions, payment_config
 
 # Or use Supabase CLI:
-npx supabase db reset  # Reset and apply all migrations
+bunx supabase db reset  # Reset and apply all migrations
 ```
 
 ---
@@ -135,7 +135,7 @@ export default defineNuxtConfig({
 
 ```bash
 # 1. Start dev server
-npm run dev
+bun run dev
 
 # 2. Go to http://localhost:3000/signup
 # 3. Register with your email
@@ -175,7 +175,7 @@ stripe listen --forward-to localhost:3000/api/subscriptions/webhook
 curl http://localhost:54321/rest/v1/
 
 # 2. App running
-npm run dev
+bun run dev
 # Visit http://localhost:3000
 
 # 3. Database tables exist
@@ -228,20 +228,20 @@ starter-nuxt/
 ```bash
 # Start services
 docker-compose -f supabase/docker/docker-compose.yml up -d
-npm run dev
+bun run dev
 
 # Run tests
-npm run test
+bun run test
 
 # Lint code
-npx eslint .
+bunx eslint .
 
 # Type check
-npx nuxi typecheck
+bunx nuxi typecheck
 
 # Build for production
-npm run build
-npm run preview
+bun run build
+bun run preview
 ```
 
 ---
@@ -261,7 +261,7 @@ docker-compose restart
 ### Database Migration Fails
 ```bash
 # Reset database
-npx supabase db reset
+bunx supabase db reset
 
 # Or manually drop and recreate tables
 ```

@@ -21,7 +21,7 @@ Before implementing this feature, ensure you have:
 2. ✅ **Development Environment**:
    - Node.js 18+
    - Supabase running (`supabase start`)
-   - Dev server can start (`npm run dev`)
+   - Dev server can start (`bun run dev`)
    - At least one admin user exists in database
 
 3. ✅ **Access**:
@@ -38,7 +38,7 @@ Before implementing this feature, ensure you have:
 
 1. **Start dev server** (if not already running):
    ```bash
-   npm run dev
+   bun run dev
    ```
 
 2. **Log in as admin** and navigate to:
@@ -425,8 +425,8 @@ const handleApiError = (error: unknown) => {
 - ✅ Success/error toasts appear
 
 **Code Quality**:
-- ✅ TypeScript: `npx nuxi typecheck` passes
-- ✅ ESLint: `npx eslint .` passes
+- ✅ TypeScript: `bunx nuxi typecheck` passes
+- ✅ ESLint: `bunx eslint .` passes
 - ✅ All translations present (EN + FR)
 - ✅ No console errors in browser
 - ✅ No accessibility violations (DevTools Inspector)
@@ -454,8 +454,8 @@ const handleApiError = (error: unknown) => {
 After completing this quickstart:
 
 1. **Code Review**:
-   - Run `npx nuxi typecheck` and fix any TypeScript errors
-   - Run `npx eslint .` and fix any linting errors
+   - Run `bunx nuxi typecheck` and fix any TypeScript errors
+   - Run `bunx eslint .` and fix any linting errors
    - Test all 5 user stories manually
 
 2. **Documentation**:
