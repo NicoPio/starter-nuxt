@@ -227,10 +227,10 @@ curl "http://localhost:3000/api/admin/users/stats"
 
 ### Tasks
 
-- [ ] T023 [P] [US4] Create DeleteUserDialog component with confirmation message in app/components/admin/DeleteUserDialog.vue
-- [ ] T024 [US4] Add "Delete" button to each user row in UserList component with disabled state for self in app/components/admin/UserList.vue
-- [ ] T025 [US4] Implement deleteUser method in useUsers composable with optimistic updates in app/composables/useUsers.ts
-- [ ] T026 [US4] Modify DELETE /api/admin/users/[id] endpoint to add business logic checks (self-deletion, last admin) in server/api/admin/users/[id]/delete.ts
+- [X] T023 [P] [US4] Create DeleteUserDialog component with confirmation message in app/components/admin/DeleteUserDialog.vue
+- [X] T024 [US4] Add "Delete" button to each user row in UserList component with disabled state for self in app/components/admin/UserList.vue
+- [X] T025 [US4] Implement deleteUser method in useUsers composable with optimistic updates in app/composables/useUsers.ts
+- [X] T026 [US4] Modify DELETE /api/admin/users/[id] endpoint to add business logic checks (self-deletion, last admin) in server/api/admin/users/[id]/index.delete.ts
 
 **Completion Criteria**:
 - "Delete" button appears on each user row
@@ -271,7 +271,7 @@ curl "http://localhost:3000/api/admin/users/stats"
 
 ### Tasks
 
-- [ ] T027 Run TypeScript type check and ESLint validation, fix all errors (npx nuxi typecheck && npx eslint .)
+- [X] T027 Run TypeScript type check and ESLint validation, fix all errors (npx nuxi typecheck && npx eslint .)
 
 **Completion Criteria**:
 - `npx nuxi typecheck` passes with 0 errors

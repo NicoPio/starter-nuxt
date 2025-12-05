@@ -44,8 +44,8 @@ const loadingStats = ref(false)
 const fetchRoleStats = async () => {
   loadingStats.value = true
   try {
-    const stats = await $fetch<{ role: UserRole; count: number }[]>('/api/admin/users/stats')
-    roleStats.value = stats
+    const response = await $fetch<{ stats: { role: UserRole; count: number }[]; total: number }>('/api/admin/users/stats')
+    roleStats.value = response.stats
   } catch (err) {
     console.error('Failed to fetch role stats:', err)
   } finally {

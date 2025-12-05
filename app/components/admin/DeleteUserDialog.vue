@@ -31,6 +31,7 @@ const handleConfirm = () => {
   <UModal
     v-model:open="isOpen"
     :title="t('admin.users.deleteDialog.title')"
+    :description="t('admin.users.deleteDialog.message')"
     :ui="{ footer: 'flex items-center justify-end gap-3' }"
   >
     <template #body>
