@@ -10,22 +10,25 @@ This is a Nuxt 4 starter template built with Nuxt UI, featuring a modern compone
 
 ```bash
 # Install dependencies
-npm install
+bun install
 
 # Start development server (http://localhost:3000)
-npm run dev
+bun run dev
 
 # Build for production
-npm run build
+bun run build
 
 # Preview production build locally
-npm run preview
+bun run preview
 
 # Generate static site
-npm run generate
+bun run generate
 
 # Lint code
-npx eslint .
+bun run lint
+
+# Type check
+bun run typecheck
 ```
 
 ## Architecture
@@ -282,13 +285,13 @@ Reply in french
 - **Password Hashing**: Handled by Better Auth (bcrypt)
 
 ## Development Workflow
-1. Install dependencies: `npm install`
+1. Install dependencies: `bun install`
 2. Start Supabase: `supabase start`
 3. Run migrations: `supabase db push`
-4. Start dev server: `npm run dev`
-5. Check types: `npx nuxi typecheck`
-6. Lint code: `npx eslint .`
-7. Build for production: `npm run build`
+4. Start dev server: `bun run dev`
+5. Check types: `bun run typecheck`
+6. Lint code: `bun run lint`
+7. Build for production: `bun run build`
 
 ## Recent Changes
 - 002-admin-user-management: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+

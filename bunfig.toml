@@ -1,0 +1,14 @@
+[runtime]
+jsx_runtime = "automatic"
+
+[install]
+registry = "https://registry.npmjs.org/"
+save_exact = false
+frozen = false
+
+[test]
+root = "./test"
+timeout = 10000
+
+[run]
+shell = "system"
