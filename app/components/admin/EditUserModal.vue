@@ -72,6 +72,7 @@ const hasChanged = computed(() => {
   <UModal
     v-model:open="isOpen"
     :title="t('admin.users.editRole.title')"
+    :description="t('admin.users.editRole.selectRole')"
     :ui="{ footer: 'flex items-center justify-end gap-3' }"
   >
     <template #body>

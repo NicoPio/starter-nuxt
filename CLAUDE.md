@@ -119,6 +119,8 @@ Reply in french
 - Zod for schema validation
 - Nuxt Content for i18n and content management
 - PostgreSQL (self-hosted Supabase) with Better Auth tables (`user`, `session`, `account`, `verification`) (002-admin-user-management)
+- TypeScript 5.9+, Node.js 18/20 (003-testing-infrastructure)
+- N/A (ephemeral test artifacts only) (003-testing-infrastructure)
 
 ## Implementation Notes
 
@@ -291,9 +293,9 @@ Reply in french
 7. Build for production: `npm run build`
 
 ## Recent Changes
+- 003-testing-infrastructure: Added TypeScript 5.9+, Node.js 18/20
 - 002-admin-user-management: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
 - 001-saas-starter-foundation: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
-- Always add a new entry to @CHANGELOG.md when a new feature is added
   - Blocs <script> ou <script setup>
   - Fichiers .js / .ts / .mjs
   - JAMAIS directement dans les expressions de template Vue (v-if, {{ }}, etc.)

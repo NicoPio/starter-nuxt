@@ -7,7 +7,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest",
+    "test:unit": "vitest run test/unit",
+    "test:nuxt": "vitest run --config vitest.nuxt.config.ts",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:all": "npm run test:unit && npm run test:nuxt && npm run test:e2e"
   },
   "dependencies": {
     "@nuxt/content": "^3.8.2",
@@ -15,7 +24,6 @@
     "@nuxt/hints": "^1.0.0-alpha.2",
     "@nuxt/image": "^2.0.0",
     "@nuxt/scripts": "^0.13.0",
-    "@nuxt/test-utils": "^3.20.1",
     "@nuxt/ui": "^4.2.1",
     "@tailwindcss/vite": "^4.1.17",
     "@unhead/vue": "^2.0.19",
@@ -35,7 +43,16 @@
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.75",
     "@iconify-json/simple-icons": "^1.2.60",
+    "@nuxt/test-utils": "^3.21.0",
+    "@playwright/test": "^1.57.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/vue": "^8.1.0",
     "@types/pg": "^8.15.6",
-    "bcryptjs": "^3.0.3"
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "bcryptjs": "^3.0.3",
+    "happy-dom": "^15.11.7",
+    "vitest": "^3.2.4"
   }
 }
