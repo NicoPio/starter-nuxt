@@ -1,47 +1,14 @@
-import { auth } from "../../../utils/auth"
+import { requireRole } from "../../../utils/session"
 import { UserListQuerySchema } from "../../../utils/validation"
 import type { UserRole, UserListResponse } from "~/types/common.types"
-
-interface SessionUser {
-  id: string
-  email: string
-  name?: string | null
-  role?: UserRole
-}
-
-interface DatabaseAdapter {
-  query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>
-}
+import { getUsersDatabase } from "../../../utils/database"
 
 export default defineEventHandler(async (event): Promise<UserListResponse> => {
   console.log('🔍 [API] /admin/users - Request received')
 
-  // Vérification de la session
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  })
-
-  console.log('🔍 [API] Session:', session ? 'Found' : 'Not found')
-
-  if (!session) {
-    console.log('❌ [API] No session found, returning 401')
-    throw createError({
-      statusCode: 401,
-      message: 'Non authentifié',
-    })
-  }
-
-  // Vérification du rôle
-  const userRole = (session.user as SessionUser).role
-  console.log('🔍 [API] User role:', userRole, 'User:', (session.user as SessionUser).email)
-
-  if (!userRole || !['Admin', 'Contributor'].includes(userRole)) {
-    console.log('❌ [API] Insufficient privileges, returning 403')
-    throw createError({
-      statusCode: 403,
-      message: 'Accès refusé - Privilèges admin ou contributor requis',
-    })
-  }
+  // Vérification de la session et du rôle (Admin ou Contributor)
+  await requireRole(event, ['Admin', 'Contributor'])
+  console.log('✅ [API] User authorized')
 
   // Validation des query params avec Zod
   const query = getQuery(event)
@@ -55,10 +22,10 @@ export default defineEventHandler(async (event): Promise<UserListResponse> => {
   const { page, limit, role, search } = validatedQuery
   const offset = (page - 1) * limit
 
-  const db = auth.options.database as DatabaseAdapter
+  const db = getUsersDatabase()
 
   // Construction de la requête SQL dynamique
-  let queryBuilder = 'SELECT id, name, email, "emailVerified", image, role, "createdAt", "updatedAt" FROM public.user WHERE 1=1'
+  let queryBuilder = 'SELECT id, name, email, email_verified, image, role, created_at, updated_at FROM users WHERE 1=1'
   const params: unknown[] = []
   let paramIndex = 1
 
@@ -75,7 +42,7 @@ export default defineEventHandler(async (event): Promise<UserListResponse> => {
   }
 
   // Comptage total pour pagination
-  let countQuery = 'SELECT COUNT(*) as count FROM public.user WHERE 1=1'
+  let countQuery = 'SELECT COUNT(*) as count FROM users WHERE 1=1'
   const countParams: unknown[] = []
   let countParamIndex = 1
 
@@ -95,7 +62,7 @@ export default defineEventHandler(async (event): Promise<UserListResponse> => {
 
   // Ajout de la pagination
   params.push(limit, offset)
-  queryBuilder += ` ORDER BY "createdAt" DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
+  queryBuilder += ` ORDER BY created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`
 
   console.log('🔍 [API] Executing query with params:', { limit, offset })
   const result = await db.query(queryBuilder, params)
@@ -108,10 +75,10 @@ export default defineEventHandler(async (event): Promise<UserListResponse> => {
       email: String(row.email),
       name: row.name ? String(row.name) : null,
       role: row.role as UserRole,
-      emailVerified: Boolean(row.emailVerified),
+      emailVerified: Boolean(row.email_verified),
       image: row.image ? String(row.image) : null,
-      createdAt: String(row.createdAt),
-      updatedAt: row.updatedAt ? String(row.updatedAt) : undefined,
+      createdAt: String(row.created_at),
+      updatedAt: row.updated_at ? String(row.updated_at) : undefined,
     })),
     pagination: {
       page,

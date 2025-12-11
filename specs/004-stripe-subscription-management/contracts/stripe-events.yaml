@@ -1,0 +1,240 @@
+# Stripe Webhook Events Specification
+# Feature: 004-stripe-subscription-management
+# Documentation: https://docs.stripe.com/api/events/types
+
+supported_events:
+  # Subscription Events
+  - type: customer.subscription.created
+    priority: P1
+    description: New subscription created after successful payment
+    handler: handleSubscriptionCreated
+    actions:
+      - Create user_subscriptions record
+      - Associate with subscription_plan
+      - Send welcome email
+    data_object: Stripe.Subscription
+
+  - type: customer.subscription.updated
+    priority: P1
+    description: Subscription updated (status change, period renewal, etc.)
+    handler: handleSubscriptionUpdated
+    actions:
+      - Update user_subscriptions status
+      - Update current_period_start/end
+      - Handle cancel_at_period_end flag
+    data_object: Stripe.Subscription
+
+  - type: customer.subscription.deleted
+    priority: P1
+    description: Subscription cancelled or expired
+    handler: handleSubscriptionDeleted
+    actions:
+      - Update status to 'cancelled'
+      - Set cancelled_at timestamp
+      - Disable premium features
+      - Send cancellation confirmation email
+    data_object: Stripe.Subscription
+
+  # Invoice/Payment Events
+  - type: invoice.payment_succeeded
+    priority: P1
+    description: Payment successful for subscription invoice
+    handler: handlePaymentSucceeded
+    actions:
+      - Create payment_history record with status 'paid'
+      - Update subscription status to 'active'
+      - Send payment receipt email
+    data_object: Stripe.Invoice
+
+  - type: invoice.payment_failed
+    priority: P1
+    description: Payment failed (card declined, insufficient funds, etc.)
+    handler: handlePaymentFailed
+    actions:
+      - Create payment_history record with status 'failed'
+      - Update subscription status to 'past_due'
+      - Send payment failure notification
+      - Trigger dunning sequence
+    data_object: Stripe.Invoice
+
+  - type: invoice.finalized
+    priority: P2
+    description: Invoice finalized and ready to be paid
+    handler: handleInvoiceFinalized
+    actions:
+      - Log invoice details
+      - Send upcoming payment reminder (if configured)
+    data_object: Stripe.Invoice
+
+  # Refund Events
+  - type: charge.refunded
+    priority: P2
+    description: Payment refunded (full or partial)
+    handler: handleRefund
+    actions:
+      - Update payment_history record
+      - Send refund confirmation email
+      - Adjust subscription if needed
+    data_object: Stripe.Charge
+
+  # Payment Method Events
+  - type: payment_method.attached
+    priority: P3
+    description: Payment method attached to customer
+    handler: handlePaymentMethodAttached
+    actions:
+      - Log payment method attachment
+      - Update customer default payment method if first
+    data_object: Stripe.PaymentMethod
+
+  - type: payment_method.detached
+    priority: P3
+    description: Payment method removed from customer
+    handler: handlePaymentMethodDetached
+    actions:
+      - Log payment method removal
+      - Warn user if no payment methods remaining
+    data_object: Stripe.PaymentMethod
+
+  # Customer Events
+  - type: customer.updated
+    priority: P3
+    description: Customer data updated (email, name, etc.)
+    handler: handleCustomerUpdated
+    actions:
+      - Sync customer data with user table if needed
+    data_object: Stripe.Customer
+
+  - type: customer.deleted
+    priority: P2
+    description: Customer deleted in Stripe
+    handler: handleCustomerDeleted
+    actions:
+      - Clean up local subscription data
+      - Log deletion for audit
+    data_object: Stripe.Customer
+
+# Event Processing Configuration
+processing:
+  timeout: 5000 # ms - Stripe webhook timeout
+  retry_strategy:
+    max_retries: 3
+    backoff: exponential
+    initial_delay: 1000 # ms
+    max_delay: 10000 # ms
+
+  idempotency:
+    enabled: true
+    table: webhook_logs
+    key: stripe_event_id
+    ttl: 2592000 # 30 days in seconds
+
+  logging:
+    level: info
+    log_all_events: true
+    log_failed_events: true
+    retention_days: 90
+
+# Security
+security:
+  signature_verification:
+    enabled: true
+    header: stripe-signature
+    secret_env: STRIPE_WEBHOOK_SECRET
+    algorithm: sha256
+
+  allowed_ips:
+    # Stripe IP ranges (optional - signature verification is primary)
+    - 3.18.12.63/32
+    - 3.130.192.231/32
+    - 13.235.14.237/32
+    - 13.235.122.149/32
+    # Add more Stripe IPs as needed
+
+# Testing
+test_events:
+  # Commands to trigger test events with Stripe CLI
+  commands:
+    - stripe trigger customer.subscription.created
+    - stripe trigger customer.subscription.updated
+    - stripe trigger customer.subscription.deleted
+    - stripe trigger invoice.payment_succeeded
+    - stripe trigger invoice.payment_failed
+    - stripe trigger charge.refunded
+
+  fixtures:
+    # Test fixtures for unit tests
+    subscription_created:
+      id: evt_test_sub_created
+      type: customer.subscription.created
+      data:
+        object:
+          id: sub_test_123
+          customer: cus_test_456
+          status: active
+          current_period_start: 1704067200
+          current_period_end: 1706745600
+
+    payment_succeeded:
+      id: evt_test_payment_ok
+      type: invoice.payment_succeeded
+      data:
+        object:
+          id: in_test_789
+          customer: cus_test_456
+          subscription: sub_test_123
+          amount_paid: 2900
+          currency: eur
+          status: paid
+
+    payment_failed:
+      id: evt_test_payment_fail
+      type: invoice.payment_failed
+      data:
+        object:
+          id: in_test_999
+          customer: cus_test_456
+          subscription: sub_test_123
+          amount_due: 2900
+          currency: eur
+          status: open
+          attempted: true
+
+# Error Handling
+error_handling:
+  unhandled_event_types:
+    action: log_and_return_200
+    log_level: warn
+
+  processing_failures:
+    action: log_and_return_500
+    log_level: error
+    retry_on_500: true
+
+  invalid_signature:
+    action: reject_with_401
+    log_level: error
+
+# Monitoring & Alerts
+monitoring:
+  metrics:
+    - webhook_received_total
+    - webhook_processed_success_total
+    - webhook_processed_error_total
+    - webhook_processing_duration_seconds
+
+  alerts:
+    - name: webhook_failure_rate_high
+      condition: failure_rate > 5%
+      window: 5m
+      action: notify_slack
+
+    - name: webhook_processing_slow
+      condition: p95_duration > 3s
+      window: 5m
+      action: notify_slack
+
+    - name: webhook_signature_failures
+      condition: signature_failures > 10
+      window: 1m
+      action: notify_security_team

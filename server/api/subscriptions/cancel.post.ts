@@ -1,25 +1,14 @@
-import { auth } from "../../utils/auth"
+import { requireAuth } from "../../utils/session"
+import { getUsersDatabase } from "../../utils/database"
 import { z } from 'zod'
-
-interface DatabaseAdapter {
-  query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>
-}
 
 const cancelSchema = z.object({
   confirm: z.boolean()
 })
 
 export default defineEventHandler(async (event) => {
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  })
-
-  if (!session) {
-    throw createError({
-      statusCode: 401,
-      message: 'Non authentifié',
-    })
-  }
+  // Vérifier que l'utilisateur est authentifié
+  const user = await requireAuth(event)
 
   const body = await readBody(event)
   const validation = cancelSchema.safeParse(body)
@@ -31,8 +20,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const userId = session.user.id
-  const db = auth.options.database as DatabaseAdapter
+  const userId = user.id
+  const db = getUsersDatabase()
 
   try {
     const subscriptionResult = await db.query(

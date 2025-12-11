@@ -1,0 +1,199 @@
+# English translations for Stripe module
+# Collection: stripe
+
+# Configuration
+config:
+  title: Stripe Configuration
+  description: Configure your Stripe API keys to enable payments
+  secretKey: Secret key
+  publishableKey: Publishable key
+  webhookSecret: Webhook secret
+  mode: Mode
+  testMode: Test mode
+  liveMode: Live mode
+  save: Save
+  saving: Saving...
+  testConnection: Test connection
+  testing: Testing...
+  success: Stripe configuration saved successfully
+  testSuccess: Stripe connection successful!
+  testFailed: "Connection failed: {error}"
+  notConfigured: Stripe is not configured
+  placeholders:
+    secretKey: sk_test_...
+    publishableKey: pk_test_...
+    webhookSecret: whsec_...
+  help:
+    secretKey: Starts with sk_test_ (test) or sk_live_ (live)
+    publishableKey: Starts with pk_test_ (test) or pk_live_ (live)
+    webhookSecret: Obtained from Stripe Dashboard
+
+# Subscription plans
+plans:
+  title: Subscription Plans
+  create: Create plan
+  edit: Edit plan
+  delete: Delete plan
+  syncFromStripe: Sync from Stripe
+  syncing: Syncing...
+  name: Plan name
+  description: Description
+  amount: Amount
+  currency: Currency
+  interval: Interval
+  features: Features
+  active: Active
+  inactive: Inactive
+  displayOrder: Display order
+  actions: Actions
+  monthly: Monthly
+  yearly: Yearly
+  perMonth: /month
+  perYear: /year
+  free: Free
+  subscribers: "{count} subscriber(s)"
+  mrr: "MRR: {amount}"
+  createSuccess: Plan created successfully
+  updateSuccess: Plan updated successfully
+  deleteSuccess: Plan deleted successfully
+  deleteConfirm: "Are you sure you want to delete this plan?"
+  deleteWarning: "Warning: {count} user(s) have an active subscription"
+  cannotDelete: Cannot delete a plan with active subscriptions
+  placeholders:
+    name: e.g. Pro, Enterprise
+    description: Plan description...
+    amount: "2900 (for $29.00)"
+  addFeature: Add feature
+  removeFeature: Remove
+
+# User subscription
+subscription:
+  title: Subscription
+  currentPlan: Current plan
+  subscribe: Subscribe
+  subscribeTo: "Subscribe to {plan}"
+  subscribing: Subscribing...
+  manage: Manage my subscription
+  cancel: Cancel subscription
+  canceling: Canceling...
+  reactivate: Reactivate subscription
+  reactivating: Reactivating...
+  status: Status
+  currentPeriod: Current period
+  renewsOn: "Renews on {date}"
+  expiresOn: "Expires on {date}"
+  canceledOn: "Canceled on {date}"
+  cancelAtPeriodEnd: Cancellation scheduled
+  accessUntil: "Access until {date}"
+  statuses:
+    active: Active
+    trialing: Trial period
+    pastDue: Payment overdue
+    unpaid: Unpaid
+    cancelled: Canceled
+    incomplete: Incomplete
+    incompleteExpired: Expired
+    paused: Paused
+  cancelDialog:
+    title: Cancel subscription
+    message: "Are you sure you want to cancel your subscription?"
+    warning: "You'll keep access until {date}"
+    confirm: Yes, cancel
+    cancel: No, keep it
+  cancelSuccess: Subscription canceled successfully
+  reactivateSuccess: Subscription reactivated successfully
+  checkoutRedirect: Redirecting to Stripe Checkout...
+  checkoutError: "Error creating checkout session: {error}"
+
+# Payment history
+payments:
+  title: Payment History
+  noPayments: No payments recorded
+  invoice: Invoice
+  amount: Amount
+  status: Status
+  date: Date
+  downloadPdf: Download PDF
+  downloading: Downloading...
+  statuses:
+    paid: Paid
+    open: Pending
+    void: Canceled
+    uncollectible: Uncollectible
+    failed: Failed
+  loadMore: Load more
+  loading: Loading...
+
+# Error messages
+errors:
+  configNotFound: Stripe configuration not found
+  planNotFound: Subscription plan not found
+  subscriptionNotFound: Subscription not found
+  alreadySubscribed: You already have an active subscription
+  invalidApiKey: Invalid Stripe API key
+  webhookSignatureInvalid: Invalid webhook signature
+  paymentFailed: Payment failed
+  generic: An error occurred. Please try again.
+
+# Success messages
+success:
+  configSaved: Configuration saved
+  planCreated: Plan created
+  planUpdated: Plan updated
+  planDeleted: Plan deleted
+  subscriptionCreated: Subscription created
+  subscriptionCanceled: Subscription canceled
+  subscriptionReactivated: Subscription reactivated
+
+# Configuration wizard
+wizard:
+  title: Stripe Configuration Wizard
+  step: "Step {current} of {total}"
+  next: Next
+  previous: Previous
+  finish: Finish
+  skip: Skip
+  steps:
+    welcome:
+      title: Welcome
+      description: Configure Stripe in a few simple steps
+      start: Get started
+    account:
+      title: Create Stripe account
+      description: Create your Stripe account if you don't have one yet
+      hasAccount: I already have an account
+      createAccount: Create Stripe account
+      link: "Open {url}"
+    apiKeys:
+      title: API Keys
+      description: Copy your API keys from the Stripe dashboard
+      help: "You can find your keys at: Developers > API keys"
+    firstPlan:
+      title: First plan
+      description: Create your first subscription plan
+      help: You can create more plans later
+    summary:
+      title: Summary
+      description: Your configuration is complete!
+      configured: "✓ Stripe configured in {mode} mode"
+      plansCreated: "✓ {count} plan(s) created"
+      nextSteps: Next steps
+      createMorePlans: Create more plans
+      testCheckout: Test a payment
+      goToDashboard: Go to dashboard
+
+# Common buttons and actions
+common:
+  save: Save
+  cancel: Cancel
+  delete: Delete
+  edit: Edit
+  create: Create
+  back: Back
+  close: Close
+  loading: Loading...
+  error: Error
+  success: Success
+  confirm: Confirm
+  yes: Yes
+  no: No

@@ -1,13 +1,5 @@
-import { auth } from "../../../utils/auth"
+import { requireRole } from "../../../utils/session"
 import { z } from 'zod'
-import type { UserRole } from "~/types/common.types"
-
-interface SessionUser {
-  id: string
-  email: string
-  name?: string | null
-  role?: UserRole
-}
 
 const stripeConfigSchema = z.object({
   stripe_public_key: z.string().min(1).startsWith('pk_'),
@@ -17,24 +9,8 @@ const stripeConfigSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  })
-
-  if (!session) {
-    throw createError({
-      statusCode: 401,
-      message: 'Non authentifié',
-    })
-  }
-
-  const userRole = (session.user as SessionUser).role
-  if (userRole !== 'Admin') {
-    throw createError({
-      statusCode: 403,
-      message: 'Accès refusé - Privilèges administrateur requis',
-    })
-  }
+  // Vérifier que l'utilisateur est Admin
+  await requireRole(event, ['Admin'])
 
   const body = await readBody(event)
   const validation = stripeConfigSchema.safeParse(body)

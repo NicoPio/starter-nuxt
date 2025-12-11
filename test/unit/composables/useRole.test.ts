@@ -1,25 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import type { UserRole } from '~/types/common.types'
 
-// Mock auth-client
-vi.mock('~/lib/auth-client', () => ({
-  authClient: {
-    useSession: vi.fn(),
-  },
-}))
+// Mock nuxt-auth-utils
+const mockUserSession = {
+  user: ref(null),
+}
+
+// Set global mock before imports
+global.useUserSession = vi.fn(() => mockUserSession)
 
 describe('useRole', () => {
-  let mockSession: any
-
   beforeEach(() => {
-    // Reset modules to get fresh composable
-    vi.resetModules()
-
-    // Create a reactive session mock
-    mockSession = ref({
-      data: null,
-    })
+    // Reset user to null before each test
+    mockUserSession.user.value = null
   })
 
   const createMockUser = (role: UserRole = 'User') => ({
@@ -30,11 +24,8 @@ describe('useRole', () => {
   })
 
   const setupComposable = async (role: UserRole = 'User') => {
-    const { authClient } = await import('~/lib/auth-client')
     const mockUser = createMockUser(role)
-    mockSession.value = { data: { user: mockUser } }
-
-    vi.mocked(authClient.useSession).mockReturnValue(mockSession)
+    mockUserSession.user.value = mockUser
 
     const { useRole } = await import('~/app/composables/useRole')
     return useRole()
@@ -50,22 +41,18 @@ describe('useRole', () => {
       expect(user.value?.role).toBe('Admin')
     })
 
-    it('returns undefined user when session has no data', async () => {
-      const { authClient } = await import('~/lib/auth-client')
-      mockSession.value = { data: null }
-      vi.mocked(authClient.useSession).mockReturnValue(mockSession)
+    it('returns null user when session has no data', async () => {
+      mockUserSession.user.value = null
 
       const { useRole } = await import('~/app/composables/useRole')
       const { user } = useRole()
 
-      expect(user.value).toBeUndefined()
+      expect(user.value).toBeNull()
     })
 
     it('returns default User role when user has no role', async () => {
-      const { authClient } = await import('~/lib/auth-client')
       const mockUser = { id: 'user-123', email: 'test@example.com' }
-      mockSession.value = { data: { user: mockUser } }
-      vi.mocked(authClient.useSession).mockReturnValue(mockSession)
+      mockUserSession.user.value = mockUser as any
 
       const { useRole } = await import('~/app/composables/useRole')
       const { role } = useRole()

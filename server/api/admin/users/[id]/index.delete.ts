@@ -1,43 +1,25 @@
-import { auth } from "../../../../utils/auth"
+import { requireRole } from "../../../../utils/session"
+import { getUsersDatabase } from "../../../../utils/database"
 import type { UserRole } from "~/types/common.types"
 
-interface SessionUser {
-  id: string
-  email: string
-  name?: string | null
-  role?: UserRole
-}
-
-interface DatabaseAdapter {
-  query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>
-}
-
 export default defineEventHandler(async (event) => {
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  })
-
-  if (!session || (session.user as SessionUser).role !== 'Admin') {
-    throw createError({
-      statusCode: 403,
-      message: 'Accès refusé - Privilèges administrateur requis',
-    })
-  }
+  // Vérifier que l'utilisateur est Admin
+  const user = await requireRole(event, ['Admin'])
 
   const userId = getRouterParam(event, 'id')
 
-  if (userId === session.user.id) {
+  if (userId === user.id) {
     throw createError({
       statusCode: 400,
       message: 'Vous ne pouvez pas supprimer votre propre compte',
     })
   }
 
-  const db = auth.options.database as DatabaseAdapter
+  const db = getUsersDatabase()
 
   // Vérifier si c'est le dernier admin
   const targetUser = await db.query(
-    'SELECT role FROM public.user WHERE id = $1',
+    'SELECT role FROM users WHERE id = $1',
     [userId]
   )
 
@@ -51,7 +33,7 @@ export default defineEventHandler(async (event) => {
   // Si l'utilisateur à supprimer est Admin, vérifier qu'il n'est pas le dernier
   if ((targetUser.rows[0] as { role: UserRole }).role === 'Admin') {
     const adminCount = await db.query(
-      'SELECT COUNT(*) as count FROM public.user WHERE role = $1',
+      'SELECT COUNT(*) as count FROM users WHERE role = $1',
       ['Admin']
     )
 
@@ -66,7 +48,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const result = await db.query(
-    'DELETE FROM public.user WHERE id = $1 RETURNING id',
+    'DELETE FROM users WHERE id = $1 RETURNING id',
     [userId]
   )
 

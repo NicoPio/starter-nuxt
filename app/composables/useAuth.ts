@@ -1,81 +1,84 @@
-import { authClient } from "~/lib/auth-client";
+/**
+ * Auth composable for nuxt-auth-utils
+ * Replaces Better Auth authClient
+ */
 
 export const useAuth = () => {
   const toast = useToast()
   const { t } = useContentI18n()
-  const session = authClient.useSession()
 
-  const user = computed(() => session.value.data?.user || null)
-  const isAuthenticated = computed(() => !!session.value.data)
+  // Use nuxt-auth-utils session
+  const { loggedIn, user, session, fetch: refreshSession, clear } = useUserSession()
+
+  const isAuthenticated = computed(() => loggedIn.value)
 
   const signup = async (email: string, password: string, full_name?: string) => {
     try {
-      const response = await authClient.signUp.email({
-        email,
-        password,
-        name: full_name || email.split('@')[0] || 'User',
+      const response = await $fetch('/api/auth/register', {
+        method: 'POST',
+        body: {
+          email,
+          password,
+          name: full_name || email.split('@')[0] || 'User',
+        },
       })
 
-      if (response.error) {
-        return { data: null, error: response.error }
-      }
+      // Refresh session after signup
+      await refreshSession()
 
-      return { data: response.data, error: null }
+      return { data: response, error: null }
     } catch (error: unknown) {
+      console.error('Signup error:', error)
       return { data: null, error }
     }
   }
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await authClient.signIn.email({
-        email,
-        password,
+      const response = await $fetch('/api/auth/login', {
+        method: 'POST',
+        body: {
+          email,
+          password,
+        },
       })
 
-      if (response.error) {
-        return { data: null, error: response.error }
-      }
+      // Refresh session after login
+      await refreshSession()
 
-      return { data: response.data, error: null }
+      return { data: response, error: null }
     } catch (error: unknown) {
+      console.error('Login error:', error)
       return { data: null, error }
     }
   }
 
   const logout = async () => {
     try {
-      await authClient.signOut({
-        fetchOptions: {
-          onSuccess: async () => {
-            toast.add({
-              title: t('auth.logout.success'),
-              description: t('auth.logout.successMessage'),
-              color: 'success'
-            })
-
-            await new Promise(resolve => setTimeout(resolve, 100))
-
-            await navigateTo('/', { replace: true })
-          },
-          onError: (ctx) => {
-            const message = ctx.error?.message || t('auth.logout.errorGeneric')
-            toast.add({
-              title: t('auth.logout.error'),
-              description: message,
-              color: 'error'
-            })
-          }
-        }
+      await $fetch('/api/auth/logout', {
+        method: 'POST',
       })
+
+      // Clear local session
+      await clear()
+
+      toast.add({
+        title: t('auth.logout.success'),
+        description: t('auth.logout.successMessage'),
+        color: 'success',
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      await navigateTo('/', { replace: true })
 
       return { error: null }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : t('auth.logout.errorGeneric')
+      const message =
+        error instanceof Error ? error.message : t('auth.logout.errorGeneric')
       toast.add({
         title: t('auth.logout.error'),
         description: message,
-        color: 'error'
+        color: 'error',
       })
       return { error }
     }
@@ -87,6 +90,6 @@ export const useAuth = () => {
     isAuthenticated,
     signup,
     login,
-    logout
+    logout,
   }
 }

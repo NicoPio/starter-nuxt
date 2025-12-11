@@ -1,17 +1,18 @@
-import { auth } from "../../utils/auth";
+/**
+ * Update user profile endpoint for nuxt-auth-utils
+ */
+
 import { UpdateProfileSchema } from "../../utils/schemas";
 
 export default defineEventHandler(async (event) => {
-  // Get the session from better-auth
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  });
+  // Get the session from nuxt-auth-utils
+  const session = await getUserSession(event)
 
-  if (!session) {
+  if (!session.user) {
     throw createError({
       statusCode: 401,
       message: 'Non authentifié',
-    });
+    })
   }
 
   const body = await readBody(event);
@@ -27,23 +28,27 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Use better-auth's update user API
-    // Note: better-auth provides methods to update user data
-    // For now, we'll return the updated data
-    // In production, you'd use better-auth's update methods or direct DB access
+    // Update session with new user data
+    await setUserSession(event, {
+      user: {
+        ...session.user,
+        name: result.data.full_name || session.user.name,
+      },
+      loggedInAt: session.loggedInAt,
+    })
 
     const updatedUser = {
       id: session.user.id,
       email: session.user.email,
       full_name: result.data.full_name || session.user.name || null,
-      avatar_url: result.data.avatar_url || session.user.image || null,
-      created_at: session.user.createdAt,
+      avatar_url: result.data.avatar_url || null,
+      created_at: null, // À récupérer depuis la BD si nécessaire
       updated_at: new Date().toISOString(),
-      role: 'User',
+      role: session.user.role || 'User',
     };
 
-    // TODO: Implement actual DB update using better-auth's database adapter
-    // const db = auth.options.database
+    // TODO: Implement actual DB update
+    // const db = useDatabase()
     // await db.update(...)
 
     return updatedUser;

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { z } from 'zod'
-import { authClient } from '~/lib/auth-client'
 
 const { t } = useContentI18n()
 const toast = useToast()
 const route = useRoute()
+const { login } = useAuth()
 
 const loginSchema = z.object({
   email: z.string().email('auth.validation.emailInvalid'),
@@ -40,16 +40,13 @@ const onSubmit = async () => {
   loading.value = true
 
   try {
-    const response = await authClient.signIn.email({
-      email: state.email,
-      password: state.password,
-      rememberMe: state.remember
-    })
+    const { error } = await login(state.email, state.password)
 
-    if (response.error) {
+    if (error) {
+      const message = error instanceof Error ? error.message : t('auth.login.errorGeneric')
       toast.add({
         title: t('auth.login.error'),
-        description: response.error.message || t('auth.login.errorGeneric'),
+        description: message,
         color: 'error'
       })
       return
@@ -65,9 +62,7 @@ const onSubmit = async () => {
 
     await new Promise(resolve => setTimeout(resolve, 100))
 
-    if (import.meta.client) {
-      window.location.href = redirectTo
-    }
+    await navigateTo(redirectTo, { replace: true })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : t('auth.login.errorGeneric')
     toast.add({
@@ -84,10 +79,10 @@ const signInWithSocial = async (provider: 'github' | 'google' | 'apple') => {
   socialLoading.value = provider
 
   try {
-    await authClient.signIn.social({
-      provider,
-      callbackURL: (route.query.redirect as string) || '/dashboard'
-    })
+    // Redirect to OAuth route with callback
+    const redirectTo = (route.query.redirect as string) || '/dashboard'
+    const callbackUrl = encodeURIComponent(redirectTo)
+    window.location.href = `/auth/${provider}?redirect=${callbackUrl}`
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : t('auth.login.errorGeneric')
     toast.add({
@@ -164,6 +159,7 @@ const signInWithSocial = async (provider: 'github' | 'google' | 'apple') => {
       <UFormField :label="t('auth.login.email')" name="email" required>
         <UInput
           v-model="state.email"
+          name="email"
           type="email"
           :placeholder="t('auth.login.emailPlaceholder')"
           autocomplete="email"
@@ -175,6 +171,7 @@ const signInWithSocial = async (provider: 'github' | 'google' | 'apple') => {
       <UFormField :label="t('auth.login.password')" name="password" required>
         <UInput
           v-model="state.password"
+          name="password"
           type="password"
           :placeholder="t('auth.login.passwordPlaceholder')"
           autocomplete="current-password"

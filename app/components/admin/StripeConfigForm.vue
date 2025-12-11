@@ -149,15 +149,15 @@ const testConnection = async () => {
           </div>
         </div>
 
-        <UFormGroup :label="t('admin.stripe.fields.publicKey')" name="stripe_public_key" required>
+        <UFormField :label="t('admin.stripe.fields.publicKey')" name="stripe_public_key" required>
           <UInput
             v-model="state.stripe_public_key"
             placeholder="pk_test_..."
             icon="i-heroicons-key"
           />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup :label="t('admin.stripe.fields.secretKey')" name="stripe_secret_key" required>
+        <UFormField :label="t('admin.stripe.fields.secretKey')" name="stripe_secret_key" required>
           <UInput
             v-model="state.stripe_secret_key"
             :type="showSecretKey ? 'text' : 'password'"
@@ -174,9 +174,9 @@ const testConnection = async () => {
               />
             </template>
           </UInput>
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup :label="t('admin.stripe.fields.webhookSecret')" name="webhook_secret" required>
+        <UFormField :label="t('admin.stripe.fields.webhookSecret')" name="webhook_secret" required>
           <UInput
             v-model="state.webhook_secret"
             :type="showWebhookSecret ? 'text' : 'password'"
@@ -193,16 +193,16 @@ const testConnection = async () => {
               />
             </template>
           </UInput>
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup :label="t('admin.stripe.fields.testMode')" name="is_test_mode">
+        <UFormField :label="t('admin.stripe.fields.testMode')" name="is_test_mode">
           <div class="flex items-center gap-3">
-            <UToggle v-model="state.is_test_mode" />
+            <USwitch v-model="state.is_test_mode" />
             <span class="text-sm text-gray-600 dark:text-gray-400">
               {{ state.is_test_mode ? t('admin.stripe.testModeEnabled') : t('admin.stripe.liveModeEnabled') }}
             </span>
           </div>
-        </UFormGroup>
+        </UFormField>
 
         <div class="rounded-lg bg-yellow-50 dark:bg-yellow-900/20 p-4">
           <div class="flex gap-3">

@@ -1,7 +1,19 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const { hasPermission } = useRole()
+  const { loggedIn, user } = useUserSession()
 
-  if (!hasPermission(['Admin', 'Contributor'])) {
+  // Vérifier si l'utilisateur est connecté
+  if (!loggedIn.value || !user.value) {
+    return navigateTo({
+      path: '/login',
+      query: {
+        error: 'Authentification requise',
+        redirect: useRoute().fullPath
+      }
+    })
+  }
+
+  // Vérifier si l'utilisateur est Admin ou Contributor
+  if (user.value.role !== 'Admin' && user.value.role !== 'Contributor') {
     return navigateTo({
       path: '/dashboard',
       query: {

@@ -10,8 +10,8 @@ test.describe('Gestion des utilisateurs (Admin)', () => {
     // Vérifier l'URL
     await expect(authenticatedPage).toHaveURL('/admin/users')
 
-    // Vérifier le titre de la page
-    await expect(authenticatedPage.getByRole('heading', { name: /users|utilisateurs/i })).toBeVisible()
+    // Vérifier le titre de la page (prendre le premier heading)
+    await expect(authenticatedPage.getByRole('heading', { name: /users|utilisateurs/i }).first()).toBeVisible()
 
     // Vérifier qu'il y a une table ou une liste d'utilisateurs
     const userTable = authenticatedPage.locator('table')

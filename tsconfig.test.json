@@ -1,18 +1,12 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
+  "extends": "./.nuxt/tsconfig.app.json",
   "compilerOptions": {
-    "composite": true,
     "skipLibCheck": true,
-    "types": ["vitest/globals", "@vue/test-utils", "node"],
-    "paths": {
-      "~/*": ["./app/*"],
-      "@/*": ["./app/*"],
-      "~~/*": ["./*"],
-      "@@/*": ["./*"]
-    }
+    "types": ["vitest/globals", "@vue/test-utils", "node"]
   },
   "include": [
-    "test/**/*"
+    "test/**/*",
+    "app/**/*"
   ],
   "exclude": [
     "node_modules",
