@@ -41,7 +41,7 @@ onMounted(async () => {
     </UCard>
 
     <UCard v-else>
-      <ProfileProfileForm />
+      <ProfileForm />
     </UCard>
   </div>
 </template>
