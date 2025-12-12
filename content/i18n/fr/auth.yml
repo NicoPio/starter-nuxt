@@ -48,3 +48,39 @@ logout:
   successMessage: Vous avez été déconnecté avec succès
   error: Échec de la déconnexion
   errorGeneric: Une erreur s'est produite lors de la déconnexion
+
+forgotPassword:
+  title: Mot de passe oublié ?
+  description: Réinitialisez votre mot de passe
+  heading: Réinitialiser votre mot de passe
+  subheading: Saisissez votre adresse email et nous vous enverrons un lien de réinitialisation
+  email: Email
+  emailPlaceholder: votre.email@exemple.com
+  submit: Envoyer le lien
+  backToLogin: Retour à la connexion
+  success: Email envoyé !
+  successMessage: Si cet email existe, un lien de réinitialisation a été envoyé
+  error: Demande échouée
+  errorGeneric: Impossible d'envoyer l'email de réinitialisation. Veuillez réessayer.
+  rateLimited: Trop de demandes. Veuillez attendre avant de réessayer.
+
+resetPassword:
+  title: Réinitialiser le mot de passe
+  description: Choisissez un nouveau mot de passe
+  heading: Créer un nouveau mot de passe
+  subheading: Saisissez votre nouveau mot de passe ci-dessous
+  password: Nouveau mot de passe
+  passwordPlaceholder: Entrez le nouveau mot de passe
+  confirmPassword: Confirmer le mot de passe
+  confirmPasswordPlaceholder: Confirmez le nouveau mot de passe
+  passwordHint: Doit contenir au moins 8 caractères
+  submit: Réinitialiser le mot de passe
+  success: Mot de passe réinitialisé !
+  successMessage: Votre mot de passe a été réinitialisé avec succès
+  error: Réinitialisation échouée
+  errorGeneric: Impossible de réinitialiser le mot de passe. Veuillez réessayer.
+  invalidToken: Ce lien est invalide ou a expiré
+  expiredToken: Ce lien a expiré
+  usedToken: Ce lien a déjà été utilisé
+  passwordMismatch: Les mots de passe ne correspondent pas
+  passwordTooShort: Le mot de passe doit contenir au moins 8 caractères

@@ -48,3 +48,39 @@ logout:
   successMessage: You have been logged out successfully
   error: Logout failed
   errorGeneric: An error occurred during logout
+
+forgotPassword:
+  title: Forgot Password?
+  description: Reset your password
+  heading: Reset Your Password
+  subheading: Enter your email address and we'll send you a reset link
+  email: Email
+  emailPlaceholder: your.email@example.com
+  submit: Send Reset Link
+  backToLogin: Back to login
+  success: Email sent!
+  successMessage: If this email exists, a reset link has been sent
+  error: Request failed
+  errorGeneric: Could not send reset email. Please try again.
+  rateLimited: Too many requests. Please wait before trying again.
+
+resetPassword:
+  title: Reset Password
+  description: Choose a new password
+  heading: Create New Password
+  subheading: Enter your new password below
+  password: New Password
+  passwordPlaceholder: Enter new password
+  confirmPassword: Confirm Password
+  confirmPasswordPlaceholder: Confirm new password
+  passwordHint: Must be at least 8 characters
+  submit: Reset Password
+  success: Password reset!
+  successMessage: Your password has been successfully reset
+  error: Reset failed
+  errorGeneric: Could not reset password. Please try again.
+  invalidToken: This link is invalid or has expired
+  expiredToken: This link has expired
+  usedToken: This link has already been used
+  passwordMismatch: Passwords do not match
+  passwordTooShort: Password must be at least 8 characters

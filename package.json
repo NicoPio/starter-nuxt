@@ -38,6 +38,7 @@
     "nuxt-auth-utils": "^0.5.26",
     "pg": "^8.16.3",
     "postgres": "^3.4.7",
+    "resend": "^6.6.0",
     "stripe": "^20.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
