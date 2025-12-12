@@ -25,6 +25,10 @@ export default defineNuxtConfig({
     githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     appleClientSecret: process.env.APPLE_CLIENT_SECRET,
+    resend: {
+      apiKey: process.env.RESEND_API_KEY || '',
+      fromEmail: process.env.RESEND_FROM_EMAIL || '[email protected]',
+    },
     stripe: {
       secretKey: process.env.STRIPE_SECRET_KEY,
       publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -62,6 +66,7 @@ export default defineNuxtConfig({
     // Public (client + server)
     public: {
       betterAuthUrl: process.env.NUXT_PUBLIC_BETTER_AUTH_URL || 'http://localhost:3000',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
       githubClientId: process.env.NUXT_PUBLIC_GITHUB_CLIENT_ID,
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID,
       appleClientId: process.env.NUXT_PUBLIC_APPLE_CLIENT_ID,

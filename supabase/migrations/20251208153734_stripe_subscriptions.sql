@@ -54,7 +54,7 @@ COMMENT ON COLUMN subscription_plans.features IS 'Array JSON des features du pla
 -- Table 3: Abonnements utilisateurs
 CREATE TABLE user_subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   plan_id UUID NOT NULL REFERENCES subscription_plans(id),
   stripe_subscription_id TEXT NOT NULL UNIQUE,
   stripe_customer_id TEXT NOT NULL,
@@ -85,7 +85,7 @@ COMMENT ON INDEX unique_active_subscription_per_user IS 'Empêche plusieurs abon
 -- Table 4: Historique des paiements
 CREATE TABLE payment_history (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   subscription_id UUID NOT NULL REFERENCES user_subscriptions(id),
   stripe_invoice_id TEXT NOT NULL UNIQUE,
   stripe_payment_intent_id TEXT,
@@ -123,14 +123,14 @@ CREATE INDEX idx_webhooks_status ON webhook_logs(status) WHERE status = 'failed'
 COMMENT ON TABLE webhook_logs IS 'Logs des événements webhook Stripe (idempotence + debugging)';
 COMMENT ON COLUMN webhook_logs.stripe_event_id IS 'Clé d''idempotence - garantit traitement unique';
 
--- Ajouter colonne stripe_customer_id à la table user (Better Auth)
-ALTER TABLE "user"
+-- Ajouter colonne stripe_customer_id à la table users (nuxt-auth-utils)
+ALTER TABLE users
   ADD COLUMN IF NOT EXISTS stripe_customer_id TEXT;
 
-CREATE INDEX IF NOT EXISTS idx_user_stripe_customer
-  ON "user"(stripe_customer_id);
+CREATE INDEX IF NOT EXISTS idx_users_stripe_customer
+  ON users(stripe_customer_id);
 
-COMMENT ON COLUMN "user".stripe_customer_id IS 'ID Customer Stripe associé à cet utilisateur';
+COMMENT ON COLUMN users.stripe_customer_id IS 'ID Customer Stripe associé à cet utilisateur';
 
 -- Triggers pour updated_at automatique
 CREATE OR REPLACE FUNCTION update_updated_at_column()

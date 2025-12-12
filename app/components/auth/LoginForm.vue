@@ -179,7 +179,7 @@ const signInWithSocial = async (provider: 'github' | 'google' | 'apple') => {
           required
         />
         <template #hint>
-          <NuxtLink to="/forgot-password" class="text-xs text-primary-600 hover:text-primary-700">
+          <NuxtLink to="/auth/forgot-password" class="text-xs text-primary-600 hover:text-primary-700">
             {{ t('auth.login.forgotPassword') }}
           </NuxtLink>
         </template>

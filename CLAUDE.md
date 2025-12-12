@@ -124,6 +124,7 @@ Reply in french
 - PostgreSQL (self-hosted Supabase) with custom auth tables (`users`, `oauth_accounts`, `stripe_customers`, `stripe_subscriptions`)
 - TypeScript 5.9+, Node.js 18/20 (003-testing-infrastructure)
 - Vitest for unit testing, Playwright for E2E testing (003-testing-infrastructure)
+- PostgreSQL (self-hosted Supabase) - nouvelle table `password_reset_tokens` (006-password-reset)
 
 ## Implementation Notes
 
@@ -323,6 +324,7 @@ Reply in french
 10. Build for production: `bun run build`
 
 ## Recent Changes
+- 006-password-reset: Added TypeScript 5.9+ with Nuxt 4.2.1, Vue 3.5, Node.js 18+
 - **005-migrate-nuxt-auth-utils**: 🚀 Migrated from Better Auth to nuxt-auth-utils
   - Replaced Better Auth with nuxt-auth-utils for session management
   - Custom email/password authentication with scrypt hashing
@@ -335,7 +337,6 @@ Reply in french
   - Stripe customer and subscription management
   - Webhook handling for subscription events
   - Admin configuration for Stripe API keys
-- **003-testing-infrastructure**: Added Vitest (unit) and Playwright (E2E) testing
   - Unit tests for composables and utilities
   - E2E tests for critical user flows
   - Code coverage reporting

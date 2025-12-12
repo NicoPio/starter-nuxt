@@ -41,15 +41,12 @@ END $$;
 -- STEP 3: Drop Better Auth-specific triggers and functions (if any)
 -- ============================================================================
 
--- Drop triggers (already dropped via CASCADE, but for safety)
-DROP TRIGGER IF EXISTS update_user_updated_at ON "user";
-DROP TRIGGER IF EXISTS update_session_updated_at ON "session";
-DROP TRIGGER IF EXISTS update_account_updated_at ON "account";
-DROP TRIGGER IF EXISTS update_verification_updated_at ON "verification";
+-- Triggers are already dropped via CASCADE when tables were dropped
+-- Commenting out explicit DROP TRIGGER commands to avoid errors
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Better Auth triggers dropped successfully';
+  RAISE NOTICE 'Better Auth triggers dropped successfully (via CASCADE)';
 END $$;
 
 -- Note: We keep the update_updated_at_column() function as it's used by nuxt-auth-utils tables
