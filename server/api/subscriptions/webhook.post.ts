@@ -1,9 +1,5 @@
 import Stripe from 'stripe'
-import { auth } from '../../utils/auth'
-
-interface DatabaseAdapter {
-  query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>
-}
+import { getUsersDatabase } from '../../utils/database'
 
 // Lazy initialization de Stripe pour éviter les erreurs si la clé n'est pas configurée
 let stripe: Stripe | null = null
@@ -51,7 +47,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const db = auth.options.database as DatabaseAdapter
+  const db = getUsersDatabase()
 
   try {
     switch (stripeEvent.type) {
@@ -88,7 +84,7 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-async function handleSubscriptionUpdate(db: DatabaseAdapter, subscription: Stripe.Subscription) {
+async function handleSubscriptionUpdate(db: ReturnType<typeof getUsersDatabase>, subscription: Stripe.Subscription) {
   const customerId = subscription.customer as string
   const subscriptionId = subscription.id
 
@@ -138,7 +134,7 @@ async function handleSubscriptionUpdate(db: DatabaseAdapter, subscription: Strip
   console.log(`[Webhook] Subscription ${subscriptionId} updated for customer ${customerId}`)
 }
 
-async function handleSubscriptionDeleted(db: DatabaseAdapter, subscription: Stripe.Subscription) {
+async function handleSubscriptionDeleted(db: ReturnType<typeof getUsersDatabase>, subscription: Stripe.Subscription) {
   const customerId = subscription.customer as string
   const subscriptionId = subscription.id
 
@@ -157,7 +153,7 @@ async function handleSubscriptionDeleted(db: DatabaseAdapter, subscription: Stri
   console.log(`[Webhook] Subscription ${subscriptionId} deleted for customer ${customerId}`)
 }
 
-async function handlePaymentFailed(db: DatabaseAdapter, invoice: Stripe.Invoice) {
+async function handlePaymentFailed(db: ReturnType<typeof getUsersDatabase>, invoice: Stripe.Invoice) {
   const customerId = invoice.customer as string
   // invoice.subscription existe sur Stripe.Invoice (string | Subscription | DeletedSubscription | null)
   const inv = invoice as Stripe.Invoice & { subscription?: string | Stripe.Subscription | null }

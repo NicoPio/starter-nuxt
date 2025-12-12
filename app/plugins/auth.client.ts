@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(async () => {
   const { session } = useAuth()
 
-  // Wait for better-auth to load the session
+  // Wait for nuxt-auth-utils to load the session
   // This prevents race conditions in middlewares
   await new Promise<void>((resolve) => {
     // If session is already defined (not pending), resolve immediately

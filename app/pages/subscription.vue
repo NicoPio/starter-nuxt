@@ -53,7 +53,7 @@ useSeoMeta({
     </div>
 
     <div v-else-if="subscription" class="space-y-6">
-      <SubscriptionSubscriptionCard
+      <SubscriptionCard
         :subscription="subscription"
         @cancel="handleCancelClick"
       />

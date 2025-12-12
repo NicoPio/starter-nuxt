@@ -1,0 +1,246 @@
+# Traductions françaises pour le module Stripe
+# Collection: stripe
+
+# Configuration
+config:
+  title: Configuration Stripe
+  description: Configurez vos clés API Stripe pour activer les paiements
+  hideKeys: Masquer les clés
+  showKeys: Afficher les clés
+  fields:
+    secretKey:
+      label: Clé secrète Stripe
+      help: Commence par sk_test_ (test) ou sk_live_ (production)
+    publishableKey:
+      label: Clé publique Stripe
+      help: Commence par pk_test_ (test) ou pk_live_ (production)
+    webhookSecret:
+      label: Secret webhook Stripe
+      help: Obtenu depuis le tableau de bord Stripe
+  buttons:
+    save: Sauvegarder
+    testConnection: Tester la connexion
+  validation:
+    secretKeyMin: La clé secrète doit contenir au moins 20 caractères
+    secretKeyPrefix: La clé secrète doit commencer par sk_
+    publishableKeyMin: La clé publique doit contenir au moins 20 caractères
+    publishableKeyPrefix: La clé publique doit commencer par pk_
+    webhookSecretMin: Le secret webhook doit contenir au moins 20 caractères
+    webhookSecretPrefix: Le secret webhook doit commencer par whsec_
+  save:
+    success: Configuration sauvegardée
+    successMessage: La configuration Stripe a été enregistrée avec succès
+    error: Erreur de sauvegarde
+    errorGeneric: Impossible de sauvegarder la configuration Stripe
+  fetch:
+    errorGeneric: Impossible de charger la configuration Stripe
+  test:
+    success: Connexion réussie
+    successMessage: "Connexion à Stripe réussie en mode {mode}"
+    error: Erreur de connexion
+    errorGeneric: Impossible de tester la connexion à Stripe
+
+# Plans d'abonnement
+plans:
+  title: Plans d'abonnement
+  create: Créer un plan
+  edit: Modifier le plan
+  delete: Supprimer le plan
+  syncFromStripe: Synchroniser depuis Stripe
+  syncing: Synchronisation...
+  name: Nom du plan
+  description: Description
+  amount: Montant
+  currency: Devise
+  interval: Intervalle
+  features: Fonctionnalités
+  active: Actif
+  inactive: Inactif
+  displayOrder: Ordre d'affichage
+  actions: Actions
+  monthly: Mensuel
+  yearly: Annuel
+  perMonth: /mois
+  perYear: /an
+  free: Gratuit
+  subscribers: "{count} abonné(s)"
+  mrr: "MRR : {amount}"
+  createSuccess: Plan créé avec succès
+  updateSuccess: Plan mis à jour avec succès
+  deleteSuccess: Plan supprimé avec succès
+  deleteConfirm: "Êtes-vous sûr de vouloir supprimer ce plan ?"
+  deleteWarning: "Attention : {count} utilisateur(s) ont un abonnement actif"
+  cannotDelete: Impossible de supprimer un plan avec des abonnements actifs
+  placeholders:
+    name: Ex. Pro, Enterprise
+    description: Description du plan...
+    amount: "2900 (pour 29.00 €)"
+  addFeature: Ajouter une fonctionnalité
+  removeFeature: Retirer
+
+# Souscription utilisateur
+subscription:
+  title: Abonnement
+  currentPlan: Plan actuel
+  subscribe: S'abonner
+  subscribeTo: "S'abonner au plan {plan}"
+  subscribing: Abonnement en cours...
+  manage: Gérer mon abonnement
+  cancel: Annuler l'abonnement
+  canceling: Annulation...
+  reactivate: Réactiver l'abonnement
+  reactivating: Réactivation...
+  status: Statut
+  currentPeriod: Période actuelle
+  renewsOn: "Renouvellement le {date}"
+  expiresOn: "Expire le {date}"
+  canceledOn: "Annulé le {date}"
+  cancelAtPeriodEnd: Annulation programmée
+  accessUntil: "Accès jusqu'au {date}"
+  statuses:
+    active: Actif
+    trialing: Période d'essai
+    pastDue: Paiement en retard
+    unpaid: Impayé
+    cancelled: Annulé
+    incomplete: Incomplet
+    incompleteExpired: Expiré
+    paused: En pause
+  cancelDialog:
+    title: Annuler l'abonnement
+    message: "Êtes-vous sûr de vouloir annuler votre abonnement ?"
+    warning: "Vous garderez l'accès jusqu'au {date}"
+    confirm: Oui, annuler
+    cancel: Non, garder
+  cancelSuccess: Abonnement annulé avec succès
+  reactivateSuccess: Abonnement réactivé avec succès
+  checkoutRedirect: Redirection vers Stripe Checkout...
+  checkoutError: "Erreur lors de la création de la session : {error}"
+
+# Historique des paiements
+payments:
+  title: Historique des paiements
+  noPayments: Aucun paiement enregistré
+  invoice: Facture
+  amount: Montant
+  status: Statut
+  date: Date
+  downloadPdf: Télécharger le PDF
+  downloading: Téléchargement...
+  statuses:
+    paid: Payé
+    open: En attente
+    void: Annulé
+    uncollectible: Irrécupérable
+    failed: Échoué
+  loadMore: Charger plus
+  loading: Chargement...
+
+# Messages d'erreur
+errors:
+  configNotFound: Configuration Stripe introuvable
+  planNotFound: Plan d'abonnement introuvable
+  subscriptionNotFound: Abonnement introuvable
+  alreadySubscribed: Vous avez déjà un abonnement actif
+  invalidApiKey: Clé API Stripe invalide
+  webhookSignatureInvalid: Signature webhook invalide
+  paymentFailed: Échec du paiement
+  generic: Une erreur est survenue. Veuillez réessayer.
+
+# Messages de succès
+success:
+  configSaved: Configuration enregistrée
+  planCreated: Plan créé
+  planUpdated: Plan mis à jour
+  planDeleted: Plan supprimé
+  subscriptionCreated: Abonnement créé
+  subscriptionCanceled: Abonnement annulé
+  subscriptionReactivated: Abonnement réactivé
+
+# Assistant de configuration (Wizard)
+wizard:
+  title: Assistant de configuration Stripe
+  step: "Étape {current} sur {total}"
+  next: Suivant
+  previous: Précédent
+  finish: Terminer
+  skip: Passer
+  steps:
+    welcome:
+      title: Bienvenue
+      description: Configurez Stripe en quelques étapes simples
+      start: Commencer
+    account:
+      title: Créer un compte Stripe
+      description: Créez votre compte Stripe si vous n'en avez pas encore
+      hasAccount: J'ai déjà un compte
+      createAccount: Créer un compte Stripe
+      link: "Ouvrir {url}"
+    apiKeys:
+      title: Clés API
+      description: Copiez vos clés API depuis le tableau de bord Stripe
+      help: "Vous pouvez trouver vos clés dans : Développeurs > Clés API"
+    firstPlan:
+      title: Premier plan
+      description: Créez votre premier plan d'abonnement
+      help: Vous pourrez en créer d'autres plus tard
+    summary:
+      title: Récapitulatif
+      description: Votre configuration est complète !
+      configured: "✓ Stripe configuré en mode {mode}"
+      plansCreated: "✓ {count} plan(s) créé(s)"
+      nextSteps: Prochaines étapes
+      createMorePlans: Créer d'autres plans
+      testCheckout: Tester un paiement
+      goToDashboard: Aller au tableau de bord
+
+# Boutons et actions communes
+common:
+  save: Enregistrer
+  cancel: Annuler
+  delete: Supprimer
+  edit: Modifier
+  create: Créer
+  back: Retour
+  close: Fermer
+  loading: Chargement...
+  error: Erreur
+  success: Succès
+  confirm: Confirmer
+  yes: Oui
+  no: Non
+
+# Status
+status:
+  title: Statut de la connexion
+  connected: Connecté
+  disconnected: Non configuré
+  notConfigured: Stripe n'est pas configuré
+  testMode: Mode test actif
+  productionMode: Mode production actif
+  modeLabel: Mode
+  publishableKey: Clé publique
+  webhookSecret: Secret webhook
+  lastUpdate: Dernière mise à jour
+  testModeWarning:
+    title: Mode test activé
+    description: Vous utilisez des clés de test Stripe. Aucun paiement réel ne sera effectué.
+  productionModeInfo:
+    title: Mode production
+    description: Attention ! Vous utilisez des clés de production. Les paiements seront réels.
+  notConfiguredInfo:
+    title: Configuration requise
+    description: Veuillez configurer vos clés API Stripe pour activer les paiements.
+
+# Page
+page:
+  title: Configuration Stripe
+  description: Configurez Stripe pour activer les paiements
+  heading: Configuration Stripe
+  subheading: Gérez vos clés API Stripe et testez la connexion
+  docs:
+    title: Documentation Stripe
+    description: Consultez la documentation officielle pour plus d'informations
+    apiKeys: Clés API
+    webhooks: Webhooks
+    testing: Tests

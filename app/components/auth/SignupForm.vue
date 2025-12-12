@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { z } from 'zod'
-import { authClient } from '~/lib/auth-client'
 
 const { t } = useContentI18n()
 const toast = useToast()
 const route = useRoute()
+const { signup } = useAuth()
 
 const signupSchema = z.object({
   email: z.string().email('auth.validation.emailInvalid'),
@@ -41,16 +41,13 @@ const onSubmit = async () => {
   loading.value = true
 
   try {
-    const response = await authClient.signUp.email({
-      email: state.email,
-      password: state.password,
-      name: state.full_name
-    })
+    const { error } = await signup(state.email, state.password, state.full_name)
 
-    if (response.error) {
+    if (error) {
+      const message = error instanceof Error ? error.message : t('auth.signup.errorGeneric')
       toast.add({
         title: t('auth.signup.error'),
-        description: response.error.message || t('auth.signup.errorGeneric'),
+        description: message,
         color: 'error'
       })
       return
@@ -66,9 +63,7 @@ const onSubmit = async () => {
 
     await new Promise(resolve => setTimeout(resolve, 100))
 
-    if (import.meta.client) {
-      window.location.href = redirectTo
-    }
+    await navigateTo(redirectTo, { replace: true })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : t('auth.signup.errorGeneric')
     toast.add({
@@ -85,10 +80,10 @@ const signUpWithSocial = async (provider: 'github' | 'google' | 'apple') => {
   socialLoading.value = provider
 
   try {
-    await authClient.signIn.social({
-      provider,
-      callbackURL: (route.query.redirect as string) || '/dashboard'
-    })
+    // Redirect to OAuth route with callback
+    const redirectTo = (route.query.redirect as string) || '/dashboard'
+    const callbackUrl = encodeURIComponent(redirectTo)
+    window.location.href = `/auth/${provider}?redirect=${callbackUrl}`
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : t('auth.signup.errorGeneric')
     toast.add({
@@ -165,6 +160,7 @@ const signUpWithSocial = async (provider: 'github' | 'google' | 'apple') => {
       <UFormField :label="t('auth.signup.fullName')" name="full_name" required>
         <UInput
           v-model="state.full_name"
+          name="full_name"
           type="text"
           :placeholder="t('auth.signup.fullNamePlaceholder')"
           size="lg"
@@ -175,6 +171,7 @@ const signUpWithSocial = async (provider: 'github' | 'google' | 'apple') => {
       <UFormField :label="t('auth.signup.email')" name="email" required>
         <UInput
           v-model="state.email"
+          name="email"
           type="email"
           :placeholder="t('auth.signup.emailPlaceholder')"
           autocomplete="email"
@@ -186,6 +183,7 @@ const signUpWithSocial = async (provider: 'github' | 'google' | 'apple') => {
       <UFormField :label="t('auth.signup.password')" name="password" required>
         <UInput
           v-model="state.password"
+          name="password"
           type="password"
           :placeholder="t('auth.signup.passwordPlaceholder')"
           autocomplete="new-password"

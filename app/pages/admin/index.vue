@@ -4,7 +4,7 @@ definePageMeta({
   middleware: ['auth', 'admin']
 })
 
-const { user } = useRole()
+const { user } = useUserSession()
 
 // Statistiques basiques
 const { data: stats } = await useFetch('/api/admin/users', {
@@ -31,7 +31,7 @@ useSeoMeta({
     </div>
 
     <!-- Statistiques rapides -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <UCard>
         <div class="flex items-center justify-between">
           <div>
@@ -79,6 +79,25 @@ useSeoMeta({
           </UButton>
         </template>
       </UCard>
+
+      <UCard>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Paiements</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              Stripe
+            </p>
+          </div>
+          <UIcon name="i-heroicons-credit-card" class="w-12 h-12 text-primary-500" />
+        </div>
+        <template #footer>
+          <NuxtLink to="/admin/stripe">
+            <UButton block color="primary" variant="outline">
+              Configurer Stripe
+            </UButton>
+          </NuxtLink>
+        </template>
+      </UCard>
     </div>
 
     <!-- Actions rapides -->
@@ -103,16 +122,19 @@ useSeoMeta({
           </NuxtLink>
         </div>
 
-        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg opacity-60">
+        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
           <div>
             <h3 class="font-medium text-gray-900 dark:text-white">Configuration Stripe</h3>
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              Configurer les clés API pour les paiements (à venir)
+              Configurer les clés API Stripe pour les paiements
             </p>
           </div>
-          <UButton color="neutral" disabled>
-            Bientôt
-          </UButton>
+          <NuxtLink to="/admin/stripe">
+            <UButton color="primary">
+              Accéder
+              <UIcon name="i-heroicons-arrow-right" class="ml-2" />
+            </UButton>
+          </NuxtLink>
         </div>
 
         <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg opacity-60">
@@ -143,7 +165,7 @@ useSeoMeta({
           </div>
           <div>
             <p class="text-sm text-gray-600 dark:text-gray-400">Base de données</p>
-            <p class="text-sm font-medium text-gray-900 dark:text-white">PostgreSQL + Better Auth</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">PostgreSQL (Supabase)</p>
           </div>
           <div>
             <p class="text-sm text-gray-600 dark:text-gray-400">Framework</p>
@@ -151,7 +173,7 @@ useSeoMeta({
           </div>
           <div>
             <p class="text-sm text-gray-600 dark:text-gray-400">Authentification</p>
-            <p class="text-sm font-medium text-gray-900 dark:text-white">Better Auth v1.4.2</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">nuxt-auth-utils</p>
           </div>
         </div>
       </UCard>

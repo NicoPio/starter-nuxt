@@ -4,7 +4,7 @@ export const useContentI18n = () => {
 
   const loadTranslations = async (newLocale: 'en' | 'fr') => {
     try {
-      const modules = ['app', 'nav', 'auth', 'profile', 'dashboard', 'subscription', 'admin', 'errors', 'error', 'homepage', 'features', 'seo', 'accessibility', 'common']
+      const modules = ['app', 'nav', 'auth', 'profile', 'dashboard', 'subscription', 'admin', 'errors', 'error', 'homepage', 'features', 'seo', 'accessibility', 'common', 'stripe']
       const result: Record<string, Record<string, unknown>> = {}
 
       // Load all translations in parallel

@@ -70,7 +70,7 @@ export function mockUseRole(role: 'user' | 'contributor' | 'admin' = 'user') {
  */
 export function createAuthHeader(sessionToken: string = 'test-session-token') {
   return {
-    cookie: `better-auth.session_token=${sessionToken}`,
+    cookie: `nuxt-session=${sessionToken}`,
   }
 }
 

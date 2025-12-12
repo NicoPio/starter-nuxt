@@ -1,19 +1,18 @@
+/**
+ * Auth middleware - requires user to be authenticated
+ * Uses nuxt-auth-utils session
+ */
+
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { session } = useAuth()
+  const { loggedIn, user } = useUserSession()
 
-  // Wait for session to be loaded (handles race condition)
-  // The auth.client.ts plugin should have already loaded it
-  if (import.meta.client && session.value === undefined) {
-    // Session is still loading, wait a bit
-    await new Promise(resolve => setTimeout(resolve, 100))
-  }
-
-  if (!session.value?.data) {
+  // Check if user is authenticated
+  if (!loggedIn.value || !user.value) {
     return navigateTo({
       path: '/login',
       query: {
-        redirect: to.fullPath
-      }
+        redirect: to.fullPath,
+      },
     })
   }
 })

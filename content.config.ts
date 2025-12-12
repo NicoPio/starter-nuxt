@@ -124,5 +124,13 @@ export default defineContentConfig({
       type: "data",
       source: "i18n/fr/common.yml",
     }),
+    i18n_en_stripe: defineCollection({
+      type: "data",
+      source: "i18n/en/stripe.yml",
+    }),
+    i18n_fr_stripe: defineCollection({
+      type: "data",
+      source: "i18n/fr/stripe.yml",
+    }),
   },
 });

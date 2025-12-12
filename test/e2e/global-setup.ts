@@ -1,36 +1,80 @@
 import { chromium, type FullConfig } from '@playwright/test'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import fs from 'node:fs'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 async function globalSetup(config: FullConfig) {
   const { baseURL } = config.projects[0].use
-  const authFile = path.join(__dirname, '.playwright/.auth/user.json')
+  const authDir = path.join(__dirname, '.playwright/.auth')
+  const authFile = path.join(authDir, 'user.json')
+
+  // Créer le répertoire .playwright/.auth s'il n'existe pas
+  fs.mkdirSync(authDir, { recursive: true })
 
   // Lancer un navigateur pour l'authentification
   const browser = await chromium.launch()
-  const page = await browser.newPage()
+  const context = await browser.newContext({ baseURL })
+  const page = await context.newPage()
 
   try {
-    // Se connecter avec un utilisateur de test
-    await page.goto(`${baseURL}/auth/login`)
+    console.log('🔧 Création de l\'utilisateur de test via API...')
 
-    // Remplir le formulaire de login
-    await page.fill('input[name="email"]', 'test@example.com')
-    await page.fill('input[name="password"]', 'testpassword123')
+    // Créer un utilisateur de test via l'API
+    try {
+      const signupResponse = await context.request.post('/api/auth/register', {
+        data: {
+          email: 'test@example.com',
+          password: 'testpassword123',
+          name: 'Test Admin User',
+        },
+      })
+      console.log('✓ Utilisateur créé')
+    } catch (err) {
+      console.log('ℹ Utilisateur existe déjà')
+    }
 
-    // Soumettre le formulaire
-    await page.click('button[type="submit"]')
+    // Promouvoir le premier utilisateur en Admin
+    try {
+      const promoteResponse = await context.request.post('/api/admin/promote-first-user')
+      const promoteResult = await promoteResponse.json()
+      if (promoteResponse.ok() && promoteResult.promoted) {
+        console.log('✓ Utilisateur promu en Admin')
+      } else {
+        console.log('ℹ Admin existe déjà')
+      }
+    } catch (err) {
+      console.log('ℹ Promotion ignorée')
+    }
 
-    // Attendre la redirection vers le dashboard
-    await page.waitForURL(`${baseURL}/dashboard`, { timeout: 10000 })
+    // Se connecter pour créer une session
+    const loginResponse = await context.request.post('/api/auth/login', {
+      data: {
+        email: 'test@example.com',
+        password: 'testpassword123',
+      },
+    })
 
-    // Sauvegarder l'état d'authentification
-    await page.context().storageState({ path: authFile })
+    if (!loginResponse.ok()) {
+      throw new Error(`Login failed: ${loginResponse.status()} ${await loginResponse.text()}`)
+    }
 
+    console.log('✓ Connecté avec succès')
+
+    // Aller sur une page pour que les cookies soient définis
+    await page.goto('/dashboard')
+    await page.waitForLoadState('networkidle')
+
+    // Sauvegarder l'état d'authentification (cookies)
+    await context.storageState({ path: authFile })
     console.log('✓ État d\'authentification sauvegardé')
   } catch (error) {
-    console.error('Erreur lors du setup d\'authentification:', error)
+    console.error('❌ Erreur lors du setup d\'authentification:', error)
     // Ne pas échouer si le setup échoue (pour permettre les tests sans auth)
   } finally {
+    await context.close()
     await browser.close()
   }
 }

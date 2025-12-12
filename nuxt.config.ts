@@ -27,7 +27,36 @@ export default defineNuxtConfig({
     appleClientSecret: process.env.APPLE_CLIENT_SECRET,
     stripe: {
       secretKey: process.env.STRIPE_SECRET_KEY,
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      encryptionKey: process.env.STRIPE_ENCRYPTION_KEY,
+    },
+
+    // nuxt-auth-utils session configuration
+    session: {
+      password: process.env.NUXT_SESSION_PASSWORD || '',
+      name: 'nuxt-session',
+      cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+      },
+      maxAge: 60 * 60 * 24 * 7  // 7 days
+    },
+
+    // OAuth provider configurations
+    oauth: {
+      github: {
+        clientId: process.env.GITHUB_CLIENT_ID || '',
+        clientSecret: process.env.GITHUB_CLIENT_SECRET || ''
+      },
+      google: {
+        clientId: process.env.GOOGLE_CLIENT_ID || '',
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
+      },
+      apple: {
+        clientId: process.env.APPLE_CLIENT_ID || '',
+        clientSecret: process.env.APPLE_CLIENT_SECRET || ''
+      }
     },
 
     // Public (client + server)
@@ -50,6 +79,7 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
     "@nuxt/ui",
+    "nuxt-auth-utils",
   ],
   css: ["./app/assets/css/main.css"],
   vite: { plugins: [tailwindcss()] },

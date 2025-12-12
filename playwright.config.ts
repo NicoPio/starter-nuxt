@@ -7,6 +7,10 @@ export default defineConfig({
   testDir: './test/e2e',
   testMatch: '**/*.e2e.ts',
 
+  /* Global setup and teardown */
+  globalSetup: './test/e2e/global-setup.ts',
+  globalTeardown: './test/e2e/global-teardown.ts',
+
   /* Run tests in files in parallel */
   fullyParallel: true,
 
@@ -55,7 +59,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run dev',
+    command: 'bun run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

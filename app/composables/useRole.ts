@@ -1,19 +1,11 @@
 import { computed } from 'vue'
-import { authClient } from '~/lib/auth-client'
 import type { UserRole } from '~/types/common.types'
 
-interface UserWithRole {
-  id: string
-  email: string
-  name?: string | null
-  role?: UserRole
-}
-
 export const useRole = () => {
-  const session = authClient.useSession()
+  const { user: sessionUser } = useUserSession()
 
-  const user = computed(() => session.value.data?.user as UserWithRole | undefined)
-  const role = computed(() => user.value?.role || 'User' as UserRole)
+  const user = computed(() => sessionUser.value)
+  const role = computed(() => (user.value?.role as UserRole) || 'User' as UserRole)
 
   const isAdmin = computed(() => role.value === 'Admin')
   const isContributor = computed(() => role.value === 'Contributor')

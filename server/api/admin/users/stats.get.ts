@@ -1,16 +1,4 @@
-import { auth } from "../../../utils/auth"
 import type { UserRole } from "~/types/common.types"
-
-interface SessionUser {
-  id: string
-  email: string
-  name?: string | null
-  role?: UserRole
-}
-
-interface DatabaseAdapter {
-  query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>
-}
 
 interface RoleStat {
   role: UserRole

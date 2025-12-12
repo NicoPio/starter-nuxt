@@ -1,14 +1,13 @@
+/**
+ * Guest middleware - redirects authenticated users to dashboard
+ * Uses nuxt-auth-utils session
+ */
+
 export default defineNuxtRouteMiddleware(async () => {
-  const { session } = useAuth()
+  const { loggedIn, user } = useUserSession()
 
-  // Wait for session to be loaded (handles race condition)
-  // The auth.client.ts plugin should have already loaded it
-  if (import.meta.client && session.value === undefined) {
-    // Session is still loading, wait a bit
-    await new Promise(resolve => setTimeout(resolve, 100))
-  }
-
-  if (session.value?.data) {
+  // If user is authenticated, redirect to dashboard
+  if (loggedIn.value && user.value) {
     return navigateTo('/dashboard')
   }
 })
