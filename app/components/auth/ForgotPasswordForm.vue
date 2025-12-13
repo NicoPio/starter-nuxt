@@ -31,7 +31,20 @@ const validate = (state: { email: string }) => {
   return errors
 }
 
+// Client-side validation state
+const validationErrors = ref<Array<{ path: string; message: string }>>([])
+
+const validateEmail = () => {
+  validationErrors.value = validate(state)
+  return validationErrors.value.length === 0
+}
+
 const onSubmit = async () => {
+  // Validate before submission
+  if (!validateEmail()) {
+    return
+  }
+
   loading.value = true
 
   try {
@@ -49,15 +62,22 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6" role="region" aria-labelledby="forgot-password-heading">
+    <!-- Heading for accessibility -->
+    <h1 id="forgot-password-heading" class="sr-only">
+      {{ t('auth.forgotPassword.title') }}
+    </h1>
+
     <!-- Success Message -->
     <UAlert
       v-if="submitted"
-      color="green"
+      color="success"
       variant="subtle"
       :title="t('auth.forgotPassword.success')"
       :description="t('auth.forgotPassword.successMessage')"
       icon="i-heroicons-check-circle"
+      role="alert"
+      aria-live="polite"
     />
 
     <!-- Form -->
@@ -65,12 +85,18 @@ const onSubmit = async () => {
       :state="state"
       :validate="validate"
       class="space-y-4"
+      aria-labelledby="forgot-password-form-heading"
       @submit="onSubmit"
     >
+      <h2 id="forgot-password-form-heading" class="sr-only">
+        {{ t('auth.forgotPassword.formTitle') }}
+      </h2>
+
       <UFormField
         :label="t('auth.forgotPassword.email')"
         name="email"
         required
+        :error="validationErrors.find(e => e.path === 'email')?.message"
       >
         <UInput
           v-model="state.email"
@@ -80,7 +106,21 @@ const onSubmit = async () => {
           autocomplete="email"
           size="lg"
           required
+          aria-required="true"
+          aria-describedby="email-help email-error"
+          :aria-invalid="!!validationErrors.find(e => e.path === 'email')"
+          @blur="validateEmail"
         />
+        <template #help>
+          <span id="email-help" class="text-xs text-gray-500 dark:text-gray-400">
+            {{ t('auth.forgotPassword.emailHelp') }}
+          </span>
+        </template>
+        <template v-if="validationErrors.find(e => e.path === 'email')" #error>
+          <span id="email-error" class="text-xs text-red-500 dark:text-red-400">
+            {{ validationErrors.find(e => e.path === 'email')?.message }}
+          </span>
+        </template>
       </UFormField>
 
       <UButton
@@ -90,6 +130,8 @@ const onSubmit = async () => {
         block
         size="lg"
         color="primary"
+        aria-label="t('auth.forgotPassword.submit')"
+        :aria-busy="loading"
       >
         {{ t('auth.forgotPassword.submit') }}
       </UButton>
@@ -98,6 +140,7 @@ const onSubmit = async () => {
         <NuxtLink
           to="/auth/login"
           class="text-primary-600 hover:text-primary-700 font-medium"
+          aria-label="t('auth.forgotPassword.backToLogin')"
         >
           {{ t('auth.forgotPassword.backToLogin') }}
         </NuxtLink>

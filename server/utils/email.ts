@@ -127,7 +127,8 @@ function renderPasswordResetEmailTemplate(resetUrl: string): string {
                   <td style="border-radius: 6px; background-color: #3b82f6;">
                     <a href="${resetUrl}"
                        style="display: inline-block; padding: 16px 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none; border-radius: 6px;"
-                       class="button">
+                       class="button"
+                       aria-label="Réinitialiser mon mot de passe">
                       Réinitialiser mon mot de passe
                     </a>
                   </td>

@@ -25,7 +25,7 @@ export const usePasswordReset = () => {
       toast.add({
         title: t('auth.forgotPassword.success'),
         description: t('auth.forgotPassword.successMessage'),
-        color: 'green',
+        color: 'success',
         icon: 'i-heroicons-check-circle',
       })
 
@@ -47,7 +47,7 @@ export const usePasswordReset = () => {
       toast.add({
         title: t('auth.forgotPassword.error'),
         description: errorMessage,
-        color: 'red',
+        color: 'error',
         icon: 'i-heroicons-exclamation-circle',
       })
 
@@ -98,7 +98,7 @@ export const usePasswordReset = () => {
       toast.add({
         title: t('auth.resetPassword.success'),
         description: t('auth.resetPassword.successMessage'),
-        color: 'green',
+        color: 'success',
         icon: 'i-heroicons-check-circle',
       })
 
@@ -134,7 +134,7 @@ export const usePasswordReset = () => {
       toast.add({
         title: t('auth.resetPassword.error'),
         description: errorMessage,
-        color: 'red',
+        color: 'error',
         icon: 'i-heroicons-exclamation-circle',
       })
 
