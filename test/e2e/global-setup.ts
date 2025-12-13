@@ -36,17 +36,22 @@ async function globalSetup(config: FullConfig) {
       console.log('ℹ Utilisateur existe déjà')
     }
 
-    // Promouvoir le premier utilisateur en Admin
+    // Promouvoir spécifiquement l'utilisateur de test en Admin
+    // Cette route doit être créée pour les tests E2E
     try {
-      const promoteResponse = await context.request.post('/api/admin/promote-first-user')
+      const promoteResponse = await context.request.post('/api/admin/promote-test-user', {
+        data: {
+          email: 'test@example.com',
+        },
+      })
       const promoteResult = await promoteResponse.json()
-      if (promoteResponse.ok() && promoteResult.promoted) {
+      if (promoteResponse.ok()) {
         console.log('✓ Utilisateur promu en Admin')
       } else {
-        console.log('ℹ Admin existe déjà')
+        console.log('⚠ Erreur promotion:', promoteResult)
       }
     } catch (err) {
-      console.log('ℹ Promotion ignorée')
+      console.log('⚠ Erreur lors de la promotion:', err)
     }
 
     // Se connecter pour créer une session
