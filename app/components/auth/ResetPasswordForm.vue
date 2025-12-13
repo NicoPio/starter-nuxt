@@ -59,7 +59,7 @@ const onSubmit = async () => {
   loading.value = true
 
   try {
-    const { data, error } = await resetPassword(
+    const { error } = await resetPassword(
       props.token,
       state.password,
       state.confirmPassword

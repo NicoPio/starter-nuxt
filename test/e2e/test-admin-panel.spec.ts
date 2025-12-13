@@ -65,7 +65,7 @@ test.describe('Admin Panel Tests (T047 & T048)', () => {
     // If redirected to login, the user might not be an admin
     if (currentAdminUrl.includes('login')) {
       console.log('  ⚠️  Redirected to login - user may not have Admin role')
-      console.log('  ℹ️  This is expected if it\\'s a fresh user. Promote to Admin first.')
+      console.log(`  ℹ️  This is expected if it's a fresh user. Promote to Admin first.`)
 
       // Manually promote user to Admin via database
       // This would require a database connection, skipping for now

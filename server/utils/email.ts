@@ -1,5 +1,4 @@
 import { Resend } from 'resend'
-import type { H3Event } from 'h3'
 
 let resendInstance: Resend | null = null
 

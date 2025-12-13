@@ -1,4 +1,4 @@
-import { type VueWrapper } from '@testing-library/vue'
+import type { VueWrapper } from '@testing-library/vue'
 import type { UserWithRole } from '~/types/common.types'
 
 /**

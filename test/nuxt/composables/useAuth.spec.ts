@@ -1,12 +1,15 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { useAuth } from '~/composables/useAuth'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { computed, ref } from 'vue'
+
+// Set up Vue globals
+global.computed = computed
 
 // Mock dependencies
 const mockToast = {
   add: vi.fn(),
 }
 
-const mockT = vi.fn((key: string, params?: Record<string, unknown>) => {
+const mockT = vi.fn((key: string) => {
   const translations: Record<string, string> = {
     'auth.logout.success': 'Déconnexion réussie',
     'auth.logout.successMessage': 'Vous avez été déconnecté avec succès',
@@ -17,9 +20,9 @@ const mockT = vi.fn((key: string, params?: Record<string, unknown>) => {
 })
 
 const mockUserSession = {
-  loggedIn: { value: false },
-  user: { value: null },
-  session: { value: null },
+  loggedIn: ref(false),
+  user: ref(null),
+  session: ref(null),
   fetch: vi.fn(),
   clear: vi.fn(),
 }
@@ -27,7 +30,7 @@ const mockUserSession = {
 const mockNavigateTo = vi.fn()
 const mockFetch = vi.fn()
 
-// Mock global composables
+// Mock global composables BEFORE import
 vi.mock('#app', () => ({
   useToast: () => mockToast,
   navigateTo: (path: string, options?: unknown) => mockNavigateTo(path, options),
@@ -38,8 +41,17 @@ vi.mock('~/composables/useContentI18n', () => ({
   useContentI18n: () => ({ t: mockT }),
 }))
 
+// Set up global mocks for the composable execution context
+global.useToast = () => mockToast
+global.useUserSession = () => mockUserSession
+global.useContentI18n = () => ({ t: mockT })
+global.navigateTo = mockNavigateTo
+
 // Mock global fetch
 global.$fetch = mockFetch as typeof $fetch
+
+// Import after all mocks are set
+const { useAuth } = await import('~/composables/useAuth')
 
 describe('useAuth Composable', () => {
   beforeEach(() => {

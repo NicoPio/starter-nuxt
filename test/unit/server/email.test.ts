@@ -1,5 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+// Import after mocking
+import { sendPasswordResetEmail, useResend } from '~/server/utils/email'
+
 // Use vi.hoisted to ensure mock is available before module evaluation
 const { mockSend, MockResend } = vi.hoisted(() => {
   const mockSend = vi.fn()
@@ -27,9 +30,6 @@ const mockConfig = {
 }
 
 vi.stubGlobal('useRuntimeConfig', vi.fn(() => mockConfig))
-
-// Import after mocking
-import { sendPasswordResetEmail, useResend } from '~/server/utils/email'
 
 describe('server/utils/email', () => {
   beforeEach(() => {

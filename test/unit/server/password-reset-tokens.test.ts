@@ -1,11 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { PasswordResetToken } from '~/server/utils/database/password-reset-tokens'
 
-// Mock sql function with factory
-vi.mock('~/server/utils/database', () => ({
-  sql: vi.fn(),
-}))
-
 // Import after mocking
 import {
   createPasswordResetToken,
@@ -23,6 +18,11 @@ import {
 
 // Get reference to the mocked sql
 import { sql } from '~/server/utils/database'
+
+// Mock sql function with factory
+vi.mock('~/server/utils/database', () => ({
+  sql: vi.fn(),
+}))
 const mockSql = vi.mocked(sql)
 
 describe('server/utils/database/password-reset-tokens', () => {

@@ -2,7 +2,7 @@
 const { t } = useContentI18n()
 const config = useRuntimeConfig()
 const route = useRoute()
-const router = useRouter()
+const _router = useRouter()
 const { verifyResetToken } = usePasswordReset()
 
 definePageMeta({
