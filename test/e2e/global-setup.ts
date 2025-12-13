@@ -36,17 +36,33 @@ async function globalSetup(config: FullConfig) {
       console.log('ℹ Utilisateur existe déjà')
     }
 
-    // Promouvoir le premier utilisateur en Admin
+    // Promouvoir spécifiquement l'utilisateur de test en Admin
+    console.log('👑 Promotion de l\'utilisateur en Admin...')
     try {
-      const promoteResponse = await context.request.post('/api/admin/promote-first-user')
-      const promoteResult = await promoteResponse.json()
-      if (promoteResponse.ok() && promoteResult.promoted) {
-        console.log('✓ Utilisateur promu en Admin')
-      } else {
-        console.log('ℹ Admin existe déjà')
+      const promoteResponse = await context.request.post('/api/admin/promote-test-user', {
+        data: {
+          email: 'test@example.com',
+        },
+      })
+
+      if (!promoteResponse.ok()) {
+        const errorBody = await promoteResponse.text()
+        throw new Error(`Échec promotion (${promoteResponse.status()}): ${errorBody}`)
       }
+
+      const promoteResult = await promoteResponse.json()
+
+      // Vérifier explicitement que le rôle est Admin
+      if (promoteResult.user?.role !== 'Admin') {
+        throw new Error(`Rôle attendu: Admin, reçu: ${promoteResult.user?.role || 'undefined'}`)
+      }
+
+      console.log(`✓  Utilisateur promu: ${promoteResult.user.email} → ${promoteResult.user.role}`)
     } catch (err) {
-      console.log('ℹ Promotion ignorée')
+      console.error('❌ ERREUR CRITIQUE: Impossible de promouvoir l\'utilisateur de test')
+      console.error('   Les tests nécessitant un compte Admin échoueront')
+      console.error('   Erreur:', err)
+      throw err // Re-throw pour arrêter le setup
     }
 
     // Se connecter pour créer une session

@@ -132,3 +132,54 @@ export function mockAuthLoading() {
   authState.loading.value = true
   return authState
 }
+
+/**
+ * Mock Resend pour éviter l'envoi de vrais emails dans les tests E2E
+ */
+export async function mockResend(page: any) {
+  await page.addInitScript(() => {
+    // @ts-ignore
+    window.mockedResendCalls = []
+    
+    // Mock the global fetch to intercept Resend API calls
+    const originalFetch = window.fetch
+    window.fetch = async function(input: RequestInfo | URL, init?: RequestInit) {
+      if (typeof input === 'string' && input.includes('api.resend.com')) {
+        // @ts-ignore
+        window.mockedResendCalls.push({
+          url: input,
+          method: init?.method || 'POST',
+          body: init?.body ? JSON.parse(init.body) : null,
+          to: 'mocked@example.com', // Default, will be extracted from body
+          html: init?.body || '',
+        })
+        
+        // Extract email from body if present
+        if (init?.body) {
+          try {
+            const body = JSON.parse(init.body)
+            if (body.to) {
+              const lastCallIndex = window.mockedResendCalls.length - 1
+              // @ts-ignore
+              window.mockedResendCalls[lastCallIndex].to = body.to
+            }
+          } catch (e) {
+            console.log('Could not parse Resend request body:', e)
+          }
+        }
+        
+        // Return mock success response
+        return new Response(JSON.stringify({
+          data: { id: 'mock-message-id' },
+          error: null,
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      }
+      
+      // For all other requests, use the original fetch
+      return originalFetch.call(window, input, init)
+    }
+  })
+}

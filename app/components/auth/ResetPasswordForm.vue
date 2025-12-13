@@ -42,7 +42,20 @@ const validate = (state: { password: string; confirmPassword: string }) => {
   return errors
 }
 
+// Client-side validation state
+const validationErrors = ref<Array<{ path: string; message: string }>>([])
+
+const validateForm = () => {
+  validationErrors.value = validate(state)
+  return validationErrors.value.length === 0
+}
+
 const onSubmit = async () => {
+  // Validate before submission
+  if (!validateForm()) {
+    return
+  }
+
   loading.value = true
 
   try {
@@ -68,17 +81,28 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6" role="region" aria-labelledby="reset-password-heading">
+    <!-- Heading for accessibility -->
+    <h1 id="reset-password-heading" class="sr-only">
+      {{ t('auth.resetPassword.title') }}
+    </h1>
+
     <UForm
       :state="state"
       :validate="validate"
       class="space-y-4"
+      aria-labelledby="reset-password-form-heading"
       @submit="onSubmit"
     >
+      <h2 id="reset-password-form-heading" class="sr-only">
+        {{ t('auth.resetPassword.formTitle') }}
+      </h2>
+
       <UFormField
         :label="t('auth.resetPassword.password')"
         name="password"
         required
+        :error="validationErrors.find(e => e.path === 'password')?.message"
       >
         <UInput
           v-model="state.password"
@@ -88,10 +112,19 @@ const onSubmit = async () => {
           autocomplete="new-password"
           size="lg"
           required
+          aria-required="true"
+          aria-describedby="password-hint password-error"
+          :aria-invalid="!!validationErrors.find(e => e.path === 'password')"
+          @blur="validateForm"
         />
         <template #hint>
-          <span class="text-xs text-gray-500">
+          <span id="password-hint" class="text-xs text-gray-500 dark:text-gray-400">
             {{ t('auth.resetPassword.passwordHint') }}
+          </span>
+        </template>
+        <template v-if="validationErrors.find(e => e.path === 'password')" #error>
+          <span id="password-error" class="text-xs text-red-500 dark:text-red-400">
+            {{ validationErrors.find(e => e.path === 'password')?.message }}
           </span>
         </template>
       </UFormField>
@@ -100,6 +133,7 @@ const onSubmit = async () => {
         :label="t('auth.resetPassword.confirmPassword')"
         name="confirmPassword"
         required
+        :error="validationErrors.find(e => e.path === 'confirmPassword')?.message"
       >
         <UInput
           v-model="state.confirmPassword"
@@ -109,7 +143,16 @@ const onSubmit = async () => {
           autocomplete="new-password"
           size="lg"
           required
+          aria-required="true"
+          aria-describedby="confirm-password-error"
+          :aria-invalid="!!validationErrors.find(e => e.path === 'confirmPassword')"
+          @blur="validateForm"
         />
+        <template v-if="validationErrors.find(e => e.path === 'confirmPassword')" #error>
+          <span id="confirm-password-error" class="text-xs text-red-500 dark:text-red-400">
+            {{ validationErrors.find(e => e.path === 'confirmPassword')?.message }}
+          </span>
+        </template>
       </UFormField>
 
       <UButton
@@ -119,6 +162,8 @@ const onSubmit = async () => {
         block
         size="lg"
         color="primary"
+        aria-label="t('auth.resetPassword.submit')"
+        :aria-busy="loading"
       >
         {{ t('auth.resetPassword.submit') }}
       </UButton>
@@ -127,6 +172,7 @@ const onSubmit = async () => {
         <NuxtLink
           to="/auth/login"
           class="text-primary-600 hover:text-primary-700 font-medium"
+          aria-label="t('auth.resetPassword.backToLogin')"
         >
           {{ t('auth.forgotPassword.backToLogin') }}
         </NuxtLink>
