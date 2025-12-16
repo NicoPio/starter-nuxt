@@ -136,16 +136,16 @@ export function mockAuthLoading() {
 /**
  * Mock Resend pour éviter l'envoi de vrais emails dans les tests E2E
  */
-export async function mockResend(page: any) {
+export async function mockResend(page: { addInitScript: (script: () => void) => Promise<void> }) {
   await page.addInitScript(() => {
-    // @ts-ignore
+    // @ts-expect-error: window.mockedResendCalls is a test-only property added by this mock
     window.mockedResendCalls = []
-    
+
     // Mock the global fetch to intercept Resend API calls
     const originalFetch = window.fetch
     window.fetch = async function(input: RequestInfo | URL, init?: RequestInit) {
       if (typeof input === 'string' && input.includes('api.resend.com')) {
-        // @ts-ignore
+        // @ts-expect-error: window.mockedResendCalls is a test-only property
         window.mockedResendCalls.push({
           url: input,
           method: init?.method || 'POST',
@@ -160,7 +160,7 @@ export async function mockResend(page: any) {
             const body = JSON.parse(init.body)
             if (body.to) {
               const lastCallIndex = window.mockedResendCalls.length - 1
-              // @ts-ignore
+              // @ts-expect-error: window.mockedResendCalls is a test-only property
               window.mockedResendCalls[lastCallIndex].to = body.to
             }
           } catch (e) {

@@ -108,6 +108,7 @@ export function createMockH3Event(options: {
 /**
  * Attend que le composant soit monté
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function waitForMount(wrapper: VueWrapper<any>) {
   await wrapper.vm.$nextTick()
   await waitForNextTick()
@@ -195,6 +196,7 @@ export function suppressConsoleError() {
  * Attend qu'un élément soit visible
  */
 export async function waitForElement(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   wrapper: VueWrapper<any>,
   selector: string,
   timeout: number = 3000
@@ -206,6 +208,7 @@ export async function waitForElement(
  * Simule un input utilisateur
  */
 export async function typeInInput(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   wrapper: VueWrapper<any>,
   selector: string,
   value: string
@@ -218,6 +221,7 @@ export async function typeInInput(
 /**
  * Simule un clic sur un bouton
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function clickButton(wrapper: VueWrapper<any>, selector: string) {
   const button = wrapper.find(selector)
   await button.trigger('click')

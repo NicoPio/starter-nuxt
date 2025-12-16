@@ -12,7 +12,7 @@ vi.mock('vue', async () => {
   }
 })
 
-vi.stubGlobal('useState', vi.fn((key: string, init?: () => any) => {
+vi.stubGlobal('useState', vi.fn((key: string, init?: () => unknown) => {
   if (key === 'locale') return mockLocale
   if (key === 'translations') return mockTranslations
   return ref(init ? init() : undefined)
@@ -25,6 +25,7 @@ const mockQueryCollection = vi.fn()
 vi.stubGlobal('queryCollection', mockQueryCollection)
 
 describe('useContentI18n', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let useContentI18n: any
 
   beforeEach(async () => {

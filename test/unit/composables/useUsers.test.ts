@@ -15,6 +15,7 @@ vi.stubGlobal('useContentI18n', () => ({
 }))
 
 describe('useUsers', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let useUsers: any
 
   beforeEach(async () => {

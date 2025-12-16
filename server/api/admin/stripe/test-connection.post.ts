@@ -1,5 +1,5 @@
 import { requireRole } from "../../../utils/session"
-import type { StripeTestConnectionResponse } from "~/app/types/stripe.types"
+import type { StripeTestConnectionResponse } from "~/types/stripe.types"
 
 /**
  * POST /api/admin/stripe/test-connection

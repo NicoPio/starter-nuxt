@@ -52,6 +52,7 @@ describe('useRole', () => {
 
     it('returns default User role when user has no role', async () => {
       const mockUser = { id: 'user-123', email: 'test@example.com' }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       mockUserSession.user.value = mockUser as any
 
       const { useRole } = await import('~/app/composables/useRole')

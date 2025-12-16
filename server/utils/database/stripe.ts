@@ -1,5 +1,5 @@
 import { getUsersDatabase } from '../database'
-import type { SubscriptionPlan, UserSubscription, PaymentHistory, WebhookLog, StripeConfiguration } from '~/app/types/stripe.types'
+import type { SubscriptionPlan, UserSubscription, PaymentHistory, WebhookLog, StripeConfiguration } from '~/types/stripe.types'
 
 interface DatabaseAdapter {
   query: (sql: string, params: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>

@@ -29,7 +29,7 @@ export const CreatePlanSchema = z.object({
   amount: z.number().int('Le montant doit être un entier').min(0, 'Le montant doit être positif ou nul'),
   currency: z.string().length(3, 'La devise doit faire 3 caractères (ex: eur, usd)').toLowerCase(),
   interval: z.enum(['month', 'year'], {
-    errorMap: () => ({ message: "L'intervalle doit être 'month' ou 'year'" }),
+    message: "L'intervalle doit être 'month' ou 'year'",
   }),
   intervalCount: z.number().int().min(1).max(12).optional().default(1),
   features: z.array(z.string()).optional().default([]),

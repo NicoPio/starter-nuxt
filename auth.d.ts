@@ -3,13 +3,11 @@
  * Extends the User type to include custom properties
  */
 
-import type { UserRole } from '~/app/types/common.types'
-
 declare module '#auth-utils' {
   interface User {
     id: string
     email: string
-    role: UserRole
+    role: 'Admin' | 'Contributor' | 'User'
     name?: string
   }
 

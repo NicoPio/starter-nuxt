@@ -1,4 +1,4 @@
-import type { StripeMode } from '~/app/types/stripe.types'
+import type { StripeMode } from '~/types/stripe.types'
 import { decryptApiKey, encryptApiKey, maskApiKey } from './crypto'
 import { getActiveStripeConfig, saveStripeConfiguration } from '../database/stripe'
 

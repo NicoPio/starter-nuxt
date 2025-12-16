@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import type { UserRole } from '~/app/types/common.types'
+import type { UserRole } from '~/types/common.types'
 
 /**
  * Require user to have one of the specified roles

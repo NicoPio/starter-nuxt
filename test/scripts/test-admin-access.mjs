@@ -122,7 +122,6 @@ async function testRoleChange(cookies) {
       })
 
       if (signupResponse.ok) {
-        const _signupData = await signupResponse.json()
         console.log('  ✅ Test user created')
 
         // Re-fetch users to get the new user's ID
@@ -169,7 +168,6 @@ async function performRoleChange(cookies, user) {
   })
 
   if (roleChangeResponse.ok) {
-    const _result = await roleChangeResponse.json()
     console.log(`  ✅ Role changed successfully to ${newRole}`)
 
     // Verify the change

@@ -46,7 +46,7 @@ export const useStripeConfig = () => {
       toast.add({
         title: t('stripe.config.save.success'),
         description: t('stripe.config.save.successMessage'),
-        color: 'green',
+        color: 'success',
       })
 
       return { data: result, error: null }
@@ -58,7 +58,7 @@ export const useStripeConfig = () => {
       toast.add({
         title: t('stripe.config.save.error'),
         description: message,
-        color: 'red',
+        color: 'error',
       })
 
       console.error('[useStripeConfig] Save error:', error)
@@ -85,13 +85,13 @@ export const useStripeConfig = () => {
         toast.add({
           title: t('stripe.config.test.success'),
           description: t('stripe.config.test.successMessage', { mode: data.mode }),
-          color: 'green',
+          color: 'success',
         })
       } else {
         toast.add({
           title: t('stripe.config.test.error'),
           description: data.error || t('stripe.config.test.errorGeneric'),
-          color: 'red',
+          color: 'error',
         })
       }
 
@@ -104,7 +104,7 @@ export const useStripeConfig = () => {
       toast.add({
         title: t('stripe.config.test.error'),
         description: message,
-        color: 'red',
+        color: 'error',
       })
 
       console.error('[useStripeConfig] Test connection error:', error)

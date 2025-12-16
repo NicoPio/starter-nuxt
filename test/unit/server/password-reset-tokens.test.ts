@@ -658,6 +658,7 @@ describe('server/utils/database/password-reset-tokens', () => {
     it('handles null dates in token validation', async () => {
       const tokenWithNullDate = {
         ...createMockToken(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expires_at: null as any,
       }
       mockSql.mockResolvedValue([tokenWithNullDate])

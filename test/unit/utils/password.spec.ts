@@ -157,6 +157,7 @@ describe('Password Utilities', () => {
       await rehashIfNeeded(userId, password, bcryptHash)
 
       expect(updateUserPassword).toHaveBeenCalledWith(userId, expect.stringContaining(':'))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const newHash = (updateUserPassword as any).mock.calls[0][1]
       expect(newHash).toContain(':')
       expect(newHash.split(':')).toHaveLength(2)
@@ -207,6 +208,7 @@ describe('Password Utilities', () => {
 
       await rehashIfNeeded(userId, password, bcryptHash)
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const newHash = (updateUserPassword as any).mock.calls[0][1]
       const isValid = await verifyPasswordCustom(password, newHash)
       expect(isValid).toBe(true)

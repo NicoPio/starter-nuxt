@@ -103,7 +103,7 @@ describe('UserList Component', () => {
     })
 
     it('génère les colonnes avec les traductions', () => {
-      const wrapper = mount(UserList, {
+      mount(UserList, {
         props: {
           users: mockUsers,
           loading: false,

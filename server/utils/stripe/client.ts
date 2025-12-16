@@ -42,7 +42,7 @@ export async function getStripeClient(apiKey?: string): Promise<Stripe> {
 
   // Créer une nouvelle instance Stripe
   stripeInstance = new Stripe(key, {
-    apiVersion: '2024-12-18.acacia', // Version API Stripe
+    apiVersion: '2025-11-17.clover', // Version API Stripe
     maxNetworkRetries: 2,
     timeout: 30000,
     telemetry: true,

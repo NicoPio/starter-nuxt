@@ -1,6 +1,6 @@
 import { requireRole } from "../../../utils/session"
 import { getUsersDatabase } from "../../../utils/database"
-import type { StripeConfigResponse } from "~/app/types/stripe.types"
+import type { StripeConfigResponse } from "~/types/stripe.types"
 
 /**
  * GET /api/admin/stripe/config
@@ -29,9 +29,13 @@ export default defineEventHandler(async (event): Promise<StripeConfigResponse | 
 
   const config = result.rows[0]
 
+  if (!config) {
+    return null
+  }
+
   // Déchiffrer et masquer les clés pour l'affichage
   const { decryptApiKey } = await import('../../../utils/stripe/crypto')
-  
+
   const publishableKey = decryptApiKey(String(config.publishable_key))
   const webhookSecret = decryptApiKey(String(config.webhook_secret))
 

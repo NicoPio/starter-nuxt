@@ -1,5 +1,3 @@
-import type { Ref, ComputedRef, WatchCallback } from 'vue'
-
 declare global {
   // Vue composables globaux pour les tests
   var ref: typeof import('vue')['ref']

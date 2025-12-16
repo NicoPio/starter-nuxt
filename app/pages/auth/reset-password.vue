@@ -95,7 +95,7 @@ useHead({
         <!-- Invalid token error -->
         <div v-else-if="tokenError" class="space-y-4">
           <UAlert
-            color="red"
+            color="error"
             variant="subtle"
             :title="t('auth.resetPassword.error')"
             :description="tokenError"

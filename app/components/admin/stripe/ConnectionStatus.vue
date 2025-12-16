@@ -3,8 +3,8 @@ const { config, isConfigured, mode, isTestMode, isProductionMode } = useStripeCo
 const { t } = useContentI18n()
 
 const statusColor = computed(() => {
-  if (!isConfigured.value) return 'gray'
-  return isTestMode.value ? 'yellow' : 'green'
+  if (!isConfigured.value) return 'neutral'
+  return isTestMode.value ? 'warning' : 'success'
 })
 
 const statusIcon = computed(() => {
@@ -63,7 +63,7 @@ const statusText = computed(() => {
       <UAlert
         v-if="isTestMode"
         icon="i-heroicons-exclamation-triangle"
-        color="yellow"
+        color="warning"
         variant="soft"
         :title="t('stripe.status.testModeWarning.title')"
         :description="t('stripe.status.testModeWarning.description')"
@@ -73,7 +73,7 @@ const statusText = computed(() => {
       <UAlert
         v-if="isProductionMode"
         icon="i-heroicons-shield-check"
-        color="green"
+        color="success"
         variant="soft"
         :title="t('stripe.status.productionModeInfo.title')"
         :description="t('stripe.status.productionModeInfo.description')"
@@ -83,7 +83,7 @@ const statusText = computed(() => {
       <UAlert
         v-if="!isConfigured"
         icon="i-heroicons-information-circle"
-        color="blue"
+        color="info"
         variant="soft"
         :title="t('stripe.status.notConfiguredInfo.title')"
         :description="t('stripe.status.notConfiguredInfo.description')"

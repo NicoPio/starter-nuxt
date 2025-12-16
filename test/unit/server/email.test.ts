@@ -538,6 +538,7 @@ describe('server/utils/email', () => {
     it('handles null error object', async () => {
       mockSend.mockResolvedValue({
         data: null,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         error: null as any,
       })
 
