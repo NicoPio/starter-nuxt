@@ -1,5 +1,25 @@
 export const useContentI18n = () => {
-  const locale = useState<'en' | 'fr'>('locale', () => 'fr')
+  // Detect locale from cookie, navigator.language, or fallback to 'fr'
+  const getInitialLocale = (): 'en' | 'fr' => {
+    if (import.meta.client) {
+      // Check cookie first
+      const cookieLocale = document.cookie.split('; ').find(row => row.startsWith('i18n_locale='))
+      if (cookieLocale) {
+        const value = cookieLocale.split('=')[1] as 'en' | 'fr'
+        if (value === 'en' || value === 'fr') return value
+      }
+
+      // Check navigator.language
+      const browserLang = navigator.language.toLowerCase()
+      if (browserLang.startsWith('en')) return 'en'
+      if (browserLang.startsWith('fr')) return 'fr'
+    }
+
+    // Default fallback
+    return 'fr'
+  }
+
+  const locale = useState<'en' | 'fr'>('locale', getInitialLocale)
   const translations = useState<Record<string, Record<string, unknown>>>('translations', () => ({}))
 
   const loadTranslations = async (newLocale: 'en' | 'fr') => {

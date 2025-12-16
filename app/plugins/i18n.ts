@@ -1,28 +1,33 @@
 export default defineNuxtPlugin({
   name: 'i18n',
   async setup(_nuxtApp) {
-    const { t, locale, setLocale, loadTranslations } = useContentI18n()
+    // Détecter la locale cible AVANT d'initialiser useContentI18n
+    let targetLocale: 'en' | 'fr' = 'fr' // Default fallback
 
-    // Détecter la locale depuis le cookie ou le navigateur côté client
     if (import.meta.client) {
+      // 1. Vérifier le cookie en premier
       const cookieLocale = document.cookie
         .split('; ')
         .find(row => row.startsWith('i18n_locale='))
         ?.split('=')[1] as 'en' | 'fr' | undefined
 
       if (cookieLocale && (cookieLocale === 'en' || cookieLocale === 'fr')) {
-        // Ne pas mettre à jour locale ici, c'est déjà fait dans useContentI18n
+        targetLocale = cookieLocale
       } else {
-        const browserLang = navigator.language.split('-')[0]
-        if (browserLang === 'en' || browserLang === 'fr') {
-          // Charger avec la langue du navigateur si pas de cookie
-          await loadTranslations(browserLang as 'en' | 'fr')
+        // 2. Utiliser la langue du navigateur si pas de cookie
+        const browserLang = navigator.language.toLowerCase()
+        if (browserLang.startsWith('en')) {
+          targetLocale = 'en'
+        } else if (browserLang.startsWith('fr')) {
+          targetLocale = 'fr'
         }
       }
     }
 
-    // Charger les traductions pour garantir qu'elles sont disponibles en SSR
-    await loadTranslations(locale.value)
+    const { t, locale, setLocale, loadTranslations } = useContentI18n()
+
+    // Charger les traductions pour la locale détectée
+    await loadTranslations(targetLocale)
 
     return {
       provide: {
