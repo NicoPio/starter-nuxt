@@ -166,7 +166,9 @@ describe('useUsers', () => {
 
     it('sets loading to true during fetch', async () => {
       const { fetchUsers, loading } = useUsers()
-      mockFetch.mockImplementationOnce(() => new Promise(resolve => setTimeout(resolve, 100)))
+      mockFetch.mockImplementationOnce(() => new Promise(resolve =>
+        setTimeout(() => resolve(createMockResponse([])), 100)
+      ))
 
       const promise = fetchUsers()
       expect(loading.value).toBe(true)
