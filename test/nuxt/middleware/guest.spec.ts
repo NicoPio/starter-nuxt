@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { RouteLocationNormalized } from 'vue-router'
 
-// Mock dependencies
+// Type helper for creating mock route objects
+type MockRoute = Partial<RouteLocationNormalized>
+
+// Mock dependencies - reactive values
 const mockUserSession = {
   loggedIn: { value: false },
   user: { value: null },
@@ -8,14 +12,15 @@ const mockUserSession = {
 
 const mockNavigateTo = vi.fn()
 
-// Mock global composables
-vi.mock('#app', () => ({
-  defineNuxtRouteMiddleware: (fn: Function) => fn,
-  useUserSession: () => mockUserSession,
-  navigateTo: (path: string) => mockNavigateTo(path),
-}))
+// CRITICAL: Mock global functions BEFORE any middleware import
+// @ts-expect-error - Global mock for Nuxt auto-imports
+global.defineNuxtRouteMiddleware = (fn: (...args: unknown[]) => unknown) => fn
+// @ts-expect-error - Global mock for nuxt-auth-utils
+global.useUserSession = () => mockUserSession
+// @ts-expect-error - Global mock for Nuxt navigation
+global.navigateTo = mockNavigateTo
 
-// Import after mocking
+// Import AFTER global mocks are set
 const guestMiddleware = await import('~/middleware/guest')
 
 describe('Guest Middleware', () => {
@@ -36,12 +41,12 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      const result = await guestMiddleware.default(mockTo, {} as any)
+      const result = await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -57,12 +62,12 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      const result = await guestMiddleware.default(mockTo, {} as any)
+      const result = await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -78,13 +83,13 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       // Simulating edge case where user object exists but not logged in
       mockUserSession.user.value = { id: '1', email: 'test@example.com' }
 
-      const result = await guestMiddleware.default(mockTo, {} as any)
+      const result = await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -100,12 +105,12 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = null
 
-      const result = await guestMiddleware.default(mockTo, {} as any)
+      const result = await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -123,7 +128,7 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -133,7 +138,7 @@ describe('Guest Middleware', () => {
         role: 'User',
       }
 
-      await guestMiddleware.default(mockTo, {} as any)
+      await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith('/dashboard')
     })
@@ -148,7 +153,7 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -158,7 +163,7 @@ describe('Guest Middleware', () => {
         role: 'Admin',
       }
 
-      await guestMiddleware.default(mockTo, {} as any)
+      await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith('/dashboard')
     })
@@ -173,7 +178,7 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -183,7 +188,7 @@ describe('Guest Middleware', () => {
         role: 'Contributor',
       }
 
-      await guestMiddleware.default(mockTo, {} as any)
+      await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith('/dashboard')
     })
@@ -200,7 +205,7 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -210,7 +215,7 @@ describe('Guest Middleware', () => {
         role: 'User',
       }
 
-      await guestMiddleware.default(mockTo, {} as any)
+      await guestMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith('/dashboard')
     })
@@ -225,12 +230,12 @@ describe('Guest Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       // First call - not authenticated
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
-      let result = await guestMiddleware.default(mockTo, {} as any)
+      let result = await guestMiddleware.default(mockTo, {} as MockRoute)
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
 
@@ -244,7 +249,7 @@ describe('Guest Middleware', () => {
         name: 'Test User',
         role: 'User',
       }
-      result = await guestMiddleware.default(mockTo, {} as any)
+      result = await guestMiddleware.default(mockTo, {} as MockRoute)
       expect(mockNavigateTo).toHaveBeenCalledWith('/dashboard')
     })
   })

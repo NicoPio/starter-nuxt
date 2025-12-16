@@ -160,7 +160,7 @@ test.describe('Admin Panel Tests (T047 & T048)', () => {
 
           roleChanged = true
           break
-        } catch (error) {
+        } catch {
           console.log(`  Failed to change role with ${selector}`)
         }
       }

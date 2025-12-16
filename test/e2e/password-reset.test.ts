@@ -50,7 +50,7 @@ test.describe('Password Reset Flow', () => {
       
       // Verify the email was sent (check console logs for mocked Resend call)
       const consoleLogs = await page.evaluate(() => {
-        // @ts-ignore
+        // @ts-expect-error
         return window.mockedResendCalls || []
       })
       
@@ -137,7 +137,7 @@ test.describe('Password Reset Flow', () => {
       
       // Extract token from mocked email
       const consoleLogs = await page.evaluate(() => {
-        // @ts-ignore
+        // @ts-expect-error
         return window.mockedResendCalls || []
       })
       
@@ -246,7 +246,7 @@ test.describe('Password Reset Flow', () => {
       await page.waitForSelector('[role="alert"]', { timeout: 5000 })
       
       const consoleLogs = await page.evaluate(() => {
-        // @ts-ignore
+        // @ts-expect-error
         return window.mockedResendCalls || []
       })
       
@@ -283,7 +283,7 @@ test.describe('Password Reset Flow', () => {
       await page.waitForSelector('[role="alert"]', { timeout: 5000 })
       
       const consoleLogs = await page.evaluate(() => {
-        // @ts-ignore
+        // @ts-expect-error
         return window.mockedResendCalls || []
       })
       
@@ -330,7 +330,7 @@ test.describe('Password Reset Flow', () => {
       await page.waitForSelector('[role="alert"]', { timeout: 5000 })
       
       const consoleLogs = await page.evaluate(() => {
-        // @ts-ignore
+        // @ts-expect-error
         return window.mockedResendCalls || []
       })
       

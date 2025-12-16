@@ -24,7 +24,7 @@ async function globalSetup(config: FullConfig) {
 
     // Créer un utilisateur de test via l'API
     try {
-      const signupResponse = await context.request.post('/api/auth/register', {
+      await context.request.post('/api/auth/register', {
         data: {
           email: 'test@example.com',
           password: 'testpassword123',
@@ -32,7 +32,7 @@ async function globalSetup(config: FullConfig) {
         },
       })
       console.log('✓ Utilisateur créé')
-    } catch (err) {
+    } catch {
       console.log('ℹ Utilisateur existe déjà')
     }
 

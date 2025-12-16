@@ -7,14 +7,13 @@ import '@testing-library/jest-dom/vitest'
 
 // Mock IntersectionObserver (required for components with lazy loading)
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
   disconnect() {}
   observe() {}
   takeRecords() {
     return []
   }
   unobserve() {}
-} as any
+} as unknown as typeof IntersectionObserver
 
 // Mock window.matchMedia (required for responsive components)
 if (typeof window !== 'undefined') {
@@ -43,5 +42,5 @@ if (typeof global.crypto === 'undefined') {
         return v.toString(16)
       })
     },
-  } as any
+  } as unknown as Crypto
 }

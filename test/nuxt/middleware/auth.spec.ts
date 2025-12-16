@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { RouteLocationNormalized } from 'vue-router'
 
-// Mock dependencies
+// Type helper for creating mock route objects
+type MockRoute = Partial<RouteLocationNormalized>
+
+// Mock dependencies - reactive values
 const mockUserSession = {
   loggedIn: { value: false },
   user: { value: null },
@@ -8,14 +12,15 @@ const mockUserSession = {
 
 const mockNavigateTo = vi.fn()
 
-// Mock global composables
-vi.mock('#app', () => ({
-  defineNuxtRouteMiddleware: (fn: Function) => fn,
-  useUserSession: () => mockUserSession,
-  navigateTo: (options: unknown) => mockNavigateTo(options),
-}))
+// CRITICAL: Mock global functions BEFORE any middleware import
+// @ts-expect-error - Global mock for Nuxt auto-imports
+global.defineNuxtRouteMiddleware = (fn: (...args: unknown[]) => unknown) => fn
+// @ts-expect-error - Global mock for nuxt-auth-utils
+global.useUserSession = () => mockUserSession
+// @ts-expect-error - Global mock for Nuxt navigation
+global.navigateTo = mockNavigateTo
 
-// Import after mocking
+// Import AFTER global mocks are set
 const authMiddleware = await import('~/middleware/auth')
 
 describe('Auth Middleware', () => {
@@ -36,12 +41,12 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',
@@ -61,12 +66,12 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',
@@ -86,12 +91,12 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = { id: '1', email: 'test@example.com' }
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',
@@ -111,12 +116,12 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = null
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',
@@ -138,7 +143,7 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -148,7 +153,7 @@ describe('Auth Middleware', () => {
         role: 'User',
       }
 
-      const result = await authMiddleware.default(mockTo, {} as any)
+      const result = await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -164,7 +169,7 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -174,7 +179,7 @@ describe('Auth Middleware', () => {
         role: 'Admin',
       }
 
-      const result = await authMiddleware.default(mockTo, {} as any)
+      const result = await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -190,7 +195,7 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = true
       mockUserSession.user.value = {
@@ -200,7 +205,7 @@ describe('Auth Middleware', () => {
         role: 'Contributor',
       }
 
-      const result = await authMiddleware.default(mockTo, {} as any)
+      const result = await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).not.toHaveBeenCalled()
       expect(result).toBeUndefined()
@@ -218,12 +223,12 @@ describe('Auth Middleware', () => {
         hash: '',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',
@@ -243,12 +248,12 @@ describe('Auth Middleware', () => {
         hash: '#settings',
         meta: {},
         matched: [],
-      }
+      } as RouteLocationNormalized
 
       mockUserSession.loggedIn.value = false
       mockUserSession.user.value = null
 
-      await authMiddleware.default(mockTo, {} as any)
+      await authMiddleware.default(mockTo, {} as MockRoute)
 
       expect(mockNavigateTo).toHaveBeenCalledWith({
         path: '/login',

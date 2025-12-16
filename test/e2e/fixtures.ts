@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test'
+import { test as base, type Page } from '@playwright/test'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 type AuthFixtures = {
-  authenticatedPage: any
+  authenticatedPage: Page
 }
 
 // Étendre le test avec une fixture pour les pages authentifiées

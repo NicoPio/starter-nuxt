@@ -124,7 +124,7 @@ test.describe('OAuth Authentication Flow', () => {
   })
 
   test.describe('OAuth Callback Handling', () => {
-    test('should handle successful OAuth callback', async ({ page, context }) => {
+    test('should handle successful OAuth callback', async ({ page, context: _context }) => {
       // Note: This test requires mocking OAuth provider responses
       // In a real test environment, you would use a mock OAuth server
 
@@ -159,7 +159,7 @@ test.describe('OAuth Authentication Flow', () => {
   })
 
   test.describe('OAuth Account Linking', () => {
-    test('should create new account for first-time OAuth user', async ({ page, context }) => {
+    test('should create new account for first-time OAuth user', async ({ page, context: _context }) => {
       // Note: This test requires a mock OAuth setup
 
       // Clear existing session
@@ -178,7 +178,7 @@ test.describe('OAuth Authentication Flow', () => {
       expect(page.url()).toContain('/dashboard')
     })
 
-    test('should link OAuth account to existing user', async ({ page, context }) => {
+    test('should link OAuth account to existing user', async ({ page, context: _context }) => {
       // First, create a regular account
       await page.goto('/signup')
 
@@ -202,7 +202,7 @@ test.describe('OAuth Authentication Flow', () => {
       expect(page.url()).toContain('github.com')
     })
 
-    test('should login with OAuth if account already exists', async ({ page, context }) => {
+    test('should login with OAuth if account already exists', async ({ page, context: _context }) => {
       // Note: This assumes an OAuth account already exists
 
       await page.goto('/login')
@@ -218,7 +218,7 @@ test.describe('OAuth Authentication Flow', () => {
   })
 
   test.describe('OAuth Session Management', () => {
-    test('should persist OAuth session across page refreshes', async ({ page, context }) => {
+    test('should persist OAuth session across page refreshes', async ({ page, context: _context }) => {
       // Note: This requires a successful OAuth login first
 
       // Simulate OAuth login
@@ -232,7 +232,7 @@ test.describe('OAuth Authentication Flow', () => {
       expect(page.url()).toContain('/dashboard')
     })
 
-    test('should logout OAuth users properly', async ({ page, context }) => {
+    test('should logout OAuth users properly', async ({ page, context: _context }) => {
       // Simulate OAuth login
       await page.goto('/auth/github?code=mock_code_123')
       await page.waitForURL('/dashboard', { timeout: 10000 })
