@@ -138,7 +138,7 @@ const onSubmit = async () => {
 
       <p class="text-center text-sm text-gray-600 dark:text-gray-400">
         <NuxtLink
-          to="/auth/login"
+          to="/login"
           class="text-primary-600 hover:text-primary-700 font-medium"
           aria-label="t('auth.forgotPassword.backToLogin')"
         >

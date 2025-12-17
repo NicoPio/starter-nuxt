@@ -118,7 +118,7 @@ useHead({
               </UButton>
 
               <UButton
-                to="/auth/login"
+                to="/login"
                 block
                 size="lg"
                 variant="outline"

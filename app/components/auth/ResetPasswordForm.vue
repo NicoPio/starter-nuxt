@@ -72,7 +72,7 @@ const onSubmit = async () => {
 
     // Success! Redirect to login page after a short delay
     setTimeout(() => {
-      router.push('/auth/login')
+      router.push('/login')
     }, 1500)
   } finally {
     loading.value = false
@@ -170,7 +170,7 @@ const onSubmit = async () => {
 
       <p class="text-center text-sm text-gray-600 dark:text-gray-400">
         <NuxtLink
-          to="/auth/login"
+          to="/login"
           class="text-primary-600 hover:text-primary-700 font-medium"
           aria-label="t('auth.resetPassword.backToLogin')"
         >
